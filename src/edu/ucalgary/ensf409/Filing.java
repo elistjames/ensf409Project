@@ -15,13 +15,13 @@ public class Filing
 
     /**
      *
-     * @param id
-     * @param type
-     * @param rails
-     * @param drawers
-     * @param cabinet
-     * @param price
-     * @param manuId
+     * @param id - receives String from id column in "Filing" table
+     * @param type - receives String from type column in "Filing" table
+     * @param rails - receives String from rails column in "Filing" table
+     * @param drawers - receives String from drawers column in "Filing" table
+     * @param cabinet - receives String from cabinet column in "Filing" table
+     * @param price - receives int from price column in "Filing" table
+     * @param manuId - receives String from manuId column in "Filing table
      */
     public Filing(String id, String type, String rails, String drawers, String cabinet, int price, String manuId)
     {

@@ -13,17 +13,20 @@ public class Desk
     private int price;
     private String manuId;
 
+
     /**
      *
-     * @param id
-     * @param type
-     * @param legs
-     * @param top
-     * @param drawer
-     * @param price
-     * @param manuId
+     * @param id - receives a String from "id" column in Desk table
+     * @param type - receives a String from "type" column in Desk table
+     * @param legs - receives a String from "legs" column in Desk table
+     * @param top - receives a String from "top" column in Desk table
+     * @param drawer - receives a String from "drawer" column in Desk table
+     * @param price - receives a int from "price" column in Desk table
+     * @param manuId - receives a String from "manuId" column in Desk table
      */
-    public Desk(String id, String type, String legs, String top, String drawer, int price, String manuId){
+    public Desk(String id, String type, String legs, String top, String drawer, int price, String manuId)
+    {
+
         this.id = id;
         this.type = type;
         this.legs = legs;

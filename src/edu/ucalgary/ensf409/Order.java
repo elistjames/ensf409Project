@@ -127,7 +127,7 @@ public class Order
 
             db.initializeConnection();
             db.updateLocal();
-            ArrayList<Integer> already = new ArrayList<Integer>();
+            ArrayList<ArrayList<Integer>> already = new ArrayList<ArrayList<Integer>>();
             switch(order.getFurnitureCategory()){
 
                 case "desk":
@@ -146,10 +146,13 @@ public class Order
             System.out.println();
             int lowest = co.getLowestPrice();
             if(lowest != 0){
+                co.setTotalPrice(lowest);
+                co.generateOrder();
                 System.out.println("The price found to make this item is: $" + lowest+".00");
             }
             else{
-                System.out.println("Impossible to make this order due to lack inventory");
+                System.out.println("Impossible to make this order due to lack of inventory");
+                co.generateRecommendation();
             }
 
             boolean valid = true;
@@ -164,6 +167,7 @@ public class Order
                         if(yn.toString().equals("n") || yn.toString().equals("N")){
                             valid = false;
                             command = false;
+
                         }
                         else{
                             orderCounter++;
