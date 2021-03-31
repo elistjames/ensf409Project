@@ -1,6 +1,8 @@
 package edu.ucalgary.ensf409;
 
-import java.io.*;import java.util.ArrayList;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class CreateOrder
 {

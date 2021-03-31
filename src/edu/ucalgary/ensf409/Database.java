@@ -180,7 +180,108 @@ public class Database {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        }
+
+        public void sendChair(){
+            try {
+                Statement statement = dbConnect.createStatement();
+                statement.executeUpdate("TRUNCATE CHAIR");
+                String query;
+                for(int i = 0; i < chairs.length; i++){
+                    query = "INSERT INTO CHAIR (ID,Type,Legs,Arms,Seat,Cushion,Price,ManuID) VALUES (?,?,?,?,?,?,?,?)";
+                    PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+                    myStmt.setString(1, chairs[i].getId());
+                    myStmt.setString(2, chairs[i].getType());
+                    myStmt.setString(3, chairs[i].getLegs());
+                    myStmt.setString(4, chairs[i].getArms());
+                    myStmt.setString(5, chairs[i].getSeat());
+                    myStmt.setString(6, chairs[i].getCushion());
+                    myStmt.setInt(7, chairs[i].getPrice());
+                    myStmt.setString(8, chairs[i].getManuId());
+
+                    myStmt.execute();
+                    myStmt.close();
+                }
+            } catch (SQLException e) {
+
+            }
+        }
+
+    public void sendDesk(){
+        try {
+            Statement statement = dbConnect.createStatement();
+            statement.executeUpdate("TRUNCATE DESK");
+            String query;
+            for(int i = 0; i < desks.length; i++){
+                query = "INSERT INTO DESK (ID,Type,Legs,Top,Drawer,Price,ManuID) VALUES (?,?,?,?,?,?,?)";
+                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+                myStmt.setString(1, desks[i].getId());
+                myStmt.setString(2, desks[i].getType());
+                myStmt.setString(3, desks[i].getLegs());
+                myStmt.setString(4, desks[i].getTop());
+                myStmt.setString(5, desks[i].getDrawer());
+                myStmt.setInt(6, desks[i].getPrice());
+                myStmt.setString(7, desks[i].getManuId());
+
+                myStmt.execute();
+                myStmt.close();
+            }
+        } catch (SQLException e) {
+
+        }
     }
+
+    public void sendFiling(){
+        try {
+            Statement statement = dbConnect.createStatement();
+            statement.executeUpdate("TRUNCATE FILING");
+            String query;
+            for(int i = 0; i < filings.length; i++){
+                query = "INSERT INTO FILING (ID,Type,Rails,Drawers,Cabinet,Price,ManuID) VALUES (?,?,?,?,?,?,?)";
+                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+                myStmt.setString(1, filings[i].getId());
+                myStmt.setString(2, filings[i].getType());
+                myStmt.setString(3, filings[i].getRails());
+                myStmt.setString(4, filings[i].getDrawers());
+                myStmt.setString(5, filings[i].getCabinet());
+                myStmt.setInt(6, filings[i].getPrice());
+                myStmt.setString(7, filings[i].getManuId());
+
+                myStmt.execute();
+                myStmt.close();
+            }
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public void sendLamp(){
+        try {
+            Statement statement = dbConnect.createStatement();
+            statement.executeUpdate("TRUNCATE LAMP");
+            String query;
+            for(int i = 0; i < lamps.length; i++){
+                query = "INSERT INTO LAMP (ID,Type,Base,Bulb,Price,ManuID) VALUES (?,?,?,?,?,?)";
+                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+
+                myStmt.setString(1, lamps[i].getId());
+                myStmt.setString(2, lamps[i].getType());
+                myStmt.setString(3, lamps[i].getBase());
+                myStmt.setString(4, lamps[i].getBulb());
+                myStmt.setInt(5, lamps[i].getPrice());
+                myStmt.setString(6, lamps[i].getManuId());
+
+                myStmt.execute();
+                myStmt.close();
+            }
+        } catch (SQLException e) {
+
+        }
+    }
+
     public void updateLocal(){
 
         pullData("CHAIR");
@@ -226,7 +327,10 @@ public class Database {
         return this.manufacturers;
     }
     public void pushLocal(){
-
+        sendChair();
+        sendDesk();
+        sendFiling();
+        sendLamp();
     }
 }
 
