@@ -14,12 +14,12 @@ public class Lamp
 
     /**
      *
-     * @param id
-     * @param type
-     * @param base
-     * @param bulb
-     * @param price
-     * @param manuId
+     * @param id - receives String from id column in "Lamp" table
+     * @param type - receives String from type column in "Lamp" table
+     * @param base - receives String from base column in "Lamp" table
+     * @param bulb - receives String from bulb column in "Lamp" table
+     * @param price - receives int from price column in "Lamp" table
+     * @param manuId - receives String from manuId column in "Lamp"
      */
     public Lamp(String id, String type, String base, String bulb, int price, String manuId){
         this.id = id;
@@ -32,7 +32,7 @@ public class Lamp
 
     /**
      *
-     * @return
+     * @return - String data member from
      */
     public String getId() { return this.id; }
 

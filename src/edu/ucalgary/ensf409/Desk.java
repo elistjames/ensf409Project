@@ -10,7 +10,6 @@ public class Desk
     private int price;
     private String manuId;
 
-
     /**
      *
      * @param id - receives a String from "id" column in Desk table
