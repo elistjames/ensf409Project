@@ -100,9 +100,9 @@ public class CreateOrder
      * @param seats
      * @param cushions
      */
-    public void chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number, int legs, int arms, int seats, int cushions) {
+    public void chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+                           int legs, int arms, int seats, int cushions) {
         int totalPrice2 = priceTotal;
-        boolean newEvent;
         for (int i = 0; i < table.length; i++) {
             int lCount = legs;
             int aCount = arms;
@@ -111,23 +111,18 @@ public class CreateOrder
             ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
             if(table[i].getType().equals(type)){
                 if(newEvent(alreadyHit, i)){
-                    boolean used = false;
                     alreadyHit2.add(i);
                     if(db.getChairs()[i].getLegs().equals("Y") && legs < number){
                         lCount = legs+1;
-                        used = true;
                     }
                     if(db.getChairs()[i].getArms().equals("Y") && arms < number){
                         aCount = arms+1;
-                        used = true;
                     }
                     if(db.getChairs()[i].getSeat().equals("Y") && seats < number){
                         sCount = seats+1;
-                        used = true;
                     }
                     if(db.getChairs()[i].getCushion().equals("Y") && cushions < number){
                         cCount = cushions+1;
-                        used = true;
                     }
                     totalPrice2 = priceTotal + db.getChairs()[i].getPrice();
                     if(lCount+aCount+sCount+cCount == number*4){
@@ -135,6 +130,96 @@ public class CreateOrder
                         return;
                     }
                     chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount);
+                }
+            }
+        }
+    }
+
+    public void deskPrice(Desk table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+                          int legs, int tops, int drawers) {
+        int totalPrice2 = priceTotal;
+        for (int i = 0; i < table.length; i++) {
+            int lCount = legs;
+            int tCount = tops;
+            int dCount = drawers;
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
+            if(table[i].getType().equals(type)){
+                if(newEvent(alreadyHit, i)){
+                    alreadyHit2.add(i);
+                    if(table[i].getLegs().equals("Y") && legs < number){
+                        lCount = legs+1;
+                    }
+                    if(table[i].getTop().equals("Y") && tops < number){
+                        tCount = tops+1;
+                    }
+                    if(table[i].getDrawer().equals("Y") && drawers < number){
+                        dCount = drawers+1;
+                    }
+                    totalPrice2 = priceTotal + table[i].getPrice();
+                    if(lCount+tCount+dCount == number*3){
+                        prices.add(totalPrice2);
+                        return;
+                    }
+                    deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount);
+                }
+            }
+        }
+    }
+
+    public void filingPrice(Filing table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+                            int rails, int drawers, int cabinets) {
+        int totalPrice2 = priceTotal;
+        for (int i = 0; i < table.length; i++) {
+            int rCount = rails;
+            int dCount = drawers;
+            int cCount = cabinets;
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
+            if(table[i].getType().equals(type)){
+                if(newEvent(alreadyHit, i)){
+                    alreadyHit2.add(i);
+                    if(table[i].getRails().equals("Y") && rails < number){
+                        rCount = rails+1;
+                    }
+                    if(table[i].getDrawers().equals("Y") && drawers < number){
+                        dCount = drawers+1;
+                    }
+                    if(table[i].getCabinet().equals("Y") && cabinets < number){
+                        cCount = cabinets+1;
+                    }
+                    totalPrice2 = priceTotal + table[i].getPrice();
+                    if(rCount+dCount+cCount == number*3){
+                        prices.add(totalPrice2);
+                        return;
+                    }
+                    filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount);
+                }
+            }
+        }
+    }
+
+    public void lampPrice(Lamp table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+                          int bases, int lightBulbs) {
+        int totalPrice2 = priceTotal;
+        for (int i = 0; i < table.length; i++) {
+            int bCount = bases;
+            int lCount = lightBulbs;
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
+            if(table[i].getType().equals(type)){
+                if(newEvent(alreadyHit, i)){
+                    alreadyHit2.add(i);
+                    if(table[i].getBase().equals("Y") && bases < number){
+                        bCount = bases+1;
+                    }
+                    if(table[i].getBulb().equals("Y") && lightBulbs < number){
+                        lCount = lightBulbs+1;
+                    }
+
+                    totalPrice2 = priceTotal + table[i].getPrice();
+                    if(bCount+lCount == number*3){
+                        prices.add(totalPrice2);
+                        return;
+                    }
+                    lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount);
                 }
             }
         }

@@ -1,6 +1,7 @@
 package edu.ucalgary.ensf409;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -30,6 +31,7 @@ public class Order
          */
         while(Order.command){
 
+            Scanner input1 = new Scanner(System.in);
             /**
              *
              */
@@ -40,7 +42,7 @@ public class Order
                 System.out.println("(3) Filing");
                 System.out.println("(4) Lamp");
 
-                switch(input.nextLine().trim()){
+                switch(input1.nextLine().trim()){
                     case "1":
                         order.setFurnitureCategory("desk");
                         break loop;
@@ -61,30 +63,86 @@ public class Order
             /**
              *
              */
-            String t = "";
-            String n = "";
+            Scanner input2 = new Scanner(System.in);
+            if(order.getFurnitureCategory().equals("filing")){
+                String t = "";
+                boolean correctType;
+                do{
+                    correctType = false;
+                    System.out.println();
+                    System.out.println("What size would you like? (Small / Medium / Large)");
+                    t = input2.nextLine().trim();
+                    if(t.equals("Small")||t.equals("small")||t.equals("Medium")||t.equals("medium")||t.equals("Large")||t.equals("large")){
+                        correctType = true;
+                    }
+                    if(!correctType){
+                        System.out.println("Invalid entry: can only enter Small, Medium or Large");
+                    }
+                }
+                while (!correctType);
+                order.setFurnitureType(t);
+            }
+            else{
+                String t = "";
+                boolean correctType;
+
+                do{
+                    correctType = false;
+                    System.out.println();
+                    System.out.println("Please enter a type: ");
+                    t = input2.nextLine().trim();
+                    for(int i = 0; i < t.length(); i++){
+                        if((Character.toLowerCase(t.charAt(i)) > 64 && Character.toLowerCase(t.charAt(i)) < 91)|| (Character.toLowerCase(t.charAt(i)) > 96 && Character.toLowerCase(t.charAt(i)) < 123)){
+                            correctType = true;
+                        }
+                    }
+                    if(!correctType){
+                        System.out.println("Invalid entry: Please enter a valid type of furniture");
+                    }
+
+                }
+                while (!correctType);
+                order.setFurnitureType(t);
+            }
+            Scanner input3 = new Scanner(System.in);
+            boolean correctAmount = true;
+            int n = 0;
             do{
                 System.out.println();
-                System.out.println("Please enter a type: ");
-                t = input.nextLine().trim();
-                System.out.println();
                 System.out.println("Please enter the amount: ");
-                n = input.nextLine().trim();
-                if(t.equals("") && (n.equals("")||n.equals("0"))){
-                    System.out.println("Invalid input, try again.");
+                try {
+                    n = input3.nextInt();
+                }
+                catch (InputMismatchException e){
+                    System.out.println("Must be an integer");
+                    correctAmount = false;
+                }
+                if(!correctAmount){
+                    System.out.println("Invalid entry: Must enter a valid amount");
                 }
             }
-            while (t.equals("") && (n.equals("")||n.equals("0")));
-            order.setFurnitureType(t);
-            order.setNumberItems(Integer.parseInt(n));
-
-
+            while(!correctAmount);
+            order.setNumberItems(n);
             CreateOrder co = new CreateOrder(order, orderCounter, db);
 
             db.initializeConnection();
             db.updateLocal();
             ArrayList<Integer> already = new ArrayList<Integer>();
-            co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
+            switch(order.getFurnitureCategory()){
+
+                case "desk":
+                    co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
+                    break;
+                case "chair":
+                    co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
+                    break;
+                case "filing":
+                    co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
+                    break;
+                case "lamp":
+                    co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0);
+                    break;
+            }
             System.out.println();
             int lowest = co.getLowestPrice();
             if(lowest != 0){
