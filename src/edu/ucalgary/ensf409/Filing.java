@@ -1,5 +1,8 @@
 package edu.ucalgary.ensf409;
 
+/**
+ *
+ */
 public class Filing
 {
     private String id;
@@ -10,6 +13,16 @@ public class Filing
     private int price;
     private String manuId;
 
+    /**
+     *
+     * @param id
+     * @param type
+     * @param rails
+     * @param drawers
+     * @param cabinet
+     * @param price
+     * @param manuId
+     */
     public Filing(String id, String type, String rails, String drawers, String cabinet, int price, String manuId)
     {
         this.id = id;
@@ -20,33 +33,103 @@ public class Filing
         this.price = price;
         this.manuId = manuId;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getId()
     {
         return this.id;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getType()
     {
         return this.type;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getRails()
     {
         return this.rails;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getDrawers()
     {
         return this.drawers;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getCabinet() { return this.cabinet; }
+
+    /**
+     *
+     * @return
+     */
     public int getPrice()
     {
         return this.price;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getManuId() { return this.manuId; }
+
+    /**
+     *
+     * @param id
+     */
     public void setId(String id){this.id = id;}
+
+    /**
+     *
+     * @param type
+     */
     public void setType(String type){this.type = type;}
+
+    /**
+     *
+     * @param rails
+     */
     public void setRails(String rails){this.rails = rails;}
+
+    /**
+     *
+     * @param drawers
+     */
     public void setDrawers(String drawers){this.drawers = drawers;}
+
+    /**
+     *
+     * @param cabinet
+     */
     public void setCabinet(String cabinet){this.cabinet = cabinet;}
+
+    /**
+     *
+     * @param price
+     */
     public void setPrice(int price){this.price = price;}
+
+    /**
+     *
+     * @param manuId
+     */
     public void setManuId(String manuId){this.manuId = manuId;}
 }

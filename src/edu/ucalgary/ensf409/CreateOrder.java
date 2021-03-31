@@ -78,26 +78,39 @@ public class CreateOrder
         return lowest;
     }
 
+    public boolean newEvent(ArrayList<Integer> arr, int index){
+        boolean didNotHappen = true;
+        for(int j = 0; j < arr.size(); j++){
+            if(index == arr.get(j)){
+                didNotHappen = false;
+            }
+        }
+        return didNotHappen;
+    }
     ArrayList<Integer>prices = new ArrayList<Integer>();
 
-
-    public void chairPrice(int priceTotal, ArrayList<Integer>alreadyHit, String type, int number, int legs, int arms, int seats, int cushions) {
+    /**
+     * the chair price
+     * @param priceTotal
+     * @param alreadyHit
+     * @param type
+     * @param number
+     * @param legs
+     * @param arms
+     * @param seats
+     * @param cushions
+     */
+    public void chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number, int legs, int arms, int seats, int cushions) {
         int totalPrice2 = priceTotal;
         boolean newEvent;
-        for (int i = 0; i < db.getChairs().length; i++) {
+        for (int i = 0; i < table.length; i++) {
             int lCount = legs;
             int aCount = arms;
             int sCount = seats;
             int cCount = cushions;
             ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
-            if(db.getChairs()[i].getType().equals(type)){
-                newEvent = true;
-                for(int j = 0; j < alreadyHit.size(); j++){
-                    if(i == alreadyHit.get(j)){
-                        newEvent = false;
-                    }
-                }
-                if(newEvent){
+            if(table[i].getType().equals(type)){
+                if(newEvent(alreadyHit, i)){
                     boolean used = false;
                     alreadyHit2.add(i);
                     if(db.getChairs()[i].getLegs().equals("Y") && legs < number){
@@ -121,7 +134,7 @@ public class CreateOrder
                         prices.add(totalPrice2);
                         return;
                     }
-                    chairPrice(totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount);
+                    chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount);
                 }
             }
         }

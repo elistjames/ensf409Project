@@ -3,6 +3,9 @@ package edu.ucalgary.ensf409;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class Order
 {
     private String furnitureCategory;
@@ -10,6 +13,11 @@ public class Order
     private int numberItems;
 
     static boolean command = true;
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
         int orderCounter = 1;
@@ -17,8 +25,14 @@ public class Order
         Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409");
         db.initializeConnection();
         db.updateLocal();
+        /**
+         *
+         */
         while(Order.command){
 
+            /**
+             *
+             */
             loop:   while(true){
                 System.out.println("Please enter a number corresponding to your desired furniture category:");
                 System.out.println("(1) Desk");
@@ -44,6 +58,9 @@ public class Order
                         break;
                 }
             }
+            /**
+             *
+             */
             String t = "";
             String n = "";
             do{
@@ -67,7 +84,7 @@ public class Order
             db.initializeConnection();
             db.updateLocal();
             ArrayList<Integer> already = new ArrayList<Integer>();
-            co.chairPrice(0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
+            co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
             System.out.println();
             int lowest = co.getLowestPrice();
             if(lowest != 0){
@@ -104,30 +121,57 @@ public class Order
         input.close();
     }
 
+    /**
+     *
+     */
     public Order(){
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberItems() {
         return numberItems;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFurnitureCategory() {
         return furnitureCategory;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFurnitureType() {
         return furnitureType;
     }
 
+    /**
+     *
+     * @param numberItems
+     */
     public void setNumberItems(int numberItems) {
         this.numberItems = numberItems;
     }
 
+    /**
+     *
+     * @param furnitureCategory
+     */
     public void setFurnitureCategory(String furnitureCategory) {
         this.furnitureCategory = furnitureCategory;
     }
 
+    /**
+     *
+     * @param furnitureType
+     */
     public void setFurnitureType(String furnitureType) {
         this.furnitureType = furnitureType;
     }
