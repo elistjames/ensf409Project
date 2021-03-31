@@ -78,15 +78,15 @@ public class Order
             }
 
             boolean valid = true;
-            String yn = "";
-            StringBuilder a = new StringBuilder(yn);
+            StringBuilder yn = new StringBuilder();
+            StringBuilder a = new StringBuilder(yn.toString());
             while(valid){
                 System.out.println();
                 System.out.println("Would you like to make another order? (Y/N)");
-                yn += input.nextLine().trim();
+                yn.append(input.nextLine().trim());
                 if(yn.length() < 2){
-                    if(yn.equals("y") || yn.equals("Y") || yn.equals("n") || yn.equals("N")){
-                        if(yn.equals("n") || yn.equals("N")){
+                    if(yn.toString().equals("y") || yn.toString().equals("Y") || yn.toString().equals("n") || yn.toString().equals("N")){
+                        if(yn.toString().equals("n") || yn.toString().equals("N")){
                             valid = false;
                             command = false;
                         }

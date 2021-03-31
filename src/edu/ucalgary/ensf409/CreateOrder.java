@@ -8,16 +8,14 @@ public class CreateOrder
     private PrintWriter outStream;
     private String[] itemsOrdered;
     private String totalPrice;
-    private int orderID;
     Database db;
 
     CreateOrder(Order request, int orderNumber, Database db)
     {
         this.originalRequest = request;
-        this.orderID = orderNumber;
         try
         {
-            this.outStream = new PrintWriter(new File("Order" + Integer.toString(orderID) + ".txt"));
+            this.outStream = new PrintWriter(new File("Order" + Integer.toString(orderNumber) + ".txt"));
         }
         catch (IOException e)
         {
@@ -35,9 +33,7 @@ public class CreateOrder
     public void setItemsOrdered(String[] toOrder) {
         if(toOrder != null) {
             itemsOrdered = new String[toOrder.length];
-            for (int i = 0; i < toOrder.length; i++) {
-                itemsOrdered[i] = toOrder[i];
-            }
+            System.arraycopy(toOrder, 0, itemsOrdered, 0, toOrder.length);
         }
     }
 
@@ -60,8 +56,8 @@ public class CreateOrder
         outStream.println("Original Request: " + originalRequest.getFurnitureType() + "," + originalRequest.getNumberItems());
         outStream.println();
         outStream.println("Items Ordered");
-        for (int i = 0; i < this.itemsOrdered.length; i++) {
-            outStream.println("ID: " + this.itemsOrdered[i]);
+        for (String s : this.itemsOrdered) {
+            outStream.println("ID: " + s);
         }
         outStream.println();
         outStream.println("Total Price: " + this.totalPrice);
@@ -73,9 +69,9 @@ public class CreateOrder
         if(prices.size() >= 1){
             lowest = prices.get(0);
         }
-        for(int i = 0; i < prices.size(); i++){
-            if(prices.get(i) <= lowest){
-                lowest = prices.get(i);
+        for (Integer price : prices) {
+            if (price <= lowest) {
+                lowest = price;
             }
         }
         prices.clear();
@@ -125,13 +121,7 @@ public class CreateOrder
                         prices.add(totalPrice2);
                         return;
                     }
-
-                    //if(used){
                     chairPrice(totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount);
-                    //}
-                    //else{
-                        //chairPrice(priceTotal, alreadyHit2, type, number, lCount, aCount, sCount, cCount);
-                    //}
                 }
             }
         }
