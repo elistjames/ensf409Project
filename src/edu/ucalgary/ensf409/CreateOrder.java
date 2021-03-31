@@ -61,6 +61,46 @@ public class CreateOrder
         }
         outStream.println();
         outStream.println("Total Price: " + this.totalPrice);
+        outStream.close();
+    }
+    public void generateRecommendation() {
+        outStream.println("Original request cannot be completed due to current inventory");
+        outStream.println();
+        outStream.println("Original Request: " + originalRequest.getFurnitureType() + "," + originalRequest.getNumberItems());
+        outStream.println();
+        outStream.println("To complete your order please contact the following UofC approved suppliers: ");
+        outStream.println(suppliersOf(this.originalRequest.getFurnitureCategory(), this.originalRequest.getFurnitureType()));
+    }
+
+    public String suppliersOf(String category, String type) {
+        ArrayList<String> suppliers = new ArrayList<String>();
+        String toRet = "";
+        if(category.equals("Chair")) {
+            for (int i = 0; i < this.db.getChairs().length; i++) {
+                if (this.db.getChairs()[i].getType().equals(type)) {
+                    for(int j = 0; j < this.db.getManufacturers().length; j++) {
+                        if(this.db.getChairs()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
+                            if(!suppliers.contains(this.db.getManufacturers()[j].getName())) {
+                                suppliers.add(this.db.getManufacturers()[j].getName());
+                            }
+                        }
+                    }
+                }
+            }
+        }else if (category.equals("Desk")) {
+            for (int i = 0; i < this.db.getDesk().length; i++) {
+                if (this.db.getDesk()[i].getType().equals(type)) {
+                    for(int j = 0; j < this.db.getManufacturers().length; j++) {
+                        if(this.db.getDesk()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
+                            if(!suppliers.contains(this.db.getManufacturers()[j].getName())) {
+                                suppliers.add(this.db.getManufacturers()[j].getName());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return toRet;
     }
 
 
