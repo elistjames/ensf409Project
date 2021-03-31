@@ -1,8 +1,5 @@
 package edu.ucalgary.ensf409;
 
-/**
- *
- */
 public class Chair
 {
     private String id;
@@ -16,17 +13,19 @@ public class Chair
 
     /**
      *
-     * @param id
-     * @param type
-     * @param legs
-     * @param arms
-     * @param seat
-     * @param cushion
-     * @param price
-     * @param manuId
+     * @param id - receives a String from "id" column in Chair table
+     * @param type - receives a String from "type" column in Chair table
+     * @param legs - receives a String from "legs" column in Chair table
+     * @param arms - receives a String from "arms" column in Chair table
+     * @param seat - receives a String from "seat" column in Chair table
+     * @param cushion - receives a String from "cushion" column in Chair table
+     * @param price - receives an int from "price" column in Chair table
+     * @param manuId - receives an String from "manu" column in Chair table
      */
+
     public Chair(String id, String type, String legs, String arms, String seat, String cushion, int price, String manuId)
     {
+
         this.id = id;
         this.type = type;
         this.legs = legs;
@@ -39,7 +38,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.id
      */
     public String getId()
     {
@@ -48,7 +47,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.type
      */
     public String getType()
     {
@@ -57,7 +56,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.legs
      */
     public String getLegs()
     {
@@ -66,7 +65,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.arms
      */
     public String getArms()
     {
@@ -75,7 +74,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.seat
      */
     public String getSeat()
     {
@@ -84,7 +83,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.cushion
      */
     public String getCushion()
     {
@@ -93,7 +92,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.price
      */
     public int getPrice()
     {
@@ -102,7 +101,7 @@ public class Chair
 
     /**
      *
-     * @return
+     * @return - String data member this.manuId
      */
     public String getManuId()
     {
@@ -111,7 +110,7 @@ public class Chair
 
     /**
      *
-     * @param id
+     * @param id - set String data member this.id
      */
     public void setId(String id)
     {
@@ -120,7 +119,7 @@ public class Chair
 
     /**
      *
-     * @param type
+     * @param type - set String data member this.type
      */
     public void setType(String type)
     {
@@ -129,7 +128,7 @@ public class Chair
 
     /**
      *
-     * @param legs
+     * @param legs - set String data member this.legs
      */
     public void setLegs(String legs)
     {
@@ -138,7 +137,7 @@ public class Chair
 
     /**
      *
-     * @param arms
+     * @param arms - set String data member this.arms
      */
     public void setArms(String arms)
     {
@@ -147,7 +146,7 @@ public class Chair
 
     /**
      *
-     * @param seat
+     * @param seat - set String data member this.seat
      */
     public void setSeat(String seat)
     {
@@ -156,7 +155,7 @@ public class Chair
 
     /**
      *
-     * @param cushion
+     * @param cushion - set String data member this.cushion
      */
     public void setCushion(String cushion)
     {
@@ -165,7 +164,7 @@ public class Chair
 
     /**
      *
-     * @param price
+     * @param price - set String data member this.price
      */
     public void setPrice(int price)
     {
@@ -174,7 +173,7 @@ public class Chair
 
     /**
      *
-     * @param manuId
+     * @param manuId - set String data member this.manuId
      */
     public void setManuId(String manuId)
     {

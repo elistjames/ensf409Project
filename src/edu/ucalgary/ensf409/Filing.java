@@ -1,8 +1,5 @@
 package edu.ucalgary.ensf409;
 
-/**
- *
- */
 public class Filing
 {
     private String id;
@@ -36,7 +33,7 @@ public class Filing
 
     /**
      *
-     * @return
+     * @return - String data member this.id
      */
     public String getId()
     {
@@ -45,7 +42,7 @@ public class Filing
 
     /**
      *
-     * @return
+     * @return - String data member this.type
      */
     public String getType()
     {
@@ -54,7 +51,7 @@ public class Filing
 
     /**
      *
-     * @return
+     * @return - String data member this.rails
      */
     public String getRails()
     {
@@ -63,7 +60,7 @@ public class Filing
 
     /**
      *
-     * @return
+     * @return - String data member this.drawers
      */
     public String getDrawers()
     {
@@ -72,13 +69,13 @@ public class Filing
 
     /**
      *
-     * @return
+     * @return - String data member this.cabinet
      */
     public String getCabinet() { return this.cabinet; }
 
     /**
      *
-     * @return
+     * @return - int data member this.price
      */
     public int getPrice()
     {
@@ -87,49 +84,49 @@ public class Filing
 
     /**
      *
-     * @return
+     * @return - String data member this.manuId
      */
     public String getManuId() { return this.manuId; }
 
     /**
      *
-     * @param id
+     * @param id - set String data member this.id
      */
     public void setId(String id){this.id = id;}
 
     /**
      *
-     * @param type
+     * @param type - set String data member this.type
      */
     public void setType(String type){this.type = type;}
 
     /**
      *
-     * @param rails
+     * @param rails - set String data member this.rails
      */
     public void setRails(String rails){this.rails = rails;}
 
     /**
      *
-     * @param drawers
+     * @param drawers - set String data member this.drawers
      */
     public void setDrawers(String drawers){this.drawers = drawers;}
 
     /**
      *
-     * @param cabinet
+     * @param cabinet - set String data member this.cabinet
      */
     public void setCabinet(String cabinet){this.cabinet = cabinet;}
 
     /**
      *
-     * @param price
+     * @param price - set int data member this.price
      */
     public void setPrice(int price){this.price = price;}
 
     /**
      *
-     * @param manuId
+     * @param manuId - set String data member this.manuId
      */
     public void setManuId(String manuId){this.manuId = manuId;}
 }
