@@ -135,6 +135,17 @@ public class CreateOrder
         }
     }
 
+    /**
+     *
+     * @param table
+     * @param priceTotal
+     * @param alreadyHit
+     * @param type
+     * @param number
+     * @param legs
+     * @param tops
+     * @param drawers
+     */
     public void deskPrice(Desk table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int legs, int tops, int drawers) {
         int totalPrice2 = priceTotal;
@@ -166,6 +177,17 @@ public class CreateOrder
         }
     }
 
+    /**
+     *
+     * @param table
+     * @param priceTotal
+     * @param alreadyHit
+     * @param type
+     * @param number
+     * @param rails
+     * @param drawers
+     * @param cabinets
+     */
     public void filingPrice(Filing table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                             int rails, int drawers, int cabinets) {
         int totalPrice2 = priceTotal;
@@ -197,6 +219,16 @@ public class CreateOrder
         }
     }
 
+    /**
+     *
+     * @param table
+     * @param priceTotal
+     * @param alreadyHit
+     * @param type
+     * @param number
+     * @param bases
+     * @param lightBulbs
+     */
     public void lampPrice(Lamp table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int bases, int lightBulbs) {
         int totalPrice2 = priceTotal;
