@@ -137,5 +137,11 @@ public class Desk
      */
     public void setManuId(String manuId){this.manuId = manuId;}
 
+    public void setAllpieces(String s){
+        this.legs = s;
+        this.top = s;
+        this.drawer = s;
+    }
+
 
 }

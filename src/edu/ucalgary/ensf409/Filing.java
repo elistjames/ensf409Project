@@ -129,4 +129,10 @@ public class Filing
      * @param manuId - set String data member this.manuId
      */
     public void setManuId(String manuId){this.manuId = manuId;}
+
+    public void setAllpieces(String s){
+        this.rails = s;
+        this.drawers = s;
+        this.cabinet = s;
+    }
 }

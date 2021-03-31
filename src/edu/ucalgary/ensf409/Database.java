@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 import java.sql.*;
-
+import java.util.ArrayList;
 public class Database {
 
     public final String DBURL; //store the database url information
@@ -305,6 +305,50 @@ public class Database {
             ex.printStackTrace();
         }
         return rowCount;
+    }
+
+    public boolean indexWasUsed(ArrayList<Integer> itemIndexes, int index){
+        boolean used = false;
+        for(int i = 0; i < itemIndexes.size(); i++){
+            if(index == itemIndexes.get(i)){
+                used = true;
+                break;
+            }
+        }
+        return used;
+    }
+
+    public void updateTable(ArrayList<Integer> itemIndexes, int indicator){
+        switch(indicator){
+            case 0:
+                for(int i = 0; i < desks.length; i++){
+                    if(indexWasUsed(itemIndexes, i)){
+                        desks[i].setAllpieces("N");
+                    }
+                }
+                break;
+            case 1:
+                for(int i = 0; i < chairs.length; i++){
+                    if(indexWasUsed(itemIndexes, i)){
+                        chairs[i].setAllpieces("N");
+                    }
+                }
+                break;
+            case 2:
+                for(int i = 0; i < filings.length; i++){
+                    if(indexWasUsed(itemIndexes, i)){
+                        filings[i].setAllpieces("N");
+                    }
+                }
+                break;
+            default:
+                for(int i = 0; i < lamps.length; i++){
+                    if(indexWasUsed(itemIndexes, i)){
+                        lamps[i].setAllpieces("N");
+                    }
+                }
+                break;
+        }
     }
 
     public Chair[] getChairs(){

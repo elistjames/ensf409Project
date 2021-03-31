@@ -127,32 +127,80 @@ public class Order
 
             db.initializeConnection();
             db.updateLocal();
-            ArrayList<ArrayList<Integer>> already = new ArrayList<ArrayList<Integer>>();
+            ArrayList<Integer> already = new ArrayList<Integer>();
             switch(order.getFurnitureCategory()){
-
                 case "desk":
                     co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
+                    int lowestDesk = co.getLowestPrice();
+                    if(lowestDesk != 0){
+                        co.setTotalPrice(lowestDesk);
+                        ArrayList<Integer> orderedItems = co.getLowestCombination();
+                        String[] deskIds = co.makeIdArray(orderedItems, 0);
+                        System.out.println("The price found to make this item is: $" + lowestDesk+".00");
+                        db.updateTable(orderedItems, 0);
+                        co.setItemsOrdered(deskIds);
+                        co.generateOrder();
+                        co.clearLists();
+                    }
+                    else{
+                        System.out.println("Impossible to make this order due to lack of inventory");
+                        co.generateRecommendation();
+                    }
                     break;
                 case "chair":
                     co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
+                    int lowestChair = co.getLowestPrice();
+                    if(lowestChair != 0){
+                        co.setTotalPrice(lowestChair);
+                        ArrayList<Integer> orderedItems = co.getLowestCombination();
+                        String[] chairIds = co.makeIdArray(orderedItems, 1);
+                        System.out.println("The price found to make this item is: $" + lowestChair+".00");
+                        db.updateTable(orderedItems, 1);
+                        co.setItemsOrdered(chairIds);
+                        co.generateOrder();
+                        co.clearLists();
+                    }
+                    else{
+                        System.out.println("Impossible to make this order due to lack of inventory");
+                        co.generateRecommendation();
+                    }
                     break;
                 case "filing":
                     co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
+                    int lowestFiling = co.getLowestPrice();
+                    if(lowestFiling != 0){
+                        co.setTotalPrice(lowestFiling);
+                        ArrayList<Integer> orderedItems = co.getLowestCombination();
+                        String[] filingIds = co.makeIdArray(orderedItems, 2);
+                        System.out.println("The price found to make this item is: $" + lowestFiling+".00");
+                        db.updateTable(orderedItems, 2);
+                        co.setItemsOrdered(filingIds);
+                        co.generateOrder();
+                        co.clearLists();
+                    }
+                    else{
+                        System.out.println("Impossible to make this order due to lack of inventory");
+                        co.generateRecommendation();
+                    }
                     break;
                 case "lamp":
                     co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0);
+                    int lowestLamp = co.getLowestPrice();
+                    if(lowestLamp != 0){
+                        co.setTotalPrice(lowestLamp);
+                        ArrayList<Integer> orderedItems = co.getLowestCombination();
+                        String[] lampIds = co.makeIdArray(orderedItems, 3);
+                        System.out.println("The price found to make this item is: $" + lowestLamp+".00");
+                        db.updateTable(orderedItems, 3);
+                        co.setItemsOrdered(lampIds);
+                        co.generateOrder();
+                        co.clearLists();
+                    }
+                    else{
+                        System.out.println("Impossible to make this order due to lack of inventory");
+                        co.generateRecommendation();
+                    }
                     break;
-            }
-            System.out.println();
-            int lowest = co.getLowestPrice();
-            if(lowest != 0){
-                co.setTotalPrice(lowest);
-                co.generateOrder();
-                System.out.println("The price found to make this item is: $" + lowest+".00");
-            }
-            else{
-                System.out.println("Impossible to make this order due to lack of inventory");
-                co.generateRecommendation();
             }
 
             boolean valid = true;

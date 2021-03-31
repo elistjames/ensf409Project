@@ -179,4 +179,11 @@ public class Chair
     {
         this.manuId = manuId;
     }
+
+    public void setAllpieces(String s){
+        this.legs = s;
+        this.arms = s;
+        this.seat = s;
+        this.cushion = s;
+    }
 }

@@ -11,6 +11,8 @@ public class CreateOrder
     private String[] itemsOrdered;
     private int totalPrice;
     Database db;
+    private ArrayList<ArrayList<Integer>> combinations = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<Integer> prices = new ArrayList<Integer>();
 
     CreateOrder(Order request, int orderNumber, Database db)
     {
@@ -133,7 +135,6 @@ public class CreateOrder
         return toRet;
     }
 
-
     public int getLowestPrice(){
         int lowest = 0;
         if(prices.size() >= 1){
@@ -144,25 +145,55 @@ public class CreateOrder
                 lowest = price;
             }
         }
-        prices.clear();
         return lowest;
     }
 
-    public ArrayList<Integer> updateTable(int lowestIndex){
-        return combinations.get(lowestIndex);
+    public ArrayList<Integer> getLowestCombination(){
+        return combinations.get(prices.indexOf(this.totalPrice));
     }
 
-    public boolean newEvent(ArrayList<ArrayList<Integer>> arr, int index){
+    public void clearLists(){
+        prices.clear();
+        combinations.clear();
+    }
+
+    public String[] makeIdArray(ArrayList<Integer> itemIndexes, int indicator){
+        String ids[] = new String[itemIndexes.size()];
+        switch(indicator){
+            case 0:
+                for(int i = 0; i < itemIndexes.size(); i++){
+                    ids[i] = db.getDesk()[itemIndexes.get(i)].getId();
+                }
+                break;
+            case 1:
+                for(int i = 0; i < itemIndexes.size(); i++){
+                    ids[i] = db.getChairs()[itemIndexes.get(i)].getId();
+                }
+                break;
+            case 2:
+                for(int i = 0; i < itemIndexes.size(); i++){
+                    ids[i] = db.getFilings()[itemIndexes.get(i)].getId();
+                }
+                break;
+            default:
+                for(int i = 0; i < itemIndexes.size(); i++){
+                    ids[i] = db.getLamps()[itemIndexes.get(i)].getId();
+                }
+                break;
+        }
+        return ids;
+    }
+
+    public boolean newEvent(ArrayList<Integer> arr, int index){
         boolean didNotHappen = true;
         for(int j = 0; j < arr.size(); j++){
-            if(index == arr.get(j).get(0)){
+            if(index == arr.get(j)){
                 didNotHappen = false;
             }
         }
         return didNotHappen;
     }
-    ArrayList<ArrayList<Integer>> combinations = new ArrayList<ArrayList<Integer>>();
-    ArrayList<Integer> prices = new ArrayList<Integer>();
+
 
     /**
      * the chair price
@@ -175,7 +206,7 @@ public class CreateOrder
      * @param seats
      * @param cushions
      */
-    public void chairPrice(Chair table[], int priceTotal, ArrayList<ArrayList<Integer>>alreadyHit, String type, int number,
+    public void chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                            int legs, int arms, int seats, int cushions) {
         int totalPrice2 = priceTotal;
         for (int i = 0; i < table.length; i++) {
@@ -183,11 +214,10 @@ public class CreateOrder
             int aCount = arms;
             int sCount = seats;
             int cCount = cushions;
-            ArrayList<ArrayList<Integer>>alreadyHit2 = new ArrayList<ArrayList<Integer>>(alreadyHit);
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
             if(table[i].getType().equals(type)){
                 if(newEvent(alreadyHit, i)){
-                    alreadyHit2.add(new ArrayList<Integer>());
-                    alreadyHit2.get(alreadyHit2.size()-1).add()
+                    alreadyHit2.add(i);
                     if(db.getChairs()[i].getLegs().equals("Y") && legs < number){
                         lCount = legs+1;
                     }
@@ -246,6 +276,7 @@ public class CreateOrder
                     totalPrice2 = priceTotal + table[i].getPrice();
                     if(lCount+tCount+dCount == number*3){
                         prices.add(totalPrice2);
+                        combinations.add(alreadyHit2);
                         return;
                     }
                     deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount);
@@ -288,6 +319,7 @@ public class CreateOrder
                     totalPrice2 = priceTotal + table[i].getPrice();
                     if(rCount+dCount+cCount == number*3){
                         prices.add(totalPrice2);
+                        combinations.add(alreadyHit2);
                         return;
                     }
                     filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount);
@@ -326,6 +358,7 @@ public class CreateOrder
                     totalPrice2 = priceTotal + table[i].getPrice();
                     if(bCount+lCount == number*3){
                         prices.add(totalPrice2);
+                        combinations.add(alreadyHit2);
                         return;
                     }
                     lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount);

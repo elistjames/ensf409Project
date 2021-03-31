@@ -114,4 +114,9 @@ public class Lamp
      * @param manuId
      */
     public void setManuId(String manuId){this.manuId = manuId;}
+
+    public void setAllpieces(String s){
+        this.base = s;
+        this.bulb = s;
+    }
 }
