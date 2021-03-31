@@ -124,7 +124,6 @@ public class CreateOrder
         return combinations.get(lowestIndex);
     }
 
-
     public boolean newEvent(ArrayList<ArrayList<Integer>> arr, int index){
         boolean didNotHappen = true;
         for(int j = 0; j < arr.size(); j++){
@@ -159,7 +158,8 @@ public class CreateOrder
             ArrayList<ArrayList<Integer>>alreadyHit2 = new ArrayList<ArrayList<Integer>>(alreadyHit);
             if(table[i].getType().equals(type)){
                 if(newEvent(alreadyHit, i)){
-                    alreadyHit2.add(i);
+                    alreadyHit2.add(new ArrayList<Integer>());
+                    alreadyHit2.get(alreadyHit2.size()-1).add()
                     if(db.getChairs()[i].getLegs().equals("Y") && legs < number){
                         lCount = legs+1;
                     }
