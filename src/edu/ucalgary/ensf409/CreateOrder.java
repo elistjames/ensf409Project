@@ -1,6 +1,6 @@
 package edu.ucalgary.ensf409;
 
-import java.io.*;
+import java.io.*;import java.util.ArrayList;
 
 public class CreateOrder {
     private Order originalRequest;
@@ -8,11 +8,16 @@ public class CreateOrder {
     private String[] itemsOrdered;
     private String totalPrice;
 
-    CreateOrder() {
-        this.originalRequest = null;
-        try {
-            this.outStream = new PrintWriter(new File("Order.txt"));
-        }catch (IOException e) {
+    CreateOrder(Order request, int orderNumber, Database db)
+    {
+        this.originalRequest = request;
+        this.orderID = orderNumber;
+        try
+        {
+            this.outStream = new PrintWriter(new File("Order" + Integer.toString(orderID) + ".txt"));
+        }
+        catch (IOException e)
+        {
             System.out.println("error opening output file");
             System.exit(1);
         }
@@ -31,6 +36,7 @@ public class CreateOrder {
             }
         }
     }
+
     public String[] getItemsOrdered() {
         return this.itemsOrdered;
     }
@@ -47,10 +53,10 @@ public class CreateOrder {
         outStream.println("Contact:");
         outStream.println("Date:");
         outStream.println();
-        outStream.println("Original Request: " + originalRequest.getType() + "," + originalRequest.getAmount());
+        outStream.println("Original Request: " + originalRequest.getFurnitureType() + "," + originalRequest.getNumberItems());
         outStream.println();
         outStream.println("Items Ordered");
-        for(int i = 0; i < this.itemsOrdered.length; i++) {
+        for (int i = 0; i < this.itemsOrdered.length; i++) {
             outStream.println("ID: " + this.itemsOrdered[i]);
         }
         outStream.println();
