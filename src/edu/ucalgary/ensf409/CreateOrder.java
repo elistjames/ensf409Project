@@ -2,7 +2,8 @@ package edu.ucalgary.ensf409;
 
 import java.io.*;import java.util.ArrayList;
 
-public class CreateOrder {
+public class CreateOrder
+{
     private Order originalRequest;
     private PrintWriter outStream;
     private String[] itemsOrdered;
