@@ -72,6 +72,7 @@ public class CreateOrder
         outStream.println();
         outStream.println("To complete your order please contact the following UofC approved suppliers: ");
         outStream.println(suppliersOf(this.originalRequest.getFurnitureCategory(), this.originalRequest.getFurnitureType()));
+        outStream.close();
     }
 
     public String suppliersOf(String category, String type) {
@@ -92,8 +93,20 @@ public class CreateOrder
         }else if (category.equals("Desk")) {
             for (int i = 0; i < this.db.getDesk().length; i++) {
                 if (this.db.getDesk()[i].getType().equals(type)) {
+                    for (int j = 0; j < this.db.getManufacturers().length; j++) {
+                        if (this.db.getDesk()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
+                            if (!suppliers.contains(this.db.getManufacturers()[j].getName())) {
+                                suppliers.add(this.db.getManufacturers()[j].getName());
+                            }
+                        }
+                    }
+                }
+            }
+        } else if(category.equals("Filing")){
+            for (int i = 0; i < this.db.getFilings().length; i++) {
+                if (this.db.getFilings()[i].getType().equals(type)) {
                     for(int j = 0; j < this.db.getManufacturers().length; j++) {
-                        if(this.db.getDesk()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
+                        if(this.db.getFilings()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
                             if(!suppliers.contains(this.db.getManufacturers()[j].getName())) {
                                 suppliers.add(this.db.getManufacturers()[j].getName());
                             }
@@ -101,6 +114,21 @@ public class CreateOrder
                     }
                 }
             }
+        } else if (category.equals("Lamp")) {
+            for (int i = 0; i < this.db.getLamps().length; i++) {
+                if (this.db.getLamps()[i].getType().equals(type)) {
+                    for(int j = 0; j < this.db.getManufacturers().length; j++) {
+                        if(this.db.getLamps()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
+                            if(!suppliers.contains(this.db.getManufacturers()[j].getName())) {
+                                suppliers.add(this.db.getManufacturers()[j].getName());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < suppliers.size(); i++) {
+            toRet = toRet.concat(suppliers.get(i) + "\n");
         }
         return toRet;
     }
