@@ -94,7 +94,8 @@ public class Order
                     System.out.println("Please enter a type: ");
                     t = input2.nextLine().trim();
                     for(int i = 0; i < t.length(); i++){
-                        if((Character.toLowerCase(t.charAt(i)) > 64 && Character.toLowerCase(t.charAt(i)) < 91)|| (Character.toLowerCase(t.charAt(i)) > 96 && Character.toLowerCase(t.charAt(i)) < 123)){
+                        if((Character.toLowerCase(t.charAt(i)) > 64 && Character.toLowerCase(t.charAt(i)) < 91)||
+                                (Character.toLowerCase(t.charAt(i)) > 96 && Character.toLowerCase(t.charAt(i)) < 123)){
                             correctType = true;
                         }
                     }
@@ -134,14 +135,15 @@ public class Order
             ArrayList<Integer> already = new ArrayList<Integer>(); // create null arraylist to pass into Price search algorithms.
             switch(order.getFurnitureCategory()){
                 case "desk": //If category is desk
-                    co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
-                    int lowestDesk = co.getLowestPrice();
-                    if(lowestDesk != 0){
-                        co.setTotalPrice(lowestDesk);
-                        ArrayList<Integer> orderedItems = co.getLowestCombination();
-                        String[] deskIds = co.makeIdArray(orderedItems, 0);
+                    co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                            0, 0, 0); // Find all combinations of desk order
+                    int lowestDesk = co.getLowestPrice(); // get lowest price of all combinations
+                    if(lowestDesk != 0){ // if a combination was found
+                        co.setTotalPrice(lowestDesk); // set lowest price found to the member variable totalPrice in CreateOrder
+                        ArrayList<Integer> orderedItems = co.getLowestCombination(); // get the indexed of the combination to make the lowest price
+                        String[] deskIds = co.makeIdArray(orderedItems, 0); // Get the Id's of the desks corresponding to the combined indexes
                         System.out.println("The price found to make this item is: $" + lowestDesk+".00");
-                        db.updateTable(orderedItems, 0);
+                        db.updateTable(orderedItems, 0); // update the desk table
                         co.setItemsOrdered(deskIds);
                         co.generateOrder();
                         co.clearLists();
@@ -152,7 +154,8 @@ public class Order
                     }
                     break;
                 case "chair": // if the category is chair
-                    co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
+                    co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                            0, 0, 0, 0); // Find all combinations of chair order
                     int lowestChair = co.getLowestPrice();
                     if(lowestChair != 0){
                         co.setTotalPrice(lowestChair);
@@ -170,7 +173,8 @@ public class Order
                     }
                     break;
                 case "filing": // if category is filing
-                    co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
+                    co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                            0, 0, 0); // find all combinations to make filing order
                     int lowestFiling = co.getLowestPrice();
                     if(lowestFiling != 0){
                         co.setTotalPrice(lowestFiling);
@@ -188,7 +192,8 @@ public class Order
                     }
                     break;
                 case "lamp": //if category is lamp
-                    co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0);
+                    co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                            0, 0); // Find all combinations to make Lamp order
                     int lowestLamp = co.getLowestPrice();
                     if(lowestLamp != 0){
                         co.setTotalPrice(lowestLamp);

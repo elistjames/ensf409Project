@@ -198,7 +198,7 @@ public class CreateOrder
     /**
      * chairPrice recursively searches through the chair array to find all combinations to make the desired order for the
      * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2d ArrayList called
-     * categories. It also puts the price sum of that found combination into an ArrayList called prices.
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
      * @param table // array of chair objects, replicating the chair table in the database
      * @param priceTotal // price of combined items
      * @param alreadyHit // stores the indexes of the chairs already checked
@@ -254,7 +254,9 @@ public class CreateOrder
     }
 
     /**
-     *
+     * deskPrice recursively searches through the desks array to find all combinations to make the desired order for the
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2D ArrayList called
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
      * @param table
      * @param priceTotal
      * @param alreadyHit
@@ -297,7 +299,9 @@ public class CreateOrder
     }
 
     /**
-     *
+     * filingPrice recursively searches through the filing array to find all combinations to make the desired order for the
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2D ArrayList called
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
      * @param table
      * @param priceTotal
      * @param alreadyHit
@@ -340,7 +344,9 @@ public class CreateOrder
     }
 
     /**
-     *
+     * lampPrice recursively searches through the lamps array to find all combinations to make the desired order for the
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2D ArrayList called
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
      * @param table
      * @param priceTotal
      * @param alreadyHit
