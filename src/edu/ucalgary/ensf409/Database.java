@@ -1,6 +1,11 @@
 package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.ArrayList;
+
+/*
+This class contains data for Database object. It stores the attributes used for accessing the SQL database, as well as local copies of the data in arrays.
+It contains methods which facilitate the accessing and updating of the database. It also includes the various getter methods for the private data members.
+ */
 public class Database {
 
     public final String DBURL; //store the database url information
@@ -11,70 +16,39 @@ public class Database {
     private Filing[] filings;
     private Lamp[] lamps;
     private Manufacturer[] manufacturers;
-
     private Connection dbConnect;
     private ResultSet results;
 
+    /**
+     Constructor for Database object
+     @param DBURL Url of database
+     @param USERNAME Access username
+     @param PASSWORD Access password
+     */
     public Database(String DBURL, String USERNAME, String PASSWORD) {
-        /**
-         * @param DBURL,USERNAME,PASSWORD.
-         *             Requires:
-         *             DBURL - stores the database url information
-         *             USERNAME - stores the user's account username
-         *             PASSWORD - stores the user's account password.
-         *             Does not use database but assists in connecting to SQL database
-         *
-         * @return returns nothing, since 3 arg constructor
-         */
 
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
     }
-    public String getDburl()
-    {
-        /**
-         * Does not use database
-         * @return no params, returns String representation stored Data Base URL
-         */
 
-        return this.DBURL;
-    }
-    public String getUserName()
-    {
-        /**
-         * Does not use database
-         * @return no params, returns String representation of stored User Name
-         */
-
-        return this.USERNAME;
-    }
-    public String getPassword()
-    {
-        /**
-         * Does not use database
-         * @return no params, returns String representation of stored Password
-         */
-
-        return this.PASSWORD;
-    }
-    public void initializeConnection()
-    {
-        /**
-         *  method tries to make a connection with the database URL and if the connection is not made,
-         *  then the SQL exception is caught.
-         */
-
-        try
-        {
+    /**
+     *  method tries to make a connection with the database URL and if the connection is not made,
+     *  then the SQL exception is caught.
+     */
+    public void initializeConnection() {
+        try {
             dbConnect = DriverManager.getConnection(this.getDburl(), this.getUserName(),this.getPassword());
         }
-        catch (SQLException ex)
-        {
+        catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     This method creates the appropriate sized arrays for each table. It then calls the respective update method to populate the arrays.
+     @param table The table name from the database
+     */
     public void pullData(String table){
         int rows = countRows(table);
 
@@ -102,6 +76,9 @@ public class Database {
         }
     }
 
+    /**
+     This method populates the chairs array using the updated data contained within the database.
+     */
     public void updateChairs(){
         ResultSet result;
         int counter = 0;
@@ -109,17 +86,20 @@ public class Database {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM CHAIR");
             while(result.next()) {
-            Chair temp = new Chair(result.getString("ID"), result.getString("Type"), result.getString ("Legs"), result.getString ("Arms"), result.getString ("Seat"),result.getString ("Cushion"), result.getInt ("Price"), result.getString ("ManuID"));
-            chairs[counter] = temp;
-            counter++;
+                Chair temp = new Chair(result.getString("ID"), result.getString("Type"), result.getString ("Legs"), result.getString ("Arms"), result.getString ("Seat"),result.getString ("Cushion"), result.getInt ("Price"), result.getString ("ManuID"));
+                chairs[counter] = temp;
+                counter++;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     This method populates the desks array using the updated data contained within the database.
+     */
     public void updateDesks(){
-    ResultSet result;
+        ResultSet result;
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -134,6 +114,9 @@ public class Database {
         }
     }
 
+    /**
+     This method populates the filings array using the updated data contained within the database.
+     */
     public void updateFiling(){
         ResultSet result;
         int counter = 0;
@@ -150,6 +133,9 @@ public class Database {
         }
     }
 
+    /**
+     This method populates the lamps array using the updated data contained within the database.
+     */
     public void updateLamp(){
         ResultSet result;
         int counter = 0;
@@ -166,6 +152,9 @@ public class Database {
         }
     }
 
+    /**
+     This method populates the manufacturers array using the updated data contained within the database.
+     */
     public void updateMan(){
         ResultSet result;
         int counter = 0;
@@ -180,34 +169,40 @@ public class Database {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        }
+    }
 
-        public void sendChair(){
-            try {
-                Statement statement = dbConnect.createStatement();
-                statement.executeUpdate("TRUNCATE CHAIR");
-                String query;
-                for(int i = 0; i < chairs.length; i++){
-                    query = "INSERT INTO CHAIR (ID,Type,Legs,Arms,Seat,Cushion,Price,ManuID) VALUES (?,?,?,?,?,?,?,?)";
-                    PreparedStatement myStmt = dbConnect.prepareStatement(query);
+    /**
+     This method updates the database with the data contained within the chairs array.
+     */
+    public void sendChair(){
+        try {
+            Statement statement = dbConnect.createStatement();
+            statement.executeUpdate("TRUNCATE CHAIR");
+            String query;
+            for(int i = 0; i < chairs.length; i++){
+                query = "INSERT INTO CHAIR (ID,Type,Legs,Arms,Seat,Cushion,Price,ManuID) VALUES (?,?,?,?,?,?,?,?)";
+                PreparedStatement myStmt = dbConnect.prepareStatement(query);
 
-                    myStmt.setString(1, chairs[i].getId());
-                    myStmt.setString(2, chairs[i].getType());
-                    myStmt.setString(3, chairs[i].getLegs());
-                    myStmt.setString(4, chairs[i].getArms());
-                    myStmt.setString(5, chairs[i].getSeat());
-                    myStmt.setString(6, chairs[i].getCushion());
-                    myStmt.setInt(7, chairs[i].getPrice());
-                    myStmt.setString(8, chairs[i].getManuId());
+                myStmt.setString(1, chairs[i].getId());
+                myStmt.setString(2, chairs[i].getType());
+                myStmt.setString(3, chairs[i].getLegs());
+                myStmt.setString(4, chairs[i].getArms());
+                myStmt.setString(5, chairs[i].getSeat());
+                myStmt.setString(6, chairs[i].getCushion());
+                myStmt.setInt(7, chairs[i].getPrice());
+                myStmt.setString(8, chairs[i].getManuId());
 
-                    myStmt.execute();
-                    myStmt.close();
-                }
-            } catch (SQLException e) {
-
+                myStmt.execute();
+                myStmt.close();
             }
-        }
+        } catch (SQLException e) {
 
+        }
+    }
+
+    /**
+     This method updates the database with the data contained within the desks array.
+     */
     public void sendDesk(){
         try {
             Statement statement = dbConnect.createStatement();
@@ -233,6 +228,9 @@ public class Database {
         }
     }
 
+    /**
+     This method updates the database with the data contained within the filings array.
+     */
     public void sendFiling(){
         try {
             Statement statement = dbConnect.createStatement();
@@ -258,6 +256,9 @@ public class Database {
         }
     }
 
+    /**
+     This method updates the database with the data contained within the lamps array.
+     */
     public void sendLamp(){
         try {
             Statement statement = dbConnect.createStatement();
@@ -282,6 +283,9 @@ public class Database {
         }
     }
 
+    /**
+     This pulls all the data from the database and updates the local arrays with the table objects.
+     */
     public void updateLocal(){
 
         pullData("CHAIR");
@@ -292,6 +296,21 @@ public class Database {
 
     }
 
+    /**
+     This pushes all the local data from the Java arrays to the database at once.
+     */
+    public void pushLocal(){
+        sendChair();
+        sendDesk();
+        sendFiling();
+        sendLamp();
+    }
+
+    /**
+     This method counts the rows of the specified table located in the database.
+     @param table The table name from the database
+     @return The number of rows in the table.
+     */
     public int countRows(String table){
         int rowCount = 0;
         ResultSet result;
@@ -351,30 +370,63 @@ public class Database {
         }
     }
 
+    /**
+     @return returns String array representation of stored chairs
+     */
     public Chair[] getChairs(){
         return this.chairs;
-}
+    }
 
+    /**
+     @return returns String array representation of stored desks
+     */
     public Desk[] getDesk(){
         return this.desks;
     }
 
+    /**
+     @return returns String array representation of stored filings
+     */
     public Filing[] getFilings(){
         return this.filings;
     }
 
+    /**
+     @return returns String array representation of stored lamps
+     */
     public Lamp[] getLamps(){
         return this.lamps;
     }
 
+    /**
+     @return returns String array representation of stored manufacturers
+     */
     public Manufacturer[] getManufacturers(){
         return this.manufacturers;
     }
-    public void pushLocal(){
-        sendChair();
-        sendDesk();
-        sendFiling();
-        sendLamp();
+
+    /**
+     Does not use database
+     @return returns String representation stored Data Base URL
+     */
+    public String getDburl() {
+        return this.DBURL;
+    }
+
+    /**
+     Does not use database
+     @return returns String representation of stored User Name
+     */
+    public String getUserName() {
+        return this.USERNAME;
+    }
+
+    /**
+     Does not use database
+     @return returns String representation of stored Password
+     */
+    public String getPassword() {
+        return this.PASSWORD;
     }
 }
 

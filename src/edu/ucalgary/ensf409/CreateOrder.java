@@ -57,14 +57,14 @@ public class CreateOrder
         outStream.println("Contact:");
         outStream.println("Date:");
         outStream.println();
-        outStream.println("Original Request: " + originalRequest.getFurnitureType() + "," + originalRequest.getNumberItems());
+        outStream.println("Original Request: " + originalRequest.getFurnitureType() +" "+ originalRequest.getFurnitureCategory()+ ", " + originalRequest.getNumberItems());
         outStream.println();
         outStream.println("Items Ordered");
         for (String s : this.itemsOrdered) {
             outStream.println("ID: " + s);
         }
         outStream.println();
-        outStream.println("Total Price: " + this.totalPrice);
+        outStream.println("Total Price: $" + this.totalPrice+".00");
         outStream.close();
     }
     public void generateRecommendation() {

@@ -1,10 +1,10 @@
 package edu.ucalgary.ensf409;
 
-/**
- *
+/*
+This class contains data for Lamp object. It stores the attributes for each column used in the Lamp table used in the database.
  */
-public class Lamp
-{
+
+public class Lamp {
     private String id;
     private String type;
     private String base;
@@ -31,90 +31,69 @@ public class Lamp
     }
 
     /**
-     *
      * @return - String data member from
      */
     public String getId() { return this.id; }
 
     /**
-     *
      * @return
      */
-    public String getType() {
-        return this.type;
-    }
+    public String getType() { return this.type; }
 
     /**
-     *
      * @return
      */
-    public String getBase() {
-        return this.base;
-    }
+    public String getBase() { return this.base; }
 
     /**
-     *
      * @return
      */
-    public String getBulb()
-    {
-        return this.bulb;
-    }
+    public String getBulb() { return this.bulb; }
 
     /**
-     *
      * @return
      */
-    public int getPrice()
-    {
-        return this.price;
-    }
+    public int getPrice() { return this.price; }
 
     /**
-     *
      * @return
      */
-    public String getManuId()
-    {
-        return this.manuId;
-    }
+    public String getManuId() { return this.manuId; }
 
     /**
-     *
      * @param id
      */
     public void setId(String id){this.id = id;}
 
     /**
-     *
      * @param type
      */
     public void setType(String type){this.type = type;}
 
     /**
-     *
      * @param base
      */
     public void setBase(String base){this.base = base;}
 
     /**
-     *
      * @param bulb
      */
     public void setBulb(String bulb){this.bulb = bulb;}
 
     /**
-     *
      * @param price
      */
     public void setPrice(int price){this.price = price;}
 
     /**
-     *
      * @param manuId
      */
     public void setManuId(String manuId){this.manuId = manuId;}
 
+    /**
+     * Sets all pieces with desired string
+     * @param s - data member to set pieces with
+     */
     public void setAllpieces(String s){
         this.base = s;
         this.bulb = s;

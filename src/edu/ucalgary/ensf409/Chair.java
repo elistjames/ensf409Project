@@ -1,7 +1,9 @@
 package edu.ucalgary.ensf409;
 
-public class Chair
-{
+/*
+This class contains data for Chair object. It stores the attributes for each column used in the Chair table used in the database.
+ */
+public class Chair {
     private String id;
     private String type;
     private String legs;
@@ -23,9 +25,7 @@ public class Chair
      * @param manuId - receives an String from "manu" column in Chair table
      */
 
-    public Chair(String id, String type, String legs, String arms, String seat, String cushion, int price, String manuId)
-    {
-
+    public Chair(String id, String type, String legs, String arms, String seat, String cushion, int price, String manuId) {
         this.id = id;
         this.type = type;
         this.legs = legs;
@@ -37,149 +37,89 @@ public class Chair
     }
 
     /**
-     *
      * @return - String data member this.id
      */
-    public String getId()
-    {
-        return this.id;
-    }
+    public String getId() { return this.id; }
 
     /**
-     *
      * @return - String data member this.type
      */
-    public String getType()
-    {
-        return this.type;
-    }
+    public String getType() { return this.type; }
 
     /**
-     *
      * @return - String data member this.legs
      */
-    public String getLegs()
-    {
-        return this.legs;
-    }
+    public String getLegs() { return this.legs; }
 
     /**
-     *
      * @return - String data member this.arms
      */
-    public String getArms()
-    {
-        return this.arms;
-    }
+    public String getArms() { return this.arms; }
 
     /**
-     *
      * @return - String data member this.seat
      */
-    public String getSeat()
-    {
-        return this.seat;
-    }
+    public String getSeat() { return this.seat; }
 
     /**
-     *
      * @return - String data member this.cushion
      */
-    public String getCushion()
-    {
-        return this.cushion;
-    }
+    public String getCushion() { return this.cushion; }
 
     /**
-     *
      * @return - String data member this.price
      */
-    public int getPrice()
-    {
-        return this.price;
-    }
+    public int getPrice() { return this.price; }
 
     /**
-     *
      * @return - String data member this.manuId
      */
-    public String getManuId()
-    {
-        return this.manuId;
-    }
+    public String getManuId() { return this.manuId; }
 
     /**
-     *
      * @param id - set String data member this.id
      */
-    public void setId(String id)
-    {
-        this.id = id;
-    }
+    public void setId(String id) { this.id = id; }
 
     /**
-     *
      * @param type - set String data member this.type
      */
-    public void setType(String type)
-    {
-        this.type = type;
-    }
+    public void setType(String type) { this.type = type; }
 
     /**
-     *
      * @param legs - set String data member this.legs
      */
-    public void setLegs(String legs)
-    {
-        this.legs = legs;
-    }
+    public void setLegs(String legs) { this.legs = legs; }
 
     /**
-     *
      * @param arms - set String data member this.arms
      */
-    public void setArms(String arms)
-    {
-        this.arms = arms;
-    }
+    public void setArms(String arms) { this.arms = arms; }
 
     /**
-     *
      * @param seat - set String data member this.seat
      */
-    public void setSeat(String seat)
-    {
-        this.seat = seat;
-    }
+    public void setSeat(String seat) { this.seat = seat; }
 
     /**
-     *
      * @param cushion - set String data member this.cushion
      */
-    public void setCushion(String cushion)
-    {
-        this.cushion = cushion;
-    }
+    public void setCushion(String cushion) { this.cushion = cushion; }
 
     /**
-     *
      * @param price - set String data member this.price
      */
-    public void setPrice(int price)
-    {
-        this.price = price;
-    }
+    public void setPrice(int price) { this.price = price; }
 
     /**
-     *
      * @param manuId - set String data member this.manuId
      */
-    public void setManuId(String manuId)
-    {
-        this.manuId = manuId;
-    }
+    public void setManuId(String manuId) { this.manuId = manuId; }
 
+    /**
+     * Sets all pieces with desired string
+     * @param s - data member to set pieces with
+     */
     public void setAllpieces(String s){
         this.legs = s;
         this.arms = s;

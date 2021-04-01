@@ -1,7 +1,10 @@
 package edu.ucalgary.ensf409;
 
-public class Desk
-{
+/*
+This class contains data for Desk object. It stores the attributes for each column used in the Desk table used in the database.
+ */
+
+public class Desk {
     private String id;
     private String type;
     private String legs;
@@ -20,8 +23,7 @@ public class Desk
      * @param price - receives a int from "price" column in Desk table
      * @param manuId - receives a String from "manuId" column in Desk table
      */
-    public Desk(String id, String type, String legs, String top, String drawer, int price, String manuId)
-    {
+    public Desk(String id, String type, String legs, String top, String drawer, int price, String manuId) {
 
         this.id = id;
         this.type = type;
@@ -33,115 +35,82 @@ public class Desk
     }
 
     /**
-     *
      * @return - String data member this.id
      */
-    public String getId()
-    {
-        return this.id;
-    }
+    public String getId() { return this.id; }
 
     /**
-     *
      * @return - String data member this.type
      */
-    public String getType()
-    {
-        return this.type;
-    }
+    public String getType() { return this.type; }
 
     /**
-     *
      * @return - String data member this.legs
      */
-    public String getLegs()
-    {
-        return this.legs;
-    }
+    public String getLegs() { return this.legs; }
 
     /**
-     *
      * @return - String data member this.top
      */
-    public String getTop()
-    {
-        return this.top;
-    }
+    public String getTop() { return this.top; }
 
     /**
-     *
      * @return - String data member this.drawer
      */
-    public String getDrawer()
-    {
-        return this.drawer;
-    }
+    public String getDrawer() { return this.drawer; }
 
     /**
-     *
      * @return int data member this.price
      */
-    public int getPrice()
-    {
-        return this.price;
-    }
+    public int getPrice() { return this.price; }
 
     /**
-     *
      * @return String data member this.manuId
      */
-    public String getManuId()
-    {
-        return this.manuId;
-    }
+    public String getManuId() { return this.manuId; }
 
     /**
-     *
      * @param id - set String data member this.id
      */
     public void setId(String id){this.id = id;}
 
     /**
-     *
      * @param type - set String data member this.type
      */
     public void setType(String type){this.type = type;}
 
     /**
-     *
      * @param legs - set String data member this.legs
      */
     public void setLegs(String legs){this.legs = legs;}
 
     /**
-     *
      * @param top set String data member this.top
      */
     public void setTop(String top){this.top = top;}
 
     /**
-     *
      * @param drawer - set String data member this.drawer
      */
     public void setDrawer(String drawer){this.drawer = drawer;}
 
     /**
-     *
      * @param price - set int data member this.price
      */
     public void setPrice(int price){this.price = price;}
 
     /**
-     *
      * @param manuId - set String data member this.manuId
      */
     public void setManuId(String manuId){this.manuId = manuId;}
 
+    /**
+     * Sets all pieces with desired string
+     * @param s - data member to set pieces with
+     */
     public void setAllpieces(String s){
         this.legs = s;
         this.top = s;
         this.drawer = s;
     }
-
-
 }
