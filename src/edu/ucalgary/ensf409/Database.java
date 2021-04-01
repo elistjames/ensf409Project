@@ -86,7 +86,10 @@ public class Database {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM CHAIR");
             while(result.next()) {
-                Chair temp = new Chair(result.getString("ID"), result.getString("Type"), result.getString ("Legs"), result.getString ("Arms"), result.getString ("Seat"),result.getString ("Cushion"), result.getInt ("Price"), result.getString ("ManuID"));
+                Chair temp = new Chair(result.getString("ID"), result.getString("Type"),
+                        result.getString ("Legs"), result.getString ("Arms"),
+                        result.getString ("Seat"),result.getString ("Cushion"),
+                        result.getInt ("Price"), result.getString ("ManuID"));
                 chairs[counter] = temp;
                 counter++;
             }
@@ -105,7 +108,10 @@ public class Database {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM DESK");
             while(result.next()) {
-                Desk temp = new Desk(result.getString("ID"), result.getString("Type"), result.getString ("Legs"), result.getString ("Top"), result.getString ("Drawer"), result.getInt ("Price"), result.getString ("ManuID"));
+                Desk temp = new Desk(result.getString("ID"), result.getString("Type"),
+                        result.getString ("Legs"), result.getString ("Top"),
+                        result.getString ("Drawer"), result.getInt ("Price"),
+                        result.getString ("ManuID"));
                 desks[counter] = temp;
                 counter++;
             }
@@ -124,7 +130,10 @@ public class Database {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM FILING");
             while(result.next()) {
-                Filing temp = new Filing(result.getString("ID"), result.getString("Type"), result.getString ("Rails"), result.getString ("Drawers"), result.getString ("Cabinet"), result.getInt ("Price"), result.getString ("ManuID"));
+                Filing temp = new Filing(result.getString("ID"), result.getString("Type"),
+                        result.getString ("Rails"), result.getString ("Drawers"),
+                        result.getString ("Cabinet"), result.getInt ("Price"),
+                        result.getString ("ManuID"));
                 filings[counter] = temp;
                 counter++;
             }
@@ -143,7 +152,9 @@ public class Database {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM LAMP");
             while(result.next()) {
-                Lamp temp = new Lamp(result.getString("ID"), result.getString("Type"), result.getString ("Base"), result.getString ("Bulb"), result.getInt ("Price"), result.getString ("ManuID"));
+                Lamp temp = new Lamp(result.getString("ID"), result.getString("Type"),
+                        result.getString ("Base"), result.getString ("Bulb"),
+                        result.getInt ("Price"), result.getString ("ManuID"));
                 lamps[counter] = temp;
                 counter++;
             }
@@ -162,7 +173,9 @@ public class Database {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM MANUFACTURER");
             while(result.next()) {
-                Manufacturer temp = new Manufacturer(result.getString("ManuID"), result.getString("Name"), result.getString ("Phone"), result.getString ("Province"));
+                Manufacturer temp = new Manufacturer(result.getString("ManuID"),
+                        result.getString("Name"), result.getString ("Phone"),
+                        result.getString ("Province"));
                 manufacturers[counter] = temp;
                 counter++;
             }

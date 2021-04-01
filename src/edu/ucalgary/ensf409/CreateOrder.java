@@ -157,6 +157,14 @@ public class CreateOrder
         combinations.clear();
     }
 
+    /**
+     * This method takes in a ArrayList of Integers and an integer called indicator which tells the method what furniture
+     * category array to look in. The method returns a String array of the Id's for each furniture item corresponding to the
+     * table index numbers in the arraylist.
+     * @param itemIndexes Stores the indexes of the items used for the requested order
+     * @param indicator Store a number from 0-3 indicating what furniture category to look in.
+     * @return String Array of ID numbers corresponding to the Table indexes stored in the ArrayList
+     */
     public String[] makeIdArray(ArrayList<Integer> itemIndexes, int indicator){
         String ids[] = new String[itemIndexes.size()];
         switch(indicator){

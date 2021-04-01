@@ -145,8 +145,8 @@ public class Order
                         System.out.println("The price found to make this item is: $" + lowestDesk+".00");
                         db.updateTable(orderedItems, 0); // update the desk table
                         co.setItemsOrdered(deskIds);
-                        co.generateOrder();
-                        co.clearLists();
+                        co.generateOrder(); //make the order output file
+                        co.clearLists(); //clear the array lists storing the prices and combinations
                     }
                     else{
                         System.out.println("Impossible to make this order due to lack of inventory");
@@ -218,7 +218,6 @@ public class Order
              */
             boolean valid = true;
             StringBuilder yn = new StringBuilder();
-            StringBuilder a = new StringBuilder(yn.toString());
             while(valid){
                 System.out.println();
                 System.out.println("Would you like to make another order? (Y/N)");
