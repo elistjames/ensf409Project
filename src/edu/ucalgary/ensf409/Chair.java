@@ -1,5 +1,5 @@
 package edu.ucalgary.ensf409;
-
+// I made a change here and the differences between branches will be shown.
 /*
 This class contains data for Chair object. It stores the attributes for each column used in the Chair table used in the database.
  */
