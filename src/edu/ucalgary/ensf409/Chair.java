@@ -1,5 +1,5 @@
 package edu.ucalgary.ensf409;
-// here is a change
+// here is a changee
 /*
 This class contains data for Chair object. It stores the attributes for each column used in the Chair table used in the database.
  */
