@@ -5,35 +5,36 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- *
+ * The Order Class is the main class and that prompts the user to make an order on the console with a sequence of
+ * questions asking for what furniture category, furniture type and the desired quantity of that item.
  */
 public class Order
 {
-    private String furnitureCategory;
-    private String furnitureType;
-    private int numberItems;
+    private String furnitureCategory; // store the furniture category
+    private String furnitureType; //store the furniture type
+    private int numberItems; // store the quantity of desired item
 
-    static boolean command = true;
-
+    static boolean command = true; //indicates weather or not another order will be made
     /**
-     *
+     * Start of the program
      * @param args
      */
     public static void main(String[] args){
-        Scanner input = new Scanner(System.in);
-        int orderCounter = 1;
-        Order order = new Order();
-        Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409");
-        db.initializeConnection();
-        db.updateLocal();
+        Scanner input = new Scanner(System.in); //Reads the user input
+        int orderCounter = 1; // indicates the order number
+        Order order = new Order(); // stores order information
+        Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409"); //makes new database
         /**
-         *
+         * This while loop is the beating heart of the program and will keep looping as long as command == true.  Every
+         * loop, the program prompts the user to make a new order, if they choose to do so. If not, the while loop breaks
+         * and the program ends.
          */
         while(Order.command){
 
             Scanner input1 = new Scanner(System.in);
             /**
-             *
+             * this block of code inside the following while loop prompts the user to select one of the four furniture
+             * categories.  if the selection is not valid, the while loop re-loops until a valid selection is made.
              */
             loop:   while(true){
                 System.out.println("Please enter a number corresponding to your desired furniture category:");
@@ -44,24 +45,25 @@ public class Order
 
                 switch(input1.nextLine().trim()){
                     case "1":
-                        order.setFurnitureCategory("desk");
+                        order.setFurnitureCategory("desk"); //sets furniture category to desk
                         break loop;
                     case "2":
-                        order.setFurnitureCategory("chair");
+                        order.setFurnitureCategory("chair"); // sets furniture category to chair
                         break loop;
                     case "3":
-                        order.setFurnitureCategory("filing");
+                        order.setFurnitureCategory("filing"); // sets furniture category to filing
                         break loop;
                     case "4":
-                        order.setFurnitureCategory("lamp");
+                        order.setFurnitureCategory("lamp"); // sets furniture category to lamp
                         break loop;
                     default:
-                        System.out.println("Invalid Entry");
+                        System.out.println("Invalid Entry"); // Error message if invalid selection
                         break;
                 }
             }
             /**
-             *
+             * The following block of code prompts the user to select a type of selected furniture category.  The do while
+             * keeps re-looping until a valid selection is inputted.
              */
             Scanner input2 = new Scanner(System.in);
             if(order.getFurnitureCategory().equals("filing")){
@@ -122,14 +124,16 @@ public class Order
                 }
             }
             while(!correctAmount);
-            order.setNumberItems(n);
-            CreateOrder co = new CreateOrder(order, orderCounter, db);
 
-            db.initializeConnection();
-            db.updateLocal();
-            ArrayList<Integer> already = new ArrayList<Integer>();
+            order.setNumberItems(n); // sets the number of items to the amount that the user inputted
+
+            CreateOrder co = new CreateOrder(order, orderCounter, db); // creates new order for based from user's input
+
+            db.initializeConnection(); // initialize the connection to the database
+            db.updateLocal(); // update the Objects arrays
+            ArrayList<Integer> already = new ArrayList<Integer>(); // create null arraylist to pass into Price search algorithms.
             switch(order.getFurnitureCategory()){
-                case "desk":
+                case "desk": //If category is desk
                     co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
                     int lowestDesk = co.getLowestPrice();
                     if(lowestDesk != 0){
@@ -147,7 +151,7 @@ public class Order
                         co.generateRecommendation();
                     }
                     break;
-                case "chair":
+                case "chair": // if the category is chair
                     co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0, 0);
                     int lowestChair = co.getLowestPrice();
                     if(lowestChair != 0){
@@ -165,7 +169,7 @@ public class Order
                         co.generateRecommendation();
                     }
                     break;
-                case "filing":
+                case "filing": // if category is filing
                     co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0, 0);
                     int lowestFiling = co.getLowestPrice();
                     if(lowestFiling != 0){
@@ -183,7 +187,7 @@ public class Order
                         co.generateRecommendation();
                     }
                     break;
-                case "lamp":
+                case "lamp": //if category is lamp
                     co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(), 0, 0);
                     int lowestLamp = co.getLowestPrice();
                     if(lowestLamp != 0){
@@ -203,6 +207,10 @@ public class Order
                     break;
             }
 
+            /**
+             * The following block of code prompts the user to input if they want to make another input or not.  If they do,
+             * the program re-loops to the beginning and the whole sequence is preformed again. If not, the program ends.
+             */
             boolean valid = true;
             StringBuilder yn = new StringBuilder();
             StringBuilder a = new StringBuilder(yn.toString());
@@ -232,59 +240,57 @@ public class Order
     }
 
     /**
-     *
+     * Default constructor for class Order
      */
-    public Order(){
-
-    }
+    public Order(){}
 
     /**
-     *
-     * @return
+     * Getter method for NumberItems
+     * @return numberItems
      */
     public int getNumberItems() {
         return numberItems;
     }
 
     /**
-     *
-     * @return
+     * Getter method for furnitureCategory
+     * @return furnitureCategory
      */
     public String getFurnitureCategory() {
         return furnitureCategory;
     }
 
     /**
-     *
-     * @return
+     * Getter method for furnitureType
+     * @return furnitureType
      */
     public String getFurnitureType() {
         return furnitureType;
     }
 
     /**
-     *
-     * @param numberItems
+     * Setter method for numberItems
+     * @param numberItems number of Items
      */
     public void setNumberItems(int numberItems) {
         this.numberItems = numberItems;
     }
 
     /**
-     *
-     * @param furnitureCategory
+     * Setter method for furniture category
+     * @param furnitureCategory furniture category
      */
     public void setFurnitureCategory(String furnitureCategory) {
         this.furnitureCategory = furnitureCategory;
     }
 
     /**
-     *
-     * @param furnitureType
+     * Setter method for furnitureType
+     * @param furnitureType furniture type
      */
     public void setFurnitureType(String furnitureType) {
         this.furnitureType = furnitureType;
     }
 
-}
+}//End of Order documentation
 

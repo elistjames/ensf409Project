@@ -196,47 +196,58 @@ public class CreateOrder
 
 
     /**
-     * the chair price
-     * @param priceTotal
-     * @param alreadyHit
-     * @param type
-     * @param number
-     * @param legs
-     * @param arms
-     * @param seats
-     * @param cushions
+     * chairPrice recursively searches through the chair array to find all combinations to make the desired order for the
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2d ArrayList called
+     * categories. It also puts the price sum of that found combination into an ArrayList called prices.
+     * @param table // array of chair objects, replicating the chair table in the database
+     * @param priceTotal // price of combined items
+     * @param alreadyHit // stores the indexes of the chairs already checked
+     * @param type // furniture type
+     * @param number // number of desired furniture items
+     * @param legs // counts the number of legs found
+     * @param arms // counts the number of arms found
+     * @param seats // counts the number of seats found
+     * @param cushions // counts the number of cushions found
      */
     public void chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                            int legs, int arms, int seats, int cushions) {
-        int totalPrice2 = priceTotal;
+        int totalPrice2 = priceTotal; // saves the price total for each recursion stage
+        // search through the chair array to find a chair of the desired type
         for (int i = 0; i < table.length; i++) {
-            int lCount = legs;
-            int aCount = arms;
-            int sCount = seats;
-            int cCount = cushions;
-            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
-            if(table[i].getType().equals(type)){
-                if(newEvent(alreadyHit, i)){
-                    alreadyHit2.add(i);
+            int lCount = legs; // saves the amount of legs found for this recursion stage
+            int aCount = arms; // saves the amount of arms found for this recursion stage
+            int sCount = seats; // saves the amount of seats found for this recursion stage
+            int cCount = cushions; // saves the amount of cushions found for this recursion stage
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit); // saves the already checked chairs for this recursion stage
+            if(table[i].getType().equals(type)){ // if the chair at current index matches the desired chair type
+                if(newEvent(alreadyHit, i)){ // if the chair at current index hasn't been checked already
+                    alreadyHit2.add(i); // add the current index to the ArrayList of checked array elements
+
+                    // If chair at current index has legs and that max number of legs needed has not been reached
                     if(db.getChairs()[i].getLegs().equals("Y") && legs < number){
-                        lCount = legs+1;
+                        lCount = legs+1; // add legs to the amount of legs found
                     }
+                    // If chair at current index has arms and that max number of arms needed has not been reached
                     if(db.getChairs()[i].getArms().equals("Y") && arms < number){
-                        aCount = arms+1;
+                        aCount = arms+1; // add arms to amount of arms found
                     }
+                    // If chair at current index has a seat and that max number of seats needed has not been reached
                     if(db.getChairs()[i].getSeat().equals("Y") && seats < number){
-                        sCount = seats+1;
+                        sCount = seats+1; // add seat to the amount of seats found
                     }
+                    // If chair at current index has a cushion and that max number of cushions needed has not been reached
                     if(db.getChairs()[i].getCushion().equals("Y") && cushions < number){
-                        cCount = cushions+1;
+                        cCount = cushions+1; // add cushion to the amount of cushions found
                     }
+                    // adds the chair price at current index to price sum and is saved for current recursion call
                     totalPrice2 = priceTotal + db.getChairs()[i].getPrice();
+                    // if the amount legs + arms + seats + cushions found is equal to max amount pieces needed to make order
                     if(lCount+aCount+sCount+cCount == number*4){
-                        prices.add(totalPrice2);
-                        combinations.add(alreadyHit2);
+                        prices.add(totalPrice2); // add total price of combination to prices ArrayList
+                        combinations.add(alreadyHit2); // add the indexes of the combined chairs to the combinations ArrayList
                         return;
                     }
-                    chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount);
+                    chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount); // recursive call
                 }
             }
         }
