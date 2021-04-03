@@ -85,7 +85,8 @@ public class Database {
         try {
             Statement myStmt = dbConnect.createStatement();
             result = myStmt.executeQuery("SELECT * FROM CHAIR");
-            while(result.next()) {
+            while(result.next())
+            {
                 Chair temp = new Chair(result.getString("ID"), result.getString("Type"),
                         result.getString ("Legs"), result.getString ("Arms"),
                         result.getString ("Seat"),result.getString ("Cushion"),
@@ -301,11 +302,11 @@ public class Database {
      */
     public void updateLocal(){
 
-        pullData("CHAIR");
-        pullData("DESK");
-        pullData("FILING");
-        pullData("LAMP");
-        pullData("MANUFACTURER");
+        pullData("CHAIR");        //creates array for chair table and populates the array
+        pullData("DESK");         //creates array for desk table and populates the array
+        pullData("FILING");       //creates array for filing table and populates the array
+        pullData("LAMP");         //creates array for lamp table and populates the array
+        pullData("MANUFACTURER"); //creates array for manufacturer table and populates the array
 
     }
 

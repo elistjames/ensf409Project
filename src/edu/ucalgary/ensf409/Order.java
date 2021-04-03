@@ -1,7 +1,7 @@
 package edu.ucalgary.ensf409;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
+import java.util.InputMismatchException; // Exceptions for out of range or mismatching tokens
 import java.util.Scanner;
 
 /**
@@ -14,36 +14,39 @@ public class Order
     private String furnitureType; //store the furniture type
     private int numberItems; // store the quantity of desired item
 
-    static boolean command = true; //indicates weather or not another order will be made
+    static boolean command = true; //indicates whether or not, another order will be made
     /**
      * Start of the program
      * @param args
      */
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         Scanner input = new Scanner(System.in); //Reads the user input
         int orderCounter = 1; // indicates the order number
         Order order = new Order(); // stores order information
-        Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409"); //makes new database
+        Database db = new Database("jdbc:mysql://localhost/inventory", "chad", "@@Kawa1000"); //makes new database
         /**
          * This while loop is the beating heart of the program and will keep looping as long as command == true.  Every
          * loop, the program prompts the user to make a new order, if they choose to do so. If not, the while loop breaks
          * and the program ends.
          */
-        while(Order.command){
-
+        while(Order.command)
+        {
             Scanner input1 = new Scanner(System.in);
             /**
              * this block of code inside the following while loop prompts the user to select one of the four furniture
              * categories.  if the selection is not valid, the while loop re-loops until a valid selection is made.
              */
-            loop:   while(true){
+            loop:   while(true)
+            {
                 System.out.println("Please enter a number corresponding to your desired furniture category:");
                 System.out.println("(1) Desk");
                 System.out.println("(2) Chair");
                 System.out.println("(3) Filing");
                 System.out.println("(4) Lamp");
 
-                switch(input1.nextLine().trim()){
+                switch(input1.nextLine().trim())
+                {
                     case "1":
                         order.setFurnitureCategory("desk"); //sets furniture category to desk
                         break loop;
@@ -62,14 +65,16 @@ public class Order
                 }
             }
             /**
-             * The following block of code prompts the user to select a type of selected furniture category.  The do while
+             * The following block of code prompts the user to select a type of selected furniture category. The do while
              * keeps re-looping until a valid selection is inputted.
              */
             Scanner input2 = new Scanner(System.in);
-            if(order.getFurnitureCategory().equals("filing")){
+            if(order.getFurnitureCategory().equals("filing"))
+            {
                 String t = "";
                 boolean correctType;
-                do{
+                do
+                    {
                     correctType = false;
                     System.out.println();
                     System.out.println("What size would you like? (Small / Medium / Large)");
@@ -84,11 +89,13 @@ public class Order
                 while (!correctType);
                 order.setFurnitureType(t);
             }
-            else{
+            else
+                {
                 String t = "";
                 boolean correctType;
 
-                do{
+                do
+                    {
                     correctType = false;
                     System.out.println();
                     System.out.println("Please enter a type: ");
@@ -125,15 +132,15 @@ public class Order
                 }
             }
             while(!correctAmount);
-
             order.setNumberItems(n); // sets the number of items to the amount that the user inputted
 
             CreateOrder co = new CreateOrder(order, orderCounter, db); // creates new order for based from user's input
 
             db.initializeConnection(); // initialize the connection to the database
-            db.updateLocal(); // update the Objects arrays
+            db.updateLocal(); // create and populate each of furniture category classes with their own array of objects
             ArrayList<Integer> already = new ArrayList<Integer>(); // create null arraylist to pass into Price search algorithms.
-            switch(order.getFurnitureCategory()){
+            switch(order.getFurnitureCategory())
+            {
                 case "desk": //If category is desk
                     co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(),
                             0, 0, 0); // Find all combinations of desk order
