@@ -3,7 +3,8 @@ package edu.ucalgary.ensf409;
 /*
 This class contains data for Chair object. It stores the attributes for each column used in the Chair table used in the database.
  */
-public class Chair {
+public class Chair
+{
     private String id;
     private String type;
     private String legs;

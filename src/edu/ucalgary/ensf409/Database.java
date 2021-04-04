@@ -6,7 +6,8 @@ import java.util.ArrayList;
 This class contains data for Database object. It stores the attributes used for accessing the SQL database, as well as local copies of the data in arrays.
 It contains methods which facilitate the accessing and updating of the database. It also includes the various getter methods for the private data members.
  */
-public class Database {
+public class Database
+{
 
     public final String DBURL; //store the database url information
     public final String USERNAME; //store the user's account username
@@ -36,11 +37,14 @@ public class Database {
      *  method tries to make a connection with the database URL and if the connection is not made,
      *  then the SQL exception is caught.
      */
-    public void initializeConnection() {
-        try {
+    public void initializeConnection()
+    {
+        try
+        {
             dbConnect = DriverManager.getConnection(this.getDburl(), this.getUserName(),this.getPassword());
         }
-        catch (SQLException ex) {
+        catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
@@ -75,11 +79,11 @@ public class Database {
                 break;
         }
     }
-
     /**
      This method populates the chairs array using the updated data contained within the database.
      */
-    public void updateChairs(){
+    public void updateChairs()
+    {
         ResultSet result;
         int counter = 0;
         try {
@@ -120,7 +124,6 @@ public class Database {
             ex.printStackTrace();
         }
     }
-
     /**
      This method populates the filings array using the updated data contained within the database.
      */
@@ -273,7 +276,8 @@ public class Database {
     /**
      This method updates the database with the data contained within the lamps array.
      */
-    public void sendLamp(){
+    public void sendLamp()
+    {
         try {
             Statement statement = dbConnect.createStatement();
             statement.executeUpdate("TRUNCATE LAMP");
@@ -350,12 +354,16 @@ public class Database {
         }
         return used;
     }
-
-    public void updateTable(ArrayList<Integer> itemIndexes, int indicator){
+/**
+ *  sets all arrays to "N" so when they are updated, what is left over in the other elements in each array is "N"
+ */
+    public void updateTable(ArrayList<Integer> itemIndexes, int indicator)
+    {
         switch(indicator){
             case 0:
                 for(int i = 0; i < desks.length; i++){
-                    if(indexWasUsed(itemIndexes, i)){
+                    if(indexWasUsed(itemIndexes, i))
+                    {
                         desks[i].setAllpieces("N");
                     }
                 }
@@ -442,5 +450,12 @@ public class Database {
     public String getPassword() {
         return this.PASSWORD;
     }
+
+    /**
+     * Does not use database
+     * @return returns Connection object named dbConnect
+     */
+    public Connection getDbConnect(){return this.dbConnect;}
+
 }
 
