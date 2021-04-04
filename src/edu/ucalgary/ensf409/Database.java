@@ -81,7 +81,7 @@ public class Database {
      */
     public void updateChairs(){
         ResultSet result;
-        this.chairs = new Chair[this.countRows("CHAIR")];
+        //this.chairs = new Chair[this.countRows("CHAIR")]; have to initialize first for test to work
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -104,7 +104,7 @@ public class Database {
      */
     public void updateDesks(){
         ResultSet result;
-        this.desks = new Desk[this.countRows("DESK")];
+        //this.desks = new Desk[this.countRows("DESK")]; have to initialize first for test to work
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -127,7 +127,7 @@ public class Database {
      */
     public void updateFiling(){
         ResultSet result;
-        this.filings = new Filing[this.countRows("FILING")];
+        //this.filings = new Filing[this.countRows("FILING")]; have to initialize first for test to work
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -150,7 +150,7 @@ public class Database {
      */
     public void updateLamp(){
         ResultSet result;
-        this.lamps = new Lamp[this.countRows("LAMP")];
+        //this.lamps = new Lamp[this.countRows("LAMP")]; have to initialize first for test to work
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -172,7 +172,7 @@ public class Database {
      */
     public void updateMan(){
         ResultSet result;
-        this.manufacturers = new Manufacturer[(this.countRows("MANUFACTURER"))];
+        //this.manufacturers = new Manufacturer[(this.countRows("MANUFACTURER"))]; have to initialize first for test to work
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
