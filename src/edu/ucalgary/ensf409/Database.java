@@ -448,7 +448,7 @@ public class Database {
 
     /**
      * Does not use database
-     * @return returns Connection object, dbConnect
+     * @return returns Connection object, dbConnect.
      */
     public Connection getdbConnect()
     {
