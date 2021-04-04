@@ -81,6 +81,7 @@ public class Database {
      */
     public void updateChairs(){
         ResultSet result;
+        this.chairs = new Chair[this.countRows("CHAIR")];
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -103,6 +104,7 @@ public class Database {
      */
     public void updateDesks(){
         ResultSet result;
+        this.desks = new Desk[this.countRows("DESK")];
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -125,6 +127,7 @@ public class Database {
      */
     public void updateFiling(){
         ResultSet result;
+        this.filings = new Filing[this.countRows("FILING")];
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -147,6 +150,7 @@ public class Database {
      */
     public void updateLamp(){
         ResultSet result;
+        this.lamps = new Lamp[this.countRows("LAMP")];
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -168,6 +172,7 @@ public class Database {
      */
     public void updateMan(){
         ResultSet result;
+        this.manufacturers = new Manufacturer[(this.countRows("MANUFACTURER"))];
         int counter = 0;
         try {
             Statement myStmt = dbConnect.createStatement();
@@ -382,7 +387,6 @@ public class Database {
                 break;
         }
     }
-
     /**
      @return returns String array representation of stored chairs
      */
@@ -440,6 +444,15 @@ public class Database {
      */
     public String getPassword() {
         return this.PASSWORD;
+    }
+
+    /**
+     * Does not use database
+     * @return returns Connection object, dbConnect
+     */
+    public Connection getdbConnect()
+    {
+        return this.dbConnect;
     }
 }
 
