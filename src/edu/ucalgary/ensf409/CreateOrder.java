@@ -70,7 +70,7 @@ public class CreateOrder
     public void generateRecommendation() {
         outStream.println("Original request cannot be completed due to current inventory");
         outStream.println();
-        outStream.println("Original Request: " + originalRequest.getFurnitureType() + "," + originalRequest.getNumberItems());
+        outStream.println("Original Request: " + originalRequest.getFurnitureType() +" "+ originalRequest.getFurnitureCategory()+ "," + originalRequest.getNumberItems());
         outStream.println();
         outStream.println("To complete your order please contact the following UofC approved suppliers: ");
         outStream.println(suppliersOf(this.originalRequest.getFurnitureCategory(), this.originalRequest.getFurnitureType()));
@@ -363,7 +363,7 @@ public class CreateOrder
      * @param bases
      * @param lightBulbs
      */
-    public void lampPrice(Lamp table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public void lampPrice(Lamp[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int bases, int lightBulbs) {
         int totalPrice2 = priceTotal;
         for (int i = 0; i < table.length; i++) {
@@ -373,15 +373,16 @@ public class CreateOrder
             if(table[i].getType().equals(type)){
                 if(newEvent(alreadyHit, i)){
                     alreadyHit2.add(i);
+
                     if(table[i].getBase().equals("Y") && bases < number){
                         bCount = bases+1;
                     }
+
                     if(table[i].getBulb().equals("Y") && lightBulbs < number){
                         lCount = lightBulbs+1;
                     }
-
                     totalPrice2 = priceTotal + table[i].getPrice();
-                    if(bCount+lCount == number*3){
+                    if(bCount+lCount == number*2){
                         prices.add(totalPrice2);
                         combinations.add(alreadyHit2);
                         return;
