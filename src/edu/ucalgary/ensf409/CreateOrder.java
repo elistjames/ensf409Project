@@ -135,6 +135,10 @@ public class CreateOrder
         return toRet;
     }
 
+    /**
+     * This method searches through the prices ArrayList for the lowest value.
+     * @return lowest price in the ArrayList prices.
+     */
     public int getLowestPrice(){
         int lowest = 0;
         if(prices.size() >= 1){
@@ -148,10 +152,17 @@ public class CreateOrder
         return lowest;
     }
 
+    /**
+     * This method returns the combination inside the ArrayList combinations the corresponds with the lowest price.
+     * @return ArrayList of the the indexes in the database furniture table that make up the combination.
+     */
     public ArrayList<Integer> getLowestCombination(){
         return combinations.get(prices.indexOf(this.totalPrice));
     }
 
+    /**
+     * this method clears the ArrayLists prices and combinations
+     */
     public void clearLists(){
         prices.clear();
         combinations.clear();
@@ -192,6 +203,12 @@ public class CreateOrder
         return ids;
     }
 
+    /**
+     * This method checks if the Arraylist arr contains the value i inside it.
+     * @param arr ArrayList of Integers
+     * @param index value being checked
+     * @return true if the value is not in the ArrayList, false otherwise.
+     */
     public boolean newEvent(ArrayList<Integer> arr, int index){
         boolean didNotHappen = true;
         for(int j = 0; j < arr.size(); j++){
@@ -205,7 +222,7 @@ public class CreateOrder
 
     /**
      * chairPrice recursively searches through the chair array to find all combinations to make the desired order for the
-     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2d ArrayList called
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
      * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
      * @param table // array of chair objects, replicating the chair table in the database
      * @param priceTotal // price of combined items
@@ -263,16 +280,16 @@ public class CreateOrder
 
     /**
      * deskPrice recursively searches through the desks array to find all combinations to make the desired order for the
-     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2D ArrayList called
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
      * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
-     * @param table
-     * @param priceTotal
-     * @param alreadyHit
-     * @param type
-     * @param number
-     * @param legs
-     * @param tops
-     * @param drawers
+     * @param table // array of desk objects, replicating the desk table in the database
+     * @param priceTotal // price of combined items
+     * @param alreadyHit // stores the indexes of the desks already checked
+     * @param type // furniture type
+     * @param number // number of desired furniture items
+     * @param legs // counts the number of legs found
+     * @param tops // counts the number of tops found
+     * @param drawers // counts the number of drawers found
      */
     public void deskPrice(Desk table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int legs, int tops, int drawers) {
@@ -308,16 +325,16 @@ public class CreateOrder
 
     /**
      * filingPrice recursively searches through the filing array to find all combinations to make the desired order for the
-     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2D ArrayList called
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
      * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
-     * @param table
-     * @param priceTotal
-     * @param alreadyHit
-     * @param type
-     * @param number
-     * @param rails
-     * @param drawers
-     * @param cabinets
+     * @param table // array of filing objects, replicating the filing table in the database
+     * @param priceTotal // price of combined items
+     * @param alreadyHit // stores the indexes of the filings already checked
+     * @param type // furniture type
+     * @param number // number of desired furniture items
+     * @param rails //  counts the number of rails found
+     * @param drawers // counts the number of drawers found
+     * @param cabinets // counts the number of cabinets found
      */
     public void filingPrice(Filing table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                             int rails, int drawers, int cabinets) {
@@ -353,15 +370,15 @@ public class CreateOrder
 
     /**
      * lampPrice recursively searches through the lamps array to find all combinations to make the desired order for the
-     * user. When a combination is found, it inserts and ArrayList of the combination indexes into s 2D ArrayList called
+     * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
      * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
-     * @param table
-     * @param priceTotal
-     * @param alreadyHit
-     * @param type
-     * @param number
-     * @param bases
-     * @param lightBulbs
+     * @param table // array of lamp objects, replicating the lamp table in the database
+     * @param priceTotal // price of combined items
+     * @param alreadyHit // stores the indexes of the lamps already checked
+     * @param type // furniture type
+     * @param number // number of desired furniture items
+     * @param bases // counts the number of bases found
+     * @param lightBulbs // counts the number of bulbs found
      */
     public void lampPrice(Lamp[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int bases, int lightBulbs) {

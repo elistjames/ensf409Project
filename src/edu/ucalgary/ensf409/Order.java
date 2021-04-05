@@ -26,7 +26,7 @@ public class Order
         Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409"); //makes new database
 
         /**
-         * This while loop is the beating heart of the program and will keep looping as long as command == true.  Every
+         * This while loop is the beating heart of the program and will keep looping as long as the while argument is true.  Every
          * loop, the program prompts the user to make a new order, if they choose to do so. If not, the while loop breaks
          * and the program ends.
          */
@@ -57,8 +57,10 @@ public class Order
     }
 
     /**
-     * this block of code inside the following while loop prompts the user to select one of the four furniture
-     * categories.  if the selection is not valid, the while loop re-loops until a valid selection is made.
+     * this method prompts the user to select one of the four furniture categories.  if the selection is not valid,
+     * the while loop re-loops until a valid selection is made.
+     * @param input User input reader
+     * @return String of the category chosen by the user
      */
     public String userCategory(Scanner input) {
         String category = "";
@@ -92,8 +94,11 @@ public class Order
     }
 
     /**
-     * The following block of code prompts the user to select a type of selected furniture category.  The do while
+     * This method prompts the user to select a type of selected furniture category.  The do while
      * keeps re-looping until a valid selection is inputted.
+     * @param order object
+     * @param input user input reader
+     * @return String of the type chosen by the user.
      */
     public String userType(Order order, Scanner input){
         String type = "";
@@ -229,6 +234,12 @@ public class Order
         return type;
     }
 
+    /**
+     * This method prompts the user to input the quantity of their desired furniture item.
+     * @param order object
+     * @param input user input reader
+     * @return Integer of the amount inputted by the user.
+     */
     public int userNumber(Order order, Scanner input){
         boolean correctAmount = true;
         int number = 0;
@@ -251,6 +262,12 @@ public class Order
         return number;
     }
 
+    /**
+     * This method uses the values stored in the order variables chosen by the user to make the output file.
+     * @param order object
+     * @param co CreateOrder object
+     * @param db DataBase object
+     */
     public void operation(Order order, CreateOrder co, Database db){
 
         ArrayList<Integer> already = new ArrayList<Integer>(); // create null arraylist to pass into Price search algorithms.
@@ -335,8 +352,12 @@ public class Order
     }
 
     /**
-     * The following block of code prompts the user to input if they want to make another input or not.  If they do,
-     * the program re-loops to the beginning and the whole sequence is preformed again. If not, the program ends.
+     * This method prompts the user to input if they want to make another order or not.  If they do,
+     * the program re-loops to the beginning and the whole sequence of user inputs is preformed again. If not,
+     * the program ends.
+     * @param order object
+     * @param input user input reader
+     * @return true - if the user inputs Y and false if the user inputs N.
      */
     public boolean makeAnotherOrder(Order order, Scanner input){
         boolean command = true;
