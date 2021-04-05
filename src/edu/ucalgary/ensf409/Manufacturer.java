@@ -10,10 +10,12 @@ public class Manufacturer {
     private String province;
 
     /**
-     * @param id
-     * @param name
-     * @param phone
-     * @param province
+     * Constructor for the Manufacturer class called from the Database class
+     * @param id String representing the unique manufacturer ID
+     * @param name String representing the Manufacturer's name
+     * @param phone String representing the Manufacturer's Phone number
+     * @param province String representing the two letter abbreviation of the manufacturer's
+     * warehouse province location
      */
     public Manufacturer(String id, String name, String phone, String province) {
         this.manuId = id;
@@ -23,42 +25,51 @@ public class Manufacturer {
     }
 
     /**
-     * @return
+     * getter method for the Manufacturer ID data field
+     * @return A String
      */
     public String getManuId() { return this.manuId; }
 
     /**
-     * @return
+     * getter method for the Manufacturer's name
+     * @return A String
      */
     public String getName() { return this.name; }
 
     /**
-     * @return
+     * getter method for the Manufacturer's Phone Number
+     * @return A String
      */
     public String getPhone() { return this.phone; }
 
     /**
-     * @return
+     * getter method for the location of the Manufacturer's warehouse
+     * @return A String
      */
     public String getProvince() { return this.province; }
-
+    //Methods below should not see use
     /**
-     * @param manuId
+     * Setter method for the Manufacturer's ID
+     * @param manuId A String representing the Manufacturer's custom ID number
      */
     public void setManuId(String manuId){this.manuId = manuId;}
 
     /**
-     * @param name
+     * Setter method for the Manufacturer's name
+     * @param name A String representing the Manufacturer's name
      */
     public void setName(String name){this.name = name;}
 
     /**
-     * @param phone
+     * Setter method for the Manufacturer's phone number
+     * @param phone A String representing the Manufacturer's phone number
      */
     public void setPhone(String phone){this.phone = phone;}
 
     /**
-     * @param province
+     * Setter Method for the Manufacturer's warehouse provincial location
+     * @param province A 2 character String representing the provincial location of the
+     * Manufacturer's warehouse
      */
     public void setProvince(String province){this.province = province;}
 }
