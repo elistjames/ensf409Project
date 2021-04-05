@@ -11,13 +11,13 @@ public class Database {
     public final String DBURL; //store the database url information
     public final String USERNAME; //store the user's account username
     public final String PASSWORD; //store the user's account password
-    private Chair[] chairs;
-    private Desk[] desks;
-    private Filing[] filings;
-    private Lamp[] lamps;
-    private Manufacturer[] manufacturers;
-    private Connection dbConnect;
-    private ResultSet results;
+    private Chair[] chairs; //create array that stores chairs
+    private Desk[] desks; //create array that stores desks
+    private Filing[] filings; //create array that stores filings
+    private Lamp[] lamps; //create array that stores lamps
+    private Manufacturer[] manufacturers; //create array that stores manufacturers
+    private Connection dbConnect; //create new connection object
+    private ResultSet results; //create new ResultSet object
 
     /**
      Constructor for Database object
@@ -38,61 +38,29 @@ public class Database {
      */
     public void initializeConnection() {
         try {
-            dbConnect = DriverManager.getConnection(this.getDburl(), this.getUserName(),this.getPassword());
+            dbConnect = DriverManager.getConnection(this.getDburl(), this.getUserName(),this.getPassword()); //initialize connections
         }
         catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
-    /**
-     This method creates the appropriate sized arrays for each table. It then calls the respective update method to populate the arrays.
-     @param table The table name from the database
-     */
-    public void pullData(String table){
-        int rows = countRows(table);
-
-        switch (table){
-            case "CHAIR":
-                chairs = new Chair[rows];
-                updateChairs();
-                break;
-            case "DESK":
-                desks = new Desk[rows];
-                updateDesks();
-                break;
-            case "FILING":
-                filings = new Filing[rows];
-                updateFiling();
-                break;
-            case "LAMP":
-                lamps = new Lamp[rows];
-                updateLamp();
-                break;
-            case "MANUFACTURER":
-                manufacturers = new Manufacturer[rows];
-                updateMan();
-                break;
-        }
-    }
-
     /**
      This method populates the chairs array using the updated data contained within the database.
      */
     public void updateChairs(){
-        ResultSet result;
-        //this.chairs = new Chair[this.countRows("CHAIR")]; have to initialize first for test to work
-        int counter = 0;
+        ResultSet result; //create new ResultSet object
+        this.chairs = new Chair[this.countRows("CHAIR")]; //initialize chairs array
+        int counter = 0; //set row counter to 0;
         try {
-            Statement myStmt = dbConnect.createStatement();
-            result = myStmt.executeQuery("SELECT * FROM CHAIR");
-            while(result.next()) {
+            Statement myStmt = dbConnect.createStatement(); //create new statement
+            result = myStmt.executeQuery("SELECT * FROM CHAIR"); //execute statement select all from Chair table
+            while(result.next()) { //run while next row exists
                 Chair temp = new Chair(result.getString("ID"), result.getString("Type"),
                         result.getString ("Legs"), result.getString ("Arms"),
                         result.getString ("Seat"),result.getString ("Cushion"),
-                        result.getInt ("Price"), result.getString ("ManuID"));
-                chairs[counter] = temp;
-                counter++;
+                        result.getInt ("Price"), result.getString ("ManuID")); //populate the temporary chair
+                chairs[counter] = temp; //load temp into array
+                counter++; //increment the counter
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -103,19 +71,19 @@ public class Database {
      This method populates the desks array using the updated data contained within the database.
      */
     public void updateDesks(){
-        ResultSet result;
-        //this.desks = new Desk[this.countRows("DESK")]; have to initialize first for test to work
-        int counter = 0;
+        ResultSet result; //create new ResultSet object
+        this.desks = new Desk[this.countRows("DESK")]; //initialize desks array
+        int counter = 0; //set row counter to 0
         try {
-            Statement myStmt = dbConnect.createStatement();
-            result = myStmt.executeQuery("SELECT * FROM DESK");
+            Statement myStmt = dbConnect.createStatement(); //create and initialize statement
+            result = myStmt.executeQuery("SELECT * FROM DESK"); //execute statement select all from DDesk
             while(result.next()) {
                 Desk temp = new Desk(result.getString("ID"), result.getString("Type"),
                         result.getString ("Legs"), result.getString ("Top"),
                         result.getString ("Drawer"), result.getInt ("Price"),
-                        result.getString ("ManuID"));
-                desks[counter] = temp;
-                counter++;
+                        result.getString ("ManuID")); //populate temp desk object
+                desks[counter] = temp; //update desks array with new object
+                counter++; //increment the counter
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -125,20 +93,20 @@ public class Database {
     /**
      This method populates the filings array using the updated data contained within the database.
      */
-    public void updateFiling(){
-        ResultSet result;
-        //this.filings = new Filing[this.countRows("FILING")]; have to initialize first for test to work
-        int counter = 0;
+    public void updateFilings(){
+        ResultSet result; //create new ResultSet object
+        this.filings = new Filing[this.countRows("FILING")]; //initialize filings array
+        int counter = 0; //set row counter to 0
         try {
-            Statement myStmt = dbConnect.createStatement();
-            result = myStmt.executeQuery("SELECT * FROM FILING");
+            Statement myStmt = dbConnect.createStatement(); //create and initialize statement
+            result = myStmt.executeQuery("SELECT * FROM FILING"); //execute statement select all from Filing table
             while(result.next()) {
                 Filing temp = new Filing(result.getString("ID"), result.getString("Type"),
                         result.getString ("Rails"), result.getString ("Drawers"),
                         result.getString ("Cabinet"), result.getInt ("Price"),
-                        result.getString ("ManuID"));
-                filings[counter] = temp;
-                counter++;
+                        result.getString ("ManuID")); //create temp Filing object
+                filings[counter] = temp; //update the filings array with temp Filing
+                counter++; //increment counter
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -148,18 +116,18 @@ public class Database {
     /**
      This method populates the lamps array using the updated data contained within the database.
      */
-    public void updateLamp(){
-        ResultSet result;
-        //this.lamps = new Lamp[this.countRows("LAMP")]; have to initialize first for test to work
-        int counter = 0;
+    public void updateLamps(){
+        ResultSet result; //create new ResultSet obejct
+        this.lamps = new Lamp[this.countRows("LAMP")]; //initialize lamps array
+        int counter = 0; //set row counter to 0
         try {
-            Statement myStmt = dbConnect.createStatement();
-            result = myStmt.executeQuery("SELECT * FROM LAMP");
+            Statement myStmt = dbConnect.createStatement(); //create and initialize statement
+            result = myStmt.executeQuery("SELECT * FROM LAMP"); //execute statement SELECT * FROM Lamp
             while(result.next()) {
                 Lamp temp = new Lamp(result.getString("ID"), result.getString("Type"),
                         result.getString ("Base"), result.getString ("Bulb"),
-                        result.getInt ("Price"), result.getString ("ManuID"));
-                lamps[counter] = temp;
+                        result.getInt ("Price"), result.getString ("ManuID")); //create Temp lamp object
+                lamps[counter] = temp; //update lamps array with Lamp temp
                 counter++;
             }
         } catch (SQLException ex) {
@@ -170,19 +138,19 @@ public class Database {
     /**
      This method populates the manufacturers array using the updated data contained within the database.
      */
-    public void updateMan(){
-        ResultSet result;
-        //this.manufacturers = new Manufacturer[(this.countRows("MANUFACTURER"))]; have to initialize first for test to work
-        int counter = 0;
+    public void updateMans(){
+        ResultSet result; //create new ResultSet
+        this.manufacturers = new Manufacturer[(this.countRows("MANUFACTURER"))]; //initialize manufacturers array
+        int counter = 0; //set row counter to 0
         try {
-            Statement myStmt = dbConnect.createStatement();
-            result = myStmt.executeQuery("SELECT * FROM MANUFACTURER");
+            Statement myStmt = dbConnect.createStatement(); //create and intiilize statement
+            result = myStmt.executeQuery("SELECT * FROM MANUFACTURER"); //execute statement select * from Manufacturer
             while(result.next()) {
                 Manufacturer temp = new Manufacturer(result.getString("ManuID"),
                         result.getString("Name"), result.getString ("Phone"),
-                        result.getString ("Province"));
-                manufacturers[counter] = temp;
-                counter++;
+                        result.getString ("Province")); //create temp manufacturer object
+                manufacturers[counter] = temp; //update manufacturers array
+                counter++; //increment the counter
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -194,13 +162,16 @@ public class Database {
      */
     public void sendChair(){
         try {
-            Statement statement = dbConnect.createStatement();
-            statement.executeUpdate("TRUNCATE CHAIR");
-            String query;
+            Statement statement = dbConnect.createStatement(); //create and initialize statement
+            statement.executeUpdate("TRUNCATE CHAIR"); //remove old entries from Chair table
+            String query; //create new query
+
+            //create a loop to update each entry in the Table from the Chairs array
             for(int i = 0; i < chairs.length; i++){
                 query = "INSERT INTO CHAIR (ID,Type,Legs,Arms,Seat,Cushion,Price,ManuID) VALUES (?,?,?,?,?,?,?,?)";
-                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+                PreparedStatement myStmt = dbConnect.prepareStatement(query); //generate query for each loop iteration
 
+                //populate all required table fields
                 myStmt.setString(1, chairs[i].getId());
                 myStmt.setString(2, chairs[i].getType());
                 myStmt.setString(3, chairs[i].getLegs());
@@ -210,8 +181,8 @@ public class Database {
                 myStmt.setInt(7, chairs[i].getPrice());
                 myStmt.setString(8, chairs[i].getManuId());
 
-                myStmt.execute();
-                myStmt.close();
+                myStmt.execute(); //execute the statement
+                myStmt.close(); //close the statement
             }
         } catch (SQLException e) {
 
@@ -223,13 +194,16 @@ public class Database {
      */
     public void sendDesk(){
         try {
-            Statement statement = dbConnect.createStatement();
-            statement.executeUpdate("TRUNCATE DESK");
-            String query;
+            Statement statement = dbConnect.createStatement(); //create and initialize statement
+            statement.executeUpdate("TRUNCATE DESK"); //remove old entries from Desk table
+            String query; //create new query
+
+            //create a loop to update each entry in the Table from the desks array
             for(int i = 0; i < desks.length; i++){
                 query = "INSERT INTO DESK (ID,Type,Legs,Top,Drawer,Price,ManuID) VALUES (?,?,?,?,?,?,?)";
-                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+                PreparedStatement myStmt = dbConnect.prepareStatement(query); //generate query for each loop iteration
 
+                //populate all required table fields
                 myStmt.setString(1, desks[i].getId());
                 myStmt.setString(2, desks[i].getType());
                 myStmt.setString(3, desks[i].getLegs());
@@ -238,8 +212,8 @@ public class Database {
                 myStmt.setInt(6, desks[i].getPrice());
                 myStmt.setString(7, desks[i].getManuId());
 
-                myStmt.execute();
-                myStmt.close();
+                myStmt.execute(); //execute query
+                myStmt.close(); //close statement
             }
         } catch (SQLException e) {
 
@@ -251,13 +225,16 @@ public class Database {
      */
     public void sendFiling(){
         try {
-            Statement statement = dbConnect.createStatement();
-            statement.executeUpdate("TRUNCATE FILING");
-            String query;
+            Statement statement = dbConnect.createStatement(); //create a loop to update each entry in the Table from the Chairs array
+            statement.executeUpdate("TRUNCATE FILING"); //remove all old entries from Filing table
+            String query; //create new query
+
+            //create a loop to update each entry in the Table from the Filings array
             for(int i = 0; i < filings.length; i++){
                 query = "INSERT INTO FILING (ID,Type,Rails,Drawers,Cabinet,Price,ManuID) VALUES (?,?,?,?,?,?,?)";
-                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+                PreparedStatement myStmt = dbConnect.prepareStatement(query); //generate query for each loop iteration
 
+                //populate all required table fields
                 myStmt.setString(1, filings[i].getId());
                 myStmt.setString(2, filings[i].getType());
                 myStmt.setString(3, filings[i].getRails());
@@ -266,8 +243,8 @@ public class Database {
                 myStmt.setInt(6, filings[i].getPrice());
                 myStmt.setString(7, filings[i].getManuId());
 
-                myStmt.execute();
-                myStmt.close();
+                myStmt.execute(); //execute query
+                myStmt.close(); //close statement
             }
         } catch (SQLException e) {
 
@@ -279,13 +256,16 @@ public class Database {
      */
     public void sendLamp(){
         try {
-            Statement statement = dbConnect.createStatement();
-            statement.executeUpdate("TRUNCATE LAMP");
-            String query;
+            Statement statement = dbConnect.createStatement(); //create and initialize statement
+            statement.executeUpdate("TRUNCATE LAMP"); //remove old entries from Lamp table
+            String query; //create new query
+
+            //create a loop to update each entry in the Table from the Lamps array
             for(int i = 0; i < lamps.length; i++){
                 query = "INSERT INTO LAMP (ID,Type,Base,Bulb,Price,ManuID) VALUES (?,?,?,?,?,?)";
-                PreparedStatement myStmt = dbConnect.prepareStatement(query);
+                PreparedStatement myStmt = dbConnect.prepareStatement(query); //generate query for each loop iteration
 
+                //populate all required table fields
                 myStmt.setString(1, lamps[i].getId());
                 myStmt.setString(2, lamps[i].getType());
                 myStmt.setString(3, lamps[i].getBase());
@@ -293,8 +273,8 @@ public class Database {
                 myStmt.setInt(5, lamps[i].getPrice());
                 myStmt.setString(6, lamps[i].getManuId());
 
-                myStmt.execute();
-                myStmt.close();
+                myStmt.execute(); //execute the query
+                myStmt.close(); //close the statement
             }
         } catch (SQLException e) {
 
@@ -305,13 +285,11 @@ public class Database {
      This pulls all the data from the database and updates the local arrays with the table objects.
      */
     public void updateLocal(){
-
-        pullData("CHAIR");
-        pullData("DESK");
-        pullData("FILING");
-        pullData("LAMP");
-        pullData("MANUFACTURER");
-
+        updateChairs();
+        updateDesks();
+        updateFilings();
+        updateLamps();
+        updateMans();
     }
 
     /**
@@ -330,20 +308,26 @@ public class Database {
      @return The number of rows in the table.
      */
     public int countRows(String table){
-        int rowCount = 0;
+        int rowCount = 0; //set row counter to 0
         ResultSet result;
         try {
-            Statement myStmt = dbConnect.createStatement();
-            result = myStmt.executeQuery("SELECT count(*) FROM " + table);
-            result.next();
-            rowCount = result.getInt(1);
+            Statement myStmt = dbConnect.createStatement();  //create a loop to update each entry in the Table from the Chairs array
+            result = myStmt.executeQuery("SELECT count(*) FROM " + table); //execute count query
+            result.next(); //go to next ResultSet
+            rowCount = result.getInt(1); //get the total number of rows
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return rowCount;
+        return rowCount; //return number of rows
     }
 
+    /**
+     This method counts determines whether an
+     @param itemIndexes The table name from the database
+     @param index -
+     @return Whether or not the index was used
+     */
     public boolean indexWasUsed(ArrayList<Integer> itemIndexes, int index){
         boolean used = false;
         for(int i = 0; i < itemIndexes.size(); i++){
@@ -450,9 +434,7 @@ public class Database {
      * Does not use database
      * @return returns Connection object, dbConnect.
      */
-    public Connection getdbConnect()
-    {
+    public Connection getdbConnect() {
         return this.dbConnect;
     }
 }
-

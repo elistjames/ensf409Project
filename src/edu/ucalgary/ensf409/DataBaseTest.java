@@ -7,11 +7,11 @@ public class DataBaseTest
     // Database update methods populate the FurnitureCategory class arrays with updated data from database
     // Database send methods send the updated data in the FurnitureCategory class arrays to the database
 
-    private String[][] chairs;
-    private String[][] desks;
-    private String[][] filings;
-    private String[][] lamps;
-    private String[][] manufacturers;
+    private String[][] theChairs;
+    private String[][] theDesks;
+    private String[][] theFilings;
+    private String[][] theLamps;
+    private String[][] theManufacturers;
     private Database dataBaseTest;
     private DataBaseTest dataTest;
     private Connection dbConnectTest;
@@ -56,74 +56,30 @@ public class DataBaseTest
         // setup
         dataBaseTest.initializeConnection();
         String[][] actual = writeChairs();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
 
         // run test
         dataBaseTest.updateChairs();
-        Chair[] chairs = dataBaseTest.getChairs();
-        int row = 0;
-        int column = 0;
-        while(row != chairs.length)
-        {
-            expected[row][column] = chairs[row].getId();
-            column++;
-            expected[row][column] = chairs[row].getType();
-            column++;
-            expected[row][column] = chairs[row].getLegs();
-            column++;
-            expected[row][column] = chairs[row].getArms();
-            column++;
-            expected[row][column] = chairs[row].getSeat();
-            column++;
-            expected[row][column] = chairs[row].getCushion();
-            column++;
-            expected[row][column] = String.valueOf(chairs[row].getPrice());
-            column++;
-            expected[row][column] = chairs[row].getManuId();
-            column = 0;
-            row++;
-        }
+        String[][] expected = chairsToStringArray();
+
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
     }
+
     /**
      * tests populating a Desk array from the database
      */
+
     @Test
     public void testUpdateDesks()
     {
         // setup
         dataBaseTest.initializeConnection();
         String[][] actual = writeDesks();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
 
         // run test
         dataBaseTest.updateDesks();
-        Desk[] desks = dataBaseTest.getDesk();
-        int row = 0;
-        int column = 0;
-        while(row != desks.length)
-        {
-            expected[row][column] = desks[row].getId();
-            column++;
-            expected[row][column] = desks[row].getType();
-            column++;
-            expected[row][column] = desks[row].getLegs();
-            column++;
-            expected[row][column] = desks[row].getTop();
-            column++;
-            expected[row][column] = desks[row].getDrawer();
-            column++;
-            expected[row][column] = String.valueOf(desks[row].getPrice());
-            column++;
-            expected[row][column] = desks[row].getManuId();
-            column = 0;
-            row++;
-        }
+        String[][] expected = desksToStringArray();
+
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
     }
@@ -136,33 +92,11 @@ public class DataBaseTest
         // setup
         dataBaseTest.initializeConnection();
         String[][] actual = writeFiling();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.updateFiling();
-        Filing[] cabinets = dataBaseTest.getFilings();
-        int counter = 0;
-        int column = 0;
-        while(counter != cabinets.length)
-        {
-            expected[counter][column] = cabinets[counter].getId();
-            column++;
-            expected[counter][column] = cabinets[counter].getType();
-            column++;
-            expected[counter][column] = cabinets[counter].getRails();
-            column++;
-            expected[counter][column] = cabinets[counter].getDrawers();
-            column++;
-            expected[counter][column] = cabinets[counter].getCabinet();
-            column++;
-            expected[counter][column] = String.valueOf(cabinets[counter].getPrice());
-            column++;
-            expected[counter][column] = cabinets[counter].getManuId();
-            column = 0;
-            counter++;
-        }
+        dataBaseTest.updateLamps();
+        String[][] expected = filingsToStringArray();
+
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
     }
@@ -175,31 +109,11 @@ public class DataBaseTest
         // setup
         dataBaseTest.initializeConnection();
         String[][] actual = writeLamp();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.updateLamp();
-        Lamp[] theLamps = dataBaseTest.getLamps();
-        int row = 0;
-        int column = 0;
-        while(row != theLamps.length)
-        {
-            expected[row][column] = theLamps[row].getId();
-            column++;
-            expected[row][column] = theLamps[row].getType();
-            column++;
-            expected[row][column] = theLamps[row].getBase();
-            column++;
-            expected[row][column] = theLamps[row].getBulb();
-            column++;
-            expected[row][column] = String.valueOf(theLamps[row].getPrice());
-            column++;
-            expected[row][column] = theLamps[row].getManuId();
-            column = 0;
-            row++;
-        }
+        dataBaseTest.updateLamps();
+        String[][] expected = lampsToStringArray();
+
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
     }
@@ -212,75 +126,40 @@ public class DataBaseTest
         // setup
         dataBaseTest.initializeConnection();
         String[][] actual = writeManufacturer();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.updateMan();
-        Manufacturer[] manufs = dataBaseTest.getManufacturers();
-        int row = 0;
-        int column = 0;
-        while(row != manufs.length)
-        {
-            expected[row][column] = manufs[row].getManuId();
-            column++;
-            expected[row][column] = manufs[row].getName();
-            column++;
-            expected[row][column] = manufs[row].getPhone();
-            column++;
-            expected[row][column] = manufs[row].getProvince();
-            column = 0;
-            row++;
-        }
+        dataBaseTest.updateMans();
+        String[][] expected = manusToStringArray();
+
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
-
     }
-    /**
-     * tests updating a Desk array through the pullData method which uses a table name as input for switch
-     */
-    @Test
-    public void testPullData()
+    public void sendDeskTest()
     {
         // setup
         dataBaseTest.initializeConnection();
-        String[][] actual = writeDesks();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        dataBaseTest.updateDesks();
+        Chair newObject = new Chair("C0900","Mesh","Y","Y","Y","Y",10,"001");
+        theChairs[0][0] = "C0900";
+        theChairs[0][1] = "Mesh";
+        theChairs[0][2] = "Y";
+        theChairs[0][3] = "Y";
+        theChairs[0][4] = "Y";
+        theChairs[0][5] = "Y";
+        theChairs[0][6] = "10";
+        theChairs[0][7] = "001";
 
-        // run test
-        dataBaseTest.pullData("DESK");
-        Desk[] desks = dataBaseTest.getDesk();
-        int row = 0;
-        int column = 0;
-        while(row != desks.length)
-        {
-            expected[row][column] = desks[row].getId();
-            column++;
-            expected[row][column] = desks[row].getType();
-            column++;
-            expected[row][column] = desks[row].getLegs();
-            column++;
-            expected[row][column] = desks[row].getTop();
-            column++;
-            expected[row][column] = desks[row].getDrawer();
-            column++;
-            expected[row][column] = String.valueOf(desks[row].getPrice());
-            column++;
-            expected[row][column] = desks[row].getManuId();
-            column = 0;
-            row++;
-        }
-        Assert.assertArrayEquals(expected, actual);
+        // test
+        //dataBaseTest.overwriteChairObject(0, newObject);
+        String[][] actual = theChairs;
+
+
     }
 
     /**
      *  This is where all of the helper methods for testing class Database will be placed
      *  ---------------------------------------------------------------------------------
      */
-
 
 
     /**
@@ -308,6 +187,38 @@ public class DataBaseTest
                 };
         return chairData;
     }
+    public String[][] chairsToStringArray()
+    {
+            String[][] actual = writeChairs();
+            int rows = actual.length;
+            int columns = actual[0].length;
+            String[][] expected = new String[rows][columns];
+
+            Chair[] chairs = dataBaseTest.getChairs();
+            int row = 0;
+            int column = 0;
+            while(row != chairs.length)
+            {
+            expected[row][column] = chairs[row].getId();
+            column++;
+            expected[row][column] = chairs[row].getType();
+            column++;
+            expected[row][column] = chairs[row].getLegs();
+            column++;
+            expected[row][column] = chairs[row].getArms();
+            column++;
+            expected[row][column] = chairs[row].getSeat();
+            column++;
+            expected[row][column] = chairs[row].getCushion();
+            column++;
+            expected[row][column] = String.valueOf(chairs[row].getPrice());
+            column++;
+            expected[row][column] = chairs[row].getManuId();
+            column = 0;
+            row++;
+            }
+        return expected;
+    }
     public String[][] writeDesks()
     {
         String[][] deskData =
@@ -329,6 +240,37 @@ public class DataBaseTest
                     {"D9387", "Standing", "Y", "Y", "N", "250", "004"}
                 };
         return deskData;
+    }
+    public String[][] desksToStringArray()
+    {
+        String[][] actual = writeDesks();
+        int rows = actual.length;
+        int columns = actual[0].length;
+        String[][] expected = new String[rows][columns];
+
+        dataBaseTest.updateDesks();
+        Desk[] desks = dataBaseTest.getDesk();
+        int row = 0;
+        int column = 0;
+        while(row != desks.length)
+        {
+            expected[row][column] = desks[row].getId();
+            column++;
+            expected[row][column] = desks[row].getType();
+            column++;
+            expected[row][column] = desks[row].getLegs();
+            column++;
+            expected[row][column] = desks[row].getTop();
+            column++;
+            expected[row][column] = desks[row].getDrawer();
+            column++;
+            expected[row][column] = String.valueOf(desks[row].getPrice());
+            column++;
+            expected[row][column] = desks[row].getManuId();
+            column = 0;
+            row++;
+        }
+        return expected;
     }
     public String[][] writeFiling()
     {
@@ -352,7 +294,37 @@ public class DataBaseTest
                  };
           return filingData;
     }
+   public String[][] filingsToStringArray()
+   {
+       String[][] actual = writeFiling();
+       int rows = actual.length;
+       int columns = actual[0].length;
+       String[][] expected = new String[rows][columns];
 
+       dataBaseTest.updateFilings();
+       Filing[] cabinets = dataBaseTest.getFilings();
+       int counter = 0;
+       int column = 0;
+       while(counter != cabinets.length)
+       {
+           expected[counter][column] = cabinets[counter].getId();
+           column++;
+           expected[counter][column] = cabinets[counter].getType();
+           column++;
+           expected[counter][column] = cabinets[counter].getRails();
+           column++;
+           expected[counter][column] = cabinets[counter].getDrawers();
+           column++;
+           expected[counter][column] = cabinets[counter].getCabinet();
+           column++;
+           expected[counter][column] = String.valueOf(cabinets[counter].getPrice());
+           column++;
+           expected[counter][column] = cabinets[counter].getManuId();
+           column = 0;
+           counter++;
+       }
+       return expected;
+   }
    public String[][] writeLamp()
    {
        String[][] lampData =
@@ -375,6 +347,35 @@ public class DataBaseTest
                };
        return lampData;
    }
+   public String[][] lampsToStringArray()
+   {
+       String[][] actual = writeLamp();
+       int rows = actual.length;
+       int columns = actual[0].length;
+       String[][] expected = new String[rows][columns];
+
+       dataBaseTest.updateLamps();
+       Lamp[] theLamps = dataBaseTest.getLamps();
+       int row = 0;
+       int column = 0;
+       while(row != theLamps.length)
+       {
+           expected[row][column] = theLamps[row].getId();
+           column++;
+           expected[row][column] = theLamps[row].getType();
+           column++;
+           expected[row][column] = theLamps[row].getBase();
+           column++;
+           expected[row][column] = theLamps[row].getBulb();
+           column++;
+           expected[row][column] = String.valueOf(theLamps[row].getPrice());
+           column++;
+           expected[row][column] = theLamps[row].getManuId();
+           column = 0;
+           row++;
+       }
+       return expected;
+   }
    public String[][] writeManufacturer()
    {
       String[][] manuData =
@@ -387,19 +388,44 @@ public class DataBaseTest
               };
       return manuData;
    }
+   public String[][] manusToStringArray()
+   {
+       String[][] actual = writeManufacturer();
+       int rows = actual.length;
+       int columns = actual[0].length;
+       String[][] expected = new String[rows][columns];
+
+       dataBaseTest.updateMans();
+       Manufacturer[] manufs = dataBaseTest.getManufacturers();
+       int row = 0;
+       int column = 0;
+       while(row != manufs.length)
+       {
+           expected[row][column] = manufs[row].getManuId();
+           column++;
+           expected[row][column] = manufs[row].getName();
+           column++;
+           expected[row][column] = manufs[row].getPhone();
+           column++;
+           expected[row][column] = manufs[row].getProvince();
+           column = 0;
+           row++;
+       }
+       return expected;
+   }
 }
 
 
 
-                  
-                          
-                          
-       
-       
-       
-       
-                          
-                          
-                         
+
+
+
+
+
+
+
+
+
+
 
 
