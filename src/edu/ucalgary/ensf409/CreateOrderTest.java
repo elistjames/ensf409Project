@@ -6,3 +6,9 @@ import java.sql.*;
 public class CreateOrderTest {
 
 }
+
+//suppliers of
+//chair price
+//desk price
+//filing price
+//lamp price
