@@ -323,9 +323,10 @@ public class Database {
     }
 
     /**
-     This method counts determines whether an
-     @param itemIndexes The table name from the database
-     @param index -
+     This method determines whether an item in a specific table was used to make the specific order.
+     If the item was used, the method returns true, anf returns false otherwise.
+     @param itemIndexes - stores the indexes of the items in the table that were used to make the order.
+     @param index - the item index in the table being checked
      @return Whether or not the index was used
      */
     public boolean indexWasUsed(ArrayList<Integer> itemIndexes, int index){
@@ -339,33 +340,41 @@ public class Database {
         return used;
     }
 
+    /**
+     * This method takes in an ArrayList and an integer at arguments. The list contains indexes of a specific table within
+     * the database that correspond to the item used to make the order.  The integer indicator just tells the method which
+     * table in the database to update. 1 for desk, 2 for chair, 3 for filing, and 4 for lamp. If an Item was used, all its
+     * components are set to "N".
+     * @param itemIndexes stores the indexes of the items in the table that were used to make the order.
+     * @param indicator indicates which table in the database needs to be updated.
+     */
     public void updateTable(ArrayList<Integer> itemIndexes, int indicator){
         switch(indicator){
-            case 0:
-                for(int i = 0; i < desks.length; i++){
-                    if(indexWasUsed(itemIndexes, i)){
-                        desks[i].setAllpieces("N");
+            case 0: // if desk table must be updated
+                for(int i = 0; i < desks.length; i++){ //scan through the desk table to find used items
+                    if(indexWasUsed(itemIndexes, i)){ // if item was used to make order
+                        desks[i].setAllpieces("N"); // set all pieces to "N"
                     }
                 }
                 break;
-            case 1:
-                for(int i = 0; i < chairs.length; i++){
-                    if(indexWasUsed(itemIndexes, i)){
-                        chairs[i].setAllpieces("N");
+            case 1: // if chair table must be updated
+                for(int i = 0; i < chairs.length; i++){ //scan through the chair table to find used items
+                    if(indexWasUsed(itemIndexes, i)){ // if item was used to make order
+                        chairs[i].setAllpieces("N"); // set all pieces to "N"
                     }
                 }
                 break;
-            case 2:
-                for(int i = 0; i < filings.length; i++){
-                    if(indexWasUsed(itemIndexes, i)){
-                        filings[i].setAllpieces("N");
+            case 2: // if filing table must be updated
+                for(int i = 0; i < filings.length; i++){ //scan through the filing table to find used items
+                    if(indexWasUsed(itemIndexes, i)){ // if item was used to make order
+                        filings[i].setAllpieces("N"); // set all pieces to "N"
                     }
                 }
                 break;
-            default:
-                for(int i = 0; i < lamps.length; i++){
-                    if(indexWasUsed(itemIndexes, i)){
-                        lamps[i].setAllpieces("N");
+            default: // if lamp table must be updated
+                for(int i = 0; i < lamps.length; i++){ //scan through the lamps table to find used items
+                    if(indexWasUsed(itemIndexes, i)){ // if item was used to make order
+                        lamps[i].setAllpieces("N"); // set all pieces to "N"
                     }
                 }
                 break;

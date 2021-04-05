@@ -352,7 +352,7 @@ public class Order
         }
         System.out.println("The file name is: "+order.getFurnitureType()+"_"+order.getFurnitureCategory()+
                 "_Order_["+ formatDateTime + "].txt");
-        //db.pushLocal(); //update all tables in the database.
+        db.pushLocal(); //update all tables in the database.
     }
 
     /**

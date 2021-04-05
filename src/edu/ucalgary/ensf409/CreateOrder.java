@@ -305,9 +305,10 @@ public class CreateOrder {
 
 
     /**
-     * chairPrice recursively searches through the chair array to find all combinations to make the desired order for the
+     * chairPrice recursively searches through the chair array to find the lowest price of all combinations to make the desired order for the
      * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
-     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices and checks for the lowest
+     * price within that list of prices.
      * @param table // array of chair objects, replicating the chair table in the database
      * @param priceTotal // price of combined items
      * @param alreadyHit // stores the indexes of the chairs already checked
@@ -366,9 +367,10 @@ public class CreateOrder {
     }
 
     /**
-     * deskPrice recursively searches through the desks array to find all combinations to make the desired order for the
+     * deskPrice recursively searches through the desks array to find the lowest price of all combinations to make the desired order for the
      * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
-     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices and checks for the lowest
+     * price within that list of prices.
      * @param table // array of desk objects, replicating the desk table in the database
      * @param priceTotal // price of combined items
      * @param alreadyHit // stores the indexes of the desks already checked
@@ -423,9 +425,10 @@ public class CreateOrder {
     }
 
     /**
-     * filingPrice recursively searches through the filing array to find all combinations to make the desired order for the
+     * filingPrice recursively searches through the filing array to find the lowest price of all combinations to make the desired order for the
      * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
-     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices and checks for the lowest
+     * price within that list of prices.
      * @param table // array of filing objects, replicating the filing table in the database
      * @param priceTotal // price of combined items
      * @param alreadyHit // stores the indexes of the filings already checked
@@ -480,9 +483,10 @@ public class CreateOrder {
     }
 
     /**
-     * lampPrice recursively searches through the lamps array to find all combinations to make the desired order for the
+     * lampPrice recursively searches through the lamps array to find the lowest price of all combinations to make the desired order for the
      * user. When a combination is found, it inserts and ArrayList of the combination indexes into a 2D ArrayList called
-     * combinations. It also puts the price sum of that found combination into an ArrayList called prices.
+     * combinations. It also puts the price sum of that found combination into an ArrayList called prices and checks for the lowest
+     * price within that list of prices.
      * @param table // array of lamp objects, replicating the lamp table in the database
      * @param priceTotal // price of combined items
      * @param alreadyHit // stores the indexes of the lamps already checked
