@@ -5,8 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
-public class CreateOrder
-{
+public class CreateOrder {
     private Order originalRequest;
     private PrintWriter outStream;
     private String[] itemsOrdered;
@@ -40,7 +39,7 @@ public class CreateOrder
         }
         catch (IOException e)
         {
-            System.out.println("error opening output file");
+            System.out.println("Error opening output file");
             System.exit(1);
         }
         this.db = db;

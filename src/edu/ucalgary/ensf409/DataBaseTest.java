@@ -141,7 +141,7 @@ public class DataBaseTest
         String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.updateFiling();
+        dataBaseTest.updateFilings();
         Filing[] cabinets = dataBaseTest.getFilings();
         int counter = 0;
         int column = 0;
@@ -180,7 +180,7 @@ public class DataBaseTest
         String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.updateLamp();
+        dataBaseTest.updateLamps();
         Lamp[] theLamps = dataBaseTest.getLamps();
         int row = 0;
         int column = 0;
@@ -217,7 +217,7 @@ public class DataBaseTest
         String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.updateMan();
+        dataBaseTest.updateMans();
         Manufacturer[] manufs = dataBaseTest.getManufacturers();
         int row = 0;
         int column = 0;
@@ -251,7 +251,7 @@ public class DataBaseTest
         String[][] expected = new String[rows][columns];
 
         // run test
-        dataBaseTest.pullData("DESK");
+        dataBaseTest.updateDesks();
         Desk[] desks = dataBaseTest.getDesk();
         int row = 0;
         int column = 0;

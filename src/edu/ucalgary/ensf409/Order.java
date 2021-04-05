@@ -109,7 +109,7 @@ public class Order
         if(order.getFurnitureCategory().equals("filing")){
             type = "";
             boolean correctType;
-            do{
+            do {
                 correctType = false;
                 System.out.println();
                 System.out.println("Enter a number corresponding to the type of lamp you would like:");
@@ -141,7 +141,7 @@ public class Order
             do{
                 correctType = false;
                 System.out.println();
-                System.out.println("enter a number corresponding to the type of lamp you would like:");
+                System.out.println("Enter a number corresponding to the type of lamp you would like:");
                 System.out.println("(1) Desk");
                 System.out.println("(2) Swing Arm");
                 System.out.println("(3) Study");
@@ -170,7 +170,7 @@ public class Order
             do{
                 correctType = false;
                 System.out.println();
-                System.out.println("enter a number corresponding to the type of desk you would like:");
+                System.out.println("Enter a number corresponding to the type of desk you would like:");
                 System.out.println("(1) Traditional");
                 System.out.println("(2) Adjustable");
                 System.out.println("(3) Standing");
@@ -200,7 +200,7 @@ public class Order
             do{
                 correctType = false;
                 System.out.println();
-                System.out.println("enter a number corresponding to the type of chair you would like:");
+                System.out.println("Enter a number corresponding to the type of chair you would like:");
                 System.out.println("(1) Task");
                 System.out.println("(2) Mesh");
                 System.out.println("(3) Kneeling");
