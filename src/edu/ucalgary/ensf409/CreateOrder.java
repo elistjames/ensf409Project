@@ -1,8 +1,9 @@
 package edu.ucalgary.ensf409;
 
 import java.io.*;
-import java.lang.reflect.Array;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class CreateOrder
 {
@@ -17,6 +18,10 @@ public class CreateOrder
     CreateOrder(Order request, int orderNumber, Database db)
     {
         this.originalRequest = request;
+        //generate unique file ID
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH~mm~ss");
+        String formatDateTime = ldt.format(format);
+        //Create output Filepath
         try
         {
             this.outStream = new PrintWriter(new File("Order" + Integer.toString(orderNumber) + ".txt"));
@@ -104,13 +109,13 @@ public class CreateOrder
                     }
                 }
             }
-        } else if(category.equals("Filing")){
-            for (int i = 0; i < this.db.getFilings().length; i++) {
-                if (this.db.getFilings()[i].getType().equals(type)) {
-                    for(int j = 0; j < this.db.getManufacturers().length; j++) {
-                        if(this.db.getFilings()[i].getManuId() == this.db.getManufacturers()[j].getManuId()) {
-                            if(!suppliers.contains(this.db.getManufacturers()[j].getName())) {
-                                suppliers.add(this.db.getManufacturers()[j].getName());
+        } else if(category.equals("filing")){ //check furniture category
+            for (int i = 0; i < this.db.getFilings().length; i++) { //check for matching type
+                if (this.db.getFilings()[i].getType().equals(type)) { //proceed if match found
+                    for(int j = 0; j < this.db.getManufacturers().length; j++) { //check for manufacturer associated with matching item
+                        if(this.db.getFilings()[i].getManuId().equals(this.db.getManufacturers()[j].getManuId())) { //proceed if match
+                            if(!suppliers.contains(this.db.getManufacturers()[j].getName())) { //proceed if not already in list
+                                suppliers.add(this.db.getManufacturers()[j].getName()); //add to list
                             }
                         }
                     }
@@ -234,8 +239,9 @@ public class CreateOrder
      * @param seats // counts the number of seats found
      * @param cushions // counts the number of cushions found
      */
-    public void chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                            int legs, int arms, int seats, int cushions) {
+        int lowest = getLowestPrice();
         int totalPrice2 = priceTotal; // saves the price total for each recursion stage
         // search through the chair array to find a chair of the desired type
         for (int i = 0; i < table.length; i++) {
@@ -270,12 +276,14 @@ public class CreateOrder
                     if(lCount+aCount+sCount+cCount == number*4){
                         prices.add(totalPrice2); // add total price of combination to prices ArrayList
                         combinations.add(alreadyHit2); // add the indexes of the combined chairs to the combinations ArrayList
-                        return;
+                        lowest = getLowestPrice();
+                        return lowest; // Update lowest chair price
                     }
-                    chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount); // recursive call
+                    lowest = chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount); // recursive call
                 }
             }
         }
+        return lowest;
     }
 
     /**
@@ -291,36 +299,48 @@ public class CreateOrder
      * @param tops // counts the number of tops found
      * @param drawers // counts the number of drawers found
      */
-    public void deskPrice(Desk table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int deskPrice(Desk table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int legs, int tops, int drawers) {
-        int totalPrice2 = priceTotal;
+        int lowest = getLowestPrice();
+        int totalPrice2 = priceTotal; // saves the price total for each recursion stage
+        // search through the desk array to find a desk of the desired type
         for (int i = 0; i < table.length; i++) {
-            int lCount = legs;
-            int tCount = tops;
-            int dCount = drawers;
-            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
-            if(table[i].getType().equals(type)){
-                if(newEvent(alreadyHit, i)){
-                    alreadyHit2.add(i);
+            int lCount = legs; // saves the amount of legs found for this recursion stage
+            int tCount = tops; // saves the amount of tops found for this recursion stage
+            int dCount = drawers; // saves the amount of drawers found for this recursion stage
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit); // saves the already checked desks for this recursion stage
+            if(table[i].getType().equals(type)){ // if the desk at current index matches the desired desk type
+                if(newEvent(alreadyHit, i)){ // if the desk at current index hasn't been checked already
+                    alreadyHit2.add(i); // add the current index to the ArrayList of checked array elements
+
+                    // If desk at current index has legs and that max number of legs needed has not been reached
                     if(table[i].getLegs().equals("Y") && legs < number){
-                        lCount = legs+1;
+                        lCount = legs+1; // add legs to the amount of legs found
                     }
+
+                    // If desk at current index has tops and that max number of tops needed has not been reached
                     if(table[i].getTop().equals("Y") && tops < number){
-                        tCount = tops+1;
+                        tCount = tops+1; // add top to the amount of tops found
                     }
+
+                    // If desk at current index has drawers and that max number of drawers needed has not been reached
                     if(table[i].getDrawer().equals("Y") && drawers < number){
-                        dCount = drawers+1;
+                        dCount = drawers+1; // add drawer to the amount of drawers found
                     }
+                    // adds the filing price at current index to price sum and is saved for current recursion call
                     totalPrice2 = priceTotal + table[i].getPrice();
+                    // if the amount legs + tops + drawers found is equal to max amount pieces needed to make order
                     if(lCount+tCount+dCount == number*3){
-                        prices.add(totalPrice2);
-                        combinations.add(alreadyHit2);
-                        return;
+                        prices.add(totalPrice2); // add total price of combination to prices ArrayList
+                        combinations.add(alreadyHit2); // add the indexes of the combined desks to the combinations ArrayList
+                        lowest = getLowestPrice(); // Update lowest
+                        return lowest;
                     }
-                    deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount);
+                    deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount); // recursive call
                 }
             }
         }
+        return lowest;
     }
 
     /**
@@ -336,36 +356,48 @@ public class CreateOrder
      * @param drawers // counts the number of drawers found
      * @param cabinets // counts the number of cabinets found
      */
-    public void filingPrice(Filing table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int filingPrice(Filing table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                             int rails, int drawers, int cabinets) {
-        int totalPrice2 = priceTotal;
+        int lowest = getLowestPrice();
+        int totalPrice2 = priceTotal; // saves the price total for each recursion stage
         for (int i = 0; i < table.length; i++) {
-            int rCount = rails;
-            int dCount = drawers;
-            int cCount = cabinets;
-            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
-            if(table[i].getType().equals(type)){
-                if(newEvent(alreadyHit, i)){
-                    alreadyHit2.add(i);
+            // search through the filing array to find a filing of the desired type
+            int rCount = rails; // saves the amount of rails found for this recursion stage
+            int dCount = drawers; // saves the amount of drawers found for this recursion stage
+            int cCount = cabinets; // saves the amount of cabinets found for this recursion stage
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit); // saves the already checked filings for this recursion stage
+            if(table[i].getType().equals(type)){ // if the filing at current index matches the desired filing type
+                if(newEvent(alreadyHit, i)){ // if the filing at current index hasn't been checked already
+                    alreadyHit2.add(i); // add the current index to the ArrayList of checked array elements
+
+                    // If filing at current index has rails and that max number of rails needed has not been reached
                     if(table[i].getRails().equals("Y") && rails < number){
-                        rCount = rails+1;
+                        rCount = rails+1; // add rails to the amount of rails found
                     }
+
+                    // If filing at current index has drawers and that max number of drawers needed has not been reached
                     if(table[i].getDrawers().equals("Y") && drawers < number){
-                        dCount = drawers+1;
+                        dCount = drawers+1; // add drawer to the amount of drawers found
                     }
+
+                    // If filing at current index has cabinets and that max number of cabinets needed has not been reached
                     if(table[i].getCabinet().equals("Y") && cabinets < number){
-                        cCount = cabinets+1;
+                        cCount = cabinets+1; // add cabinet to the amount of cabinets found
                     }
+                    // adds the filing price at current index to price sum and is saved for current recursion call
                     totalPrice2 = priceTotal + table[i].getPrice();
+                    // if the amount rails + drawers + cabinets found is equal to max amount pieces needed to make order
                     if(rCount+dCount+cCount == number*3){
-                        prices.add(totalPrice2);
-                        combinations.add(alreadyHit2);
-                        return;
+                        prices.add(totalPrice2); // add total price of combination to prices ArrayList
+                        combinations.add(alreadyHit2); // add the indexes of the combined filings to the combinations ArrayList
+                        lowest = getLowestPrice();
+                        return lowest;
                     }
-                    filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount);
+                    filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount); // recursive call
                 }
             }
         }
+        return lowest;
     }
 
     /**
@@ -380,33 +412,41 @@ public class CreateOrder
      * @param bases // counts the number of bases found
      * @param lightBulbs // counts the number of bulbs found
      */
-    public void lampPrice(Lamp[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int lampPrice(Lamp[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int bases, int lightBulbs) {
-        int totalPrice2 = priceTotal;
+        int lowest = getLowestPrice();
+        int totalPrice2 = priceTotal; // saves the price total for each recursion stage
+        // search through the lamp array to find a lamp of the desired type
         for (int i = 0; i < table.length; i++) {
-            int bCount = bases;
-            int lCount = lightBulbs;
-            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit);
-            if(table[i].getType().equals(type)){
-                if(newEvent(alreadyHit, i)){
-                    alreadyHit2.add(i);
+            int bCount = bases; // saves the amount of bases found for this recursion stage
+            int lCount = lightBulbs; // saves the amount of bulbs found for this recursion stage
+            ArrayList<Integer>alreadyHit2 = new ArrayList<Integer>(alreadyHit); // saves the already checked lamps for this recursion stage
+            if(table[i].getType().equals(type)){ // if the lamp at current index matches the desired lamp type
+                if(newEvent(alreadyHit, i)){ // if the lamp at current index hasn't been checked already
+                    alreadyHit2.add(i); // add the current index to the ArrayList of checked array elements
 
+                    // If lamp at current index has bases and that max number of bases needed has not been reached
                     if(table[i].getBase().equals("Y") && bases < number){
-                        bCount = bases+1;
+                        bCount = bases+1; // add base to the amount of bases found
                     }
 
+                    // If lamp at current index has bulbs and that max number of bulbs needed has not been reached
                     if(table[i].getBulb().equals("Y") && lightBulbs < number){
-                        lCount = lightBulbs+1;
+                        lCount = lightBulbs+1; // add bulb to the amount of bulbs found
                     }
+                    // adds the lamp price at current index to price sum and is saved for current recursion call
                     totalPrice2 = priceTotal + table[i].getPrice();
+                    // if the amount bases + bulbs found is equal to max amount pieces needed to make order
                     if(bCount+lCount == number*2){
-                        prices.add(totalPrice2);
-                        combinations.add(alreadyHit2);
-                        return;
+                        prices.add(totalPrice2); // add total price of combination to prices ArrayList
+                        combinations.add(alreadyHit2); // add the indexes of the combined lamps to the combinations ArrayList
+                        lowest = getLowestPrice();
+                        return lowest;
                     }
-                    lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount);
+                    lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount); // recursive call
                 }
             }
         }
+        return lowest;
     }
 }
