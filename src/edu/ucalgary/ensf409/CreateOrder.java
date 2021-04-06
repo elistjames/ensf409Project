@@ -356,14 +356,14 @@ public class CreateOrder {
                     if(lCount+aCount+sCount+cCount == number*4){
                         prices.add(totalPrice2); // add total price of combination to prices ArrayList
                         combinations.add(alreadyHit2); // add the indexes of the combined chairs to the combinations ArrayList
-                        lowest = getLowestPrice();
-                        return lowest; // Update lowest chair price
+                        lowest = getLowestPrice(); // Update lowest chair price
+                        return lowest;  // return updated lowest price
                     }
                     lowest = chairPrice(table, totalPrice2, alreadyHit2, type, number, lCount, aCount, sCount, cCount); // recursive call
                 }
             }
         }
-        return lowest;
+        return lowest; // return updated lowest price
     }
 
     /**
@@ -414,14 +414,14 @@ public class CreateOrder {
                     if(lCount+tCount+dCount == number*3){
                         prices.add(totalPrice2); // add total price of combination to prices ArrayList
                         combinations.add(alreadyHit2); // add the indexes of the combined desks to the combinations ArrayList
-                        lowest = getLowestPrice(); // Update lowest
-                        return lowest;
+                        lowest = getLowestPrice(); // Update lowest desk price
+                        return lowest; // return updated lowest price
                     }
                     deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount); // recursive call
                 }
             }
         }
-        return lowest;
+        return lowest; // return updated lowest price
     }
 
     /**
@@ -472,14 +472,14 @@ public class CreateOrder {
                     if(rCount+dCount+cCount == number*3){
                         prices.add(totalPrice2); // add total price of combination to prices ArrayList
                         combinations.add(alreadyHit2); // add the indexes of the combined filings to the combinations ArrayList
-                        lowest = getLowestPrice();
-                        return lowest;
+                        lowest = getLowestPrice(); // Update lowest filing price
+                        return lowest; // return updated lowest price
                     }
                     filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount); // recursive call
                 }
             }
         }
-        return lowest;
+        return lowest; // return updated lowest price
     }
 
     /**
@@ -523,13 +523,13 @@ public class CreateOrder {
                     if(bCount+lCount == number*2){
                         prices.add(totalPrice2); // add total price of combination to prices ArrayList
                         combinations.add(alreadyHit2); // add the indexes of the combined lamps to the combinations ArrayList
-                        lowest = getLowestPrice();
-                        return lowest;
+                        lowest = getLowestPrice(); // Update lowest lamp price
+                        return lowest; // return updated lowest price
                     }
                     lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount); // recursive call
                 }
             }
         }
-        return lowest;
+        return lowest; // return updated lowest price
     }
 }

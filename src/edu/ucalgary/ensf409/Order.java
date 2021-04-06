@@ -245,24 +245,29 @@ public class Order
      */
     public int userNumber(Order order, Scanner input){
         boolean correctAmount = true;
-        int number = 0;
+        String number = "";
         do{
+            correctAmount = true;
             System.out.println();
-            System.out.println("Please enter the amount: ");
-            try {
-                number = input.nextInt();
-            }
-            catch (InputMismatchException e){
-                System.out.println("Must be an integer");
+            System.out.println("Please enter your desired amount: ");
+            number = input.nextLine();
+            if(number.length() == 0){
                 correctAmount = false;
+                System.out.println("Input cannot be blank");
             }
-            if(!correctAmount){
-                System.out.println("Invalid entry: Must enter a valid amount");
+            else{
+                for(int i = 0; i < number.length(); i++){
+                    if(number.charAt(i) < 48 || number.charAt(i) > 57){
+                        correctAmount = false;
+                        System.out.println("Input must only contain integers");
+                        break;
+                    }
+                }
             }
         }
         while(!correctAmount);
 
-        return number;
+        return Integer.parseInt(number);
     }
 
     /**
@@ -365,26 +370,26 @@ public class Order
      */
     public boolean makeAnotherOrder(Order order, Scanner input){
         boolean command = true;
-        StringBuilder yn = new StringBuilder();
-        while(true){
-            System.out.println();
+        boolean valid;
+        do{
+            valid = true;
             System.out.println("Would you like to make another order? (Y/N)");
-            yn.append(input.nextLine().trim());
-            if(yn.length() < 2){
-                if(yn.toString().equals("y") || yn.toString().equals("Y") || yn.toString().equals("n") || yn.toString().equals("N")){
-                    if(yn.toString().equals("n") || yn.toString().equals("N")){
-                        command = false;
-                    }
+            switch(input.nextLine().trim()){
+                case "Y":
+                case "y":
+                    command = true;
                     break;
-                }
-                else{
-                    System.out.println("You can only enter Y or N");
-                }
-            }
-            else{
-                System.out.println("You can only enter Y or N");
+                case "N":
+                case "n":
+                    command = false;
+                    break;
+                default:
+                    valid = false;
+                    System.out.println("Must select either Y or N");
+                    break;
             }
         }
+        while(!valid);
         return command;
     }
 
