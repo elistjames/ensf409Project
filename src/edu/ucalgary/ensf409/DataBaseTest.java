@@ -128,7 +128,7 @@ public class DataBaseTest
      * compares the data with a hardcoded representation of original data. This is done through the process of calling the writeFilings()
      * method to get the hardcoded representation of the data which is in the the Lamp table in SQL. After, it compares
      * the hardcoded representation with the data in that is in Lamp[] array in Database class and asserts that
-     * both arrays are exactly the same with assertArrayEquals().
+     * both arrays are exactly the same with assertArrayEquals()..
      */
     @Test
     public void testUpdateLamps()
