@@ -280,7 +280,6 @@ public class Database {
 
         }
     }
-
     /**
      This pulls all the data from the database and updates the local arrays with the table objects.
      */
@@ -434,7 +433,53 @@ public class Database {
      * Does not use database
      * @return returns Connection object, dbConnect.
      */
-    public Connection getdbConnect() {
+    public Connection getdbConnect()
+    {
         return this.dbConnect;
+    }
+
+    /**
+     *  The following methods are used specifically for testing that the sendClass() methods update
+     *  their corresponding SQL table with data from the Class[] array stored as a data member representing
+     *  each furniture category
+     *  ------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     *
+     * @param chair Chair object for updating into Chair[] array in specific row
+     * @param row row corresponding to Chair[] array to be set with object
+     */
+    public void setChairRow(Chair chair, int row)
+    {
+        this.chairs[row] = chair;
+    }
+
+    /**
+     * @param desk Desk object for setting Desk[] array in specific row
+     * @param row row corresponding to Desk[] array to be set with object
+     */
+    public void setDeskRow(Desk desk, int row)
+    {
+        this.desks[row] = desk;
+    }
+
+    /**
+     * @param filing Chair object for setting Filing[] array in specific row
+     * @param row row corresponding to Filing[] array to be set
+     */
+    public void setFilingRow(Filing filing, int row)
+    {
+        this.filings[row] = filing;
+    }
+
+    /**
+     *
+     * @param lamp Lamp object for setting Lamp[] array in specific row
+     * @param row row corresponding to Lamp[] array to be set
+     */
+    public void setLampRow(Lamp lamp, int row)
+    {
+        this.lamps[row] = lamp;
     }
 }

@@ -1,7 +1,13 @@
+/**
+ * Active Team Member:
+ @author     chad Holst <a href="mailto:chad.holst1@ucalgary.ca">chad.holst1@ucalgary.ca</a>
+ @version    1.9
+ @since      1.0
+ */
 package edu.ucalgary.ensf409;
-// I made a change here and the differences between branches will be shown.
-/*
-This class contains data for Chair object. It stores the attributes for each column used in the Chair table used in the database.
+/**
+ * This class contains data for the furniture category, Chair.
+ * It stores the values for each column used in the Chair table in SQL as data members.
  */
 public class Chair {
     private String id;

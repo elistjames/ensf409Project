@@ -1,7 +1,14 @@
+/**
+ * Active Team Member:
+ @author     chad Holst <a href="mailto:chad.holst1@ucalgary.ca">chad.holst1@ucalgary.ca</a>
+ @version    1.9
+ @since      1.0
+ */
 package edu.ucalgary.ensf409;
 
-/*
-This class contains data for Manufacturer object. It stores the attributes for each column used in the Manufacturer table used in the database.
+/**
+ *  This class contains data for the Manufacturers of furniture, Manufacturer.
+ *  It stores the values for each column used in the Chair table in SQL as data members.
  */
 public class Manufacturer {
     private String manuId;

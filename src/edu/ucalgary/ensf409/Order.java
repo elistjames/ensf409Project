@@ -23,7 +23,7 @@ public class Order
         Scanner input = new Scanner(System.in); //Reads the user input
         int orderCounter = 1; // indicates the order number
         Order order = new Order(); // stores order information
-        Database db = new Database("jdbc:mysql://localhost/inventory", "chad", "@@Kawa1000"); //makes new database
+        Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409"); //makes new database
 
         /**
          * This while loop is the beating heart of the program and will keep looping as long as the while argument is true.  Every
