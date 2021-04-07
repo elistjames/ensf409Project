@@ -103,7 +103,8 @@ public class Order
      * @param input user input reader
      * @return String of the type chosen by the user.
      */
-    public String userType(Order order, Scanner input){
+    public String userType(Order order, Scanner input)
+    {
         String type = "";
 
         if(order.getFurnitureCategory().equals("filing")){

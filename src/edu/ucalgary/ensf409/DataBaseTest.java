@@ -1,30 +1,41 @@
+/**
+ * Active Team Member:
+ @author     chad Holst <a href="mailto:chad.holst1@ucalgary.ca">chad.holst1@ucalgary.ca</a>
+ @version    1.9
+ @since      1.0
+ */
+
 package edu.ucalgary.ensf409;
 import org.junit.*;
 import java.sql.*;
 
+/**
+ * This class tests the database read and write methods in regards to the Class arrays that represent
+ * their respective furniture category which hold their categorical information based on the table columns
+ * in SQL
+ */
 public class DataBaseTest
 {
-    // Database update methods populate the FurnitureCategory class arrays with updated data from database
-    // Database send methods send the updated data in the FurnitureCategory class arrays to the database
 
-    private String[][] chairs;
-    private String[][] desks;
-    private String[][] filings;
-    private String[][] lamps;
-    private String[][] manufacturers;
-    private Database dataBaseTest;
-    private DataBaseTest dataTest;
+    private Database databaseTest;
     private Connection dbConnectTest;
 
     /**
-     * Creates a DataBase object before each test with different USERNAME and PASSWORD for testing purposes but same data
+     * setUpTest() creates a DataBase object before each test with a different USERNAME and PASSWORD for testing purposes but uses
+     * the same data
      */
     @Before
     public void setUpTests()
     {
-        dataBaseTest = new Database("jdbc:mysql://localhost/inventory", "chad", "@@Kawa1000");
+        databaseTest = new Database("jdbc:mysql://localhost/inventory", "chad", "@@Kawa1000");
         // create Database object for testing before each test
     }
+
+    /**
+     * testInitializeConnection() tests the connection with the SQL server which allows access to the database.
+     *  We have set the actual boolean value to be true. We attempt to establish a connection and if it successful,
+     *  then the isValid() method will return true.
+     */
     @Test
     public void testInitializeConnection()
     {
@@ -33,8 +44,8 @@ public class DataBaseTest
         boolean expected = false;
 
         // run test
-        dataBaseTest.initializeConnection();
-        dbConnectTest = dataBaseTest.getdbConnect();
+        databaseTest.initializeConnection();
+        dbConnectTest = databaseTest.getdbConnect();
         try
         {
             expected = dbConnectTest.isValid(10); // if connection is valid then expected = true
@@ -48,243 +59,259 @@ public class DataBaseTest
         Assert.assertEquals("The truth value for expected must be true to verify that the connection is valid", expected, actual);
     }
     /**
-     * tests populating a Chair array from the database
+     * testUpdateChairs() will test populating a Chair array from the database and into the Database class Chair[] array, then
+     * compares the data with a hardcoded representation of original data. This is done through the process of calling the writeChairs()
+     * method to get the hardcoded representation of the data which is in the Chair table in SQL. After, it compares
+     * the hardcoded representation with the data in that is in Chair[] array in Database class and Asserts that
+     * both arrays are exactly the same with assertArrayEquals().
      */
     @Test
     public void testUpdateChairs()
     {
         // setup
-        dataBaseTest.initializeConnection();
-        String[][] actual = writeChairs();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        databaseTest.initializeConnection(); // connect to SQL server
+        String[][] actual = writeChairs(); // calls a helper method to get hardcoded String[][] representation of Chair table in SQL
 
         // run test
-        dataBaseTest.updateChairs();
-        Chair[] chairs = dataBaseTest.getChairs();
-        int row = 0;
-        int column = 0;
-        while(row != chairs.length)
-        {
-            expected[row][column] = chairs[row].getId();
-            column++;
-            expected[row][column] = chairs[row].getType();
-            column++;
-            expected[row][column] = chairs[row].getLegs();
-            column++;
-            expected[row][column] = chairs[row].getArms();
-            column++;
-            expected[row][column] = chairs[row].getSeat();
-            column++;
-            expected[row][column] = chairs[row].getCushion();
-            column++;
-            expected[row][column] = String.valueOf(chairs[row].getPrice());
-            column++;
-            expected[row][column] = chairs[row].getManuId();
-            column = 0;
-            row++;
-        }
+        databaseTest.updateChairs(); // load the data from SQL into the Chair furniture category array in Database class
+        String[][] expected = chairsToStringArray(); // calls a helper method to load the data from the Chair[] array in Database class and convert it to String[][] array.
+
         // verify
-        Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
     }
     /**
-     * tests populating a Desk array from the database
+     * testUpdateDesks() will test populating a Desk array from the database and into the Database class Desk[] array, then
+     * compares the data with a hardcoded representation of original data. This is done through the process of calling the writeDesks()
+     * method to get the hardcoded representation of the data which is in the the Desk table in SQL. After, it compares
+     * the hardcoded representation with the data in that is in Desk[] array in Database class and asserts that
+     * both arrays are exactly the same with assertArrayEquals().
      */
     @Test
     public void testUpdateDesks()
     {
         // setup
-        dataBaseTest.initializeConnection();
-        String[][] actual = writeDesks();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        databaseTest.initializeConnection();
+        String[][] actual = writeDesks(); // calls a helper method to get hardcoded String[][] representation of Desk table in SQL
 
         // run test
-        dataBaseTest.updateDesks();
-        Desk[] desks = dataBaseTest.getDesk();
-        int row = 0;
-        int column = 0;
-        while(row != desks.length)
-        {
-            expected[row][column] = desks[row].getId();
-            column++;
-            expected[row][column] = desks[row].getType();
-            column++;
-            expected[row][column] = desks[row].getLegs();
-            column++;
-            expected[row][column] = desks[row].getTop();
-            column++;
-            expected[row][column] = desks[row].getDrawer();
-            column++;
-            expected[row][column] = String.valueOf(desks[row].getPrice());
-            column++;
-            expected[row][column] = desks[row].getManuId();
-            column = 0;
-            row++;
-        }
+        databaseTest.updateDesks(); // load the data from SQL into the Desk furniture category array in Database class
+        String[][] expected = desksToStringArray(); // calls a helper method to load the data from the Desk[] array in Database class and convert it to String[][] array.
+
         // verify
-        Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same.
     }
     /**
-     * tests populating a Filing array from the database
+     * testUpdateFilings() will test populating a Filing array from the database and into the Database class Filing[] array, then
+     * compares the data with a hardcoded representation of original data. This is done through the process of calling the writeFilings()
+     * method to get the hardcoded representation of the data which is in the the Filing table in SQL. After, it compares
+     * the hardcoded representation with the data in that is in Filing[] array in Database class and asserts that
+     * both arrays are exactly the same with assertArrayEquals().
      */
     @Test
     public void testUpdateFilings()
     {
         // setup
-        dataBaseTest.initializeConnection();
-        String[][] actual = writeFiling();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        databaseTest.initializeConnection();
+        String[][] actual = writeFiling();// calls a helper method to get hardcoded String[][] representation of Filing table in SQL
 
         // run test
-        dataBaseTest.updateFilings();
-        Filing[] cabinets = dataBaseTest.getFilings();
-        int counter = 0;
-        int column = 0;
-        while(counter != cabinets.length)
-        {
-            expected[counter][column] = cabinets[counter].getId();
-            column++;
-            expected[counter][column] = cabinets[counter].getType();
-            column++;
-            expected[counter][column] = cabinets[counter].getRails();
-            column++;
-            expected[counter][column] = cabinets[counter].getDrawers();
-            column++;
-            expected[counter][column] = cabinets[counter].getCabinet();
-            column++;
-            expected[counter][column] = String.valueOf(cabinets[counter].getPrice());
-            column++;
-            expected[counter][column] = cabinets[counter].getManuId();
-            column = 0;
-            counter++;
-        }
+        databaseTest.updateFilings(); // load the data from SQL into the Filing array in Database class
+        String[][] expected = filingsToStringArray(); // calls a helper method to load the data from the Filing[] array in Database class and convert it to String[][] array.
+      
         // verify
-        Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+
     }
     /**
-     * tests populating a Lamp array from the database
+     * testUpdateLamps() will test populating a Lamp array from the database and into the Database class Lamp[] array, then
+     * compares the data with a hardcoded representation of original data. This is done through the process of calling the writeFilings()
+     * method to get the hardcoded representation of the data which is in the the Lamp table in SQL. After, it compares
+     * the hardcoded representation with the data in that is in Lamp[] array in Database class and asserts that
+     * both arrays are exactly the same with assertArrayEquals()..
      */
     @Test
     public void testUpdateLamps()
     {
         // setup
-        dataBaseTest.initializeConnection();
-        String[][] actual = writeLamp();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        databaseTest.initializeConnection();
+        String[][] actual = writeLamp(); // calls a helper method to get hardcoded String[][] representation of Lamp table in SQL
 
         // run test
-        dataBaseTest.updateLamps();
-        Lamp[] theLamps = dataBaseTest.getLamps();
-        int row = 0;
-        int column = 0;
-        while(row != theLamps.length)
-        {
-            expected[row][column] = theLamps[row].getId();
-            column++;
-            expected[row][column] = theLamps[row].getType();
-            column++;
-            expected[row][column] = theLamps[row].getBase();
-            column++;
-            expected[row][column] = theLamps[row].getBulb();
-            column++;
-            expected[row][column] = String.valueOf(theLamps[row].getPrice());
-            column++;
-            expected[row][column] = theLamps[row].getManuId();
-            column = 0;
-            row++;
-        }
+        databaseTest.updateLamps(); // load the data from SQL into the Lamp array in Database class
+        String[][] expected = lampsToStringArray();  // calls a helper method to load the data from the Lamp[] array in Database class and convert it to String[][] array.
+
         // verify
-        Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
     }
     /**
-     * tests populating a Manufacturer array from the database
+     * testUpdateManufacturer() will test populating a Manufacturer array from the database and into the Database class Manufacturer[] array, then
+     * compares the data with a hardcoded representation of original data. This is done through the process of calling the writeManufacturer()
+     * method to get the hardcoded representation of the data which is in the the Manufacturer table in SQL. After, it compares
+     * the hardcoded representation with the data in that is in Manufacturer[] array in Database class and asserts that
+     * both arrays are exactly the same with assertArrayEquals().
      */
     @Test
     public void testUpdateManufacturer()
     {
         // setup
-        dataBaseTest.initializeConnection();
-        String[][] actual = writeManufacturer();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        databaseTest.initializeConnection();
+        String[][] actual = writeManufacturer(); // calls a helper method to get hardcoded String[][] representation of Manufacturer table in SQL
 
         // run test
-        dataBaseTest.updateMans();
-        Manufacturer[] manufs = dataBaseTest.getManufacturers();
-        int row = 0;
-        int column = 0;
-        while(row != manufs.length)
-        {
-            expected[row][column] = manufs[row].getManuId();
-            column++;
-            expected[row][column] = manufs[row].getName();
-            column++;
-            expected[row][column] = manufs[row].getPhone();
-            column++;
-            expected[row][column] = manufs[row].getProvince();
-            column = 0;
-            row++;
-        }
+        databaseTest.updateMans(); // load the data from SQL into the Manufacturer array in Database class
+        String[][] expected = manusToStringArray(); // calls a helper method to load the data from the Desk[] array in Database class and convert it to String[][] array.
+
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
-
     }
     /**
-     * tests updating a Desk array through the pullData method which uses a table name as input for switch
+     * sendChairTest() will test storing data from the Chair[] array into the Chair table in SQL. This is done through
+     * the process of calling writeChairs() to receive a String[][] representation of the original hardcoded data. Then,
+     * changes a couple of values within a row to ensure that the updated array data is stored in the Chair SQL table.
+     * We instantiate a Chair object, use the setChairRow() method to set updated data from Chair object. Then call the
+     * sendChair() method to store the updated data into Chair table in SQL. Then, assert that the arrays are exactly the same.
      */
     @Test
-    public void testPullData()
+    public void sendChairTest()
     {
         // setup
-        dataBaseTest.initializeConnection();
-        String[][] actual = writeDesks();
-        int rows = actual.length;
-        int columns = actual[0].length;
-        String[][] expected = new String[rows][columns];
+        databaseTest.initializeConnection();
+        String[][] actual = writeChairs(); // calls a helper method to get hardcoded String[][] representation of Chair table in SQL
+        actual[0][0] = "C0914"; // changes values of a row in the hardcoded String[][] representation
+        actual[0][1] = "Mesh";
+        actual[0][2] = "Y";
+        actual[0][3] = "Y";
+        actual[0][4] = "Y";
+        actual[0][5] = "Y";
+        actual[0][6] = "10";
+        actual[0][7] = "001";
 
         // run test
-        dataBaseTest.updateDesks();
-        Desk[] desks = dataBaseTest.getDesk();
-        int row = 0;
-        int column = 0;
-        while(row != desks.length)
-        {
-            expected[row][column] = desks[row].getId();
-            column++;
-            expected[row][column] = desks[row].getType();
-            column++;
-            expected[row][column] = desks[row].getLegs();
-            column++;
-            expected[row][column] = desks[row].getTop();
-            column++;
-            expected[row][column] = desks[row].getDrawer();
-            column++;
-            expected[row][column] = String.valueOf(desks[row].getPrice());
-            column++;
-            expected[row][column] = desks[row].getManuId();
-            column = 0;
-            row++;
-        }
-        Assert.assertArrayEquals(expected, actual);
+        databaseTest.updateChairs(); // initializes Chair[] array with data that is in SQL
+        Chair chair = new Chair("C0914","Mesh","Y","Y","Y","Y",10,"001");
+        databaseTest.setChairRow(chair, 0); // changes a row with different values to ensure updated data from array is stored in SQL
+        databaseTest.sendChair(); // stores Chair[] array data into the Chair table in SQL
+        String[][] expected = chairsToStringArray(); // calls a helper method to load the data from the Chair[] array in Database class and convert it to String[][] array.
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+
+        // after test, put original data back in the Chair table in SQL
+        Chair oldChair = new Chair("C0914", "Task", "N", "N", "Y", "Y", 50, "002");
+        databaseTest.setChairRow(oldChair, 0);
+        databaseTest.sendChair();
+
+    }
+    /**
+     * sendDeskTest() will test storing data from the Desk[] array into the Desk table in SQL. This is done through
+     * the process of calling writeDesks() to receive a String[][] representation of the original hardcoded data. Then,
+     * changes a couple of values within a row to ensure that the updated array data is stored in the Desk SQL table.
+     * We instantiate a Desk object, use the setDeskRow() method to set updated data from Chair object. Then call the
+     * sendDesk() method to store the updated data into Desk table in SQL. Then, assert that the arrays are exactly the same.
+     */
+    @Test
+    public void sendDeskTest()
+    {
+        // setup
+        databaseTest.initializeConnection();
+        String[][] actual = writeDesks(); // calls a helper method to get String[][] representation of Desk table in SQL
+        actual[0][0] = "D0890";          // changes values of a row in the hardcoded String[][] representation
+        actual[0][1] = "Adjustable";
+        actual[0][2] = "Y";
+        actual[0][3] = "Y";
+        actual[0][4] = "Y";
+        actual[0][5] = "15";
+        actual[0][6] = "002";
+
+        // run test
+
+        databaseTest.updateDesks(); // initializes Desk[] array with data that is in SQL
+        Desk desk = new Desk("D0890", "Adjustable", "Y", "Y", "Y", 15, "002");
+        databaseTest.setDeskRow(desk, 0); // changes a row with different values to ensure updated data from array is stored in SQL
+        databaseTest.sendDesk(); // stores Desk[] array data into the Desk table in SQL
+        String[][] expected = desksToStringArray(); // calls a helper method to load the data from the Desk[] array in Database class and convert it to String[][] array.
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+
+        // after test, store old data back into row
+        Desk oldDesk = new Desk("D0890", "Traditional", "N", "N", "Y",25,"002");
+        databaseTest.setDeskRow(oldDesk, 0);
+        databaseTest.sendDesk();
+    }
+    /**
+     * sendFilingTest() will test storing data from the Filing[] array into the Filing table in SQL. This is done through
+     * the process of calling writeFilings() to receive a String[][] representation of the original hardcoded data. Then,
+     * changes a couple of values within a row to ensure that the updated array data is stored in the Filing SQL table.
+     * We instantiate a Filing object, use the setFilingRow() method to set updated data from Filing object. Then, call the
+     * sendFiling() method to store the updated data into Filing table in SQL. Then, assert that the arrays are exactly the same.
+     */
+    @Test
+    public void sendFilingTest()
+    {
+        // setup
+        databaseTest.initializeConnection();
+        String[][] actual = writeFiling(); // calls a helper method to get String[][] representation of Filing table in SQL
+        actual[0][0] = "F001";            // changes values of a row in the hardcoded String[][] representation
+        actual[0][1] = "Medium";
+        actual[0][2] = "Y";
+        actual[0][3] = "Y";
+        actual[0][4] = "Y";
+        actual[0][5] = "110";
+        actual[0][6] = "002";
+
+        // run test
+        databaseTest.updateFilings(); // initializes Filing[] array with data that is in SQL
+        Filing filing = new Filing("F001", "Medium", "Y", "Y", "Y", 110, "002");
+        databaseTest.setFilingRow(filing, 0); // changes a row with different values to ensure updated data from array is stored in SQL
+        databaseTest.sendFiling();  // stores Filing[] array data into the Filing table in SQL
+        String[][] expected = filingsToStringArray(); // calls a helper method to load the data from the Filing[] array in Database class and convert it to String[][] array.
+        Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+
+        // after test, store data back into row
+        Filing oldFiling = new Filing("F001", "Small", "Y", "Y", "N", 50, "005");
+        databaseTest.setFilingRow(oldFiling, 0);
+        databaseTest.sendFiling();
+    }
+    /**
+     * sendLampTest() will test storing data from the Lamp[] array into the Lamp table in SQL. This is done through
+     * the process of calling writeLamps() to receive a String[][] representation of the original hardcoded data. Then,
+     * changes a couple of values within a row to ensure that the updated array data is stored in the Lamp SQL table.
+     * We instantiate a Lamp object, use the setLampRow() method to set updated data from Lamp object. Then call the
+     * sendLamp() method to store the updated data into Lamp table in SQL. Then, assert that the arrays are exactly the same.
+     */
+    @Test
+    public void sendLampTest()
+    {
+        // setup
+        databaseTest.initializeConnection();
+        String[][] actual = writeLamp(); // calls a helper method to get String[][] representation of Lamp table in SQL
+        actual[0][0] = "L013";          // changes values of a row in the hardcoded String[][] representation
+        actual[0][1] = "Swing Arm";
+        actual[0][2] = "Y";
+        actual[0][3] = "Y";
+        actual[0][4] = "90";
+        actual[0][5] = "001";
+
+        // run test
+        databaseTest.updateLamps(); // initializes Filing[] array with data that is in SQL
+        Lamp lamp = new Lamp("L013", "Swing Arm", "Y", "Y",90, "001");
+        databaseTest.setLampRow(lamp, 0); // changes a row with different values to ensure updated data from array is stored in SQL
+        databaseTest.sendLamp(); // stores Lamp[] array data into the Lamp table in SQL
+        String[][] expected = lampsToStringArray(); // calls a helper method to load the data from the Lamp[] array in Database class and convert it to String[][] array.
+        Assert.assertArrayEquals(expected, actual); // checks if arrays are the same
+
+        // after test, put old date back into row
+        Lamp oldLamp = new Lamp("L013", "Desk", "Y", "N", 18, "004");
+        databaseTest.setLampRow(oldLamp, 0);
+        databaseTest.sendLamp();
     }
 
     /**
-     *  This is where all of the helper methods for testing class Database will be placed
-     *  ---------------------------------------------------------------------------------
+     *  This is where all of the helper methods for testing class Database will be placed for convenience
+     *  -------------------------------------------------------------------------------------------------
      */
 
 
-
     /**
-     @return returns String array representation of chair object data member values
+     @return returns String array of the hardcoded representation of original Chair object data member values
+     * that corresponds to the original data in the Chair table in SQL
      */
     public String[][] writeChairs()
     {
@@ -308,6 +335,48 @@ public class DataBaseTest
                 };
         return chairData;
     }
+    /**
+     * @return returns a String[][] array of the loaded data from Chair SQL table.
+     * This method initializes the Chair[] array in Database class that loads the data from SQL
+     * Then, converts the object array into a String[][] array for comparing with hardcoded data.
+     */
+    public String[][] chairsToStringArray()
+    {
+            String[][] actual = writeChairs(); // get hardcoded String[][] representation
+            int rows = actual.length; // get number of rows
+            int columns = actual[0].length; // get number of columns
+            String[][] expected = new String[rows][columns]; // initialize array
+
+            databaseTest.updateChairs();
+            Chair[] chairs = databaseTest.getChairs(); // get Chair[] array from Database class
+            int row = 0;
+            int column = 0;
+            while(row != chairs.length) // loop through and assign Chair data member values that represent the values corresponding to each column in SQL table.
+            {
+            expected[row][column] = chairs[row].getId();
+            column++;
+            expected[row][column] = chairs[row].getType();
+            column++;
+            expected[row][column] = chairs[row].getLegs();
+            column++;
+            expected[row][column] = chairs[row].getArms();
+            column++;
+            expected[row][column] = chairs[row].getSeat();
+            column++;
+            expected[row][column] = chairs[row].getCushion();
+            column++;
+            expected[row][column] = String.valueOf(chairs[row].getPrice());
+            column++;
+            expected[row][column] = chairs[row].getManuId();
+            column = 0;
+            row++;
+            }
+        return expected;
+    }
+    /**
+     @return returns String array of the hardcoded representation of original Desk object data member values
+      * that corresponds to the original data in the Desk table in SQL.
+     */
     public String[][] writeDesks()
     {
         String[][] deskData =
@@ -330,6 +399,45 @@ public class DataBaseTest
                 };
         return deskData;
     }
+     /** @return returns a String[][] array of the loaded data from Desk SQL table.
+        * This method initializes the Desk[] array in Database class that loads the data from SQL
+        * Then, converts the object array into a String[][] array for comparing with hardcoded data.
+        */
+    public String[][] desksToStringArray()
+    {
+        String[][] actual = writeDesks(); // get hardcoded String[][] representation
+        int rows = actual.length; // get number of rows
+        int columns = actual[0].length; // get number of columns
+        String[][] expected = new String[rows][columns];
+
+        databaseTest.updateDesks();
+        Desk[] desks = databaseTest.getDesk();
+        int row = 0;
+        int column = 0;
+        while(row != desks.length)
+        {
+            expected[row][column] = desks[row].getId();
+            column++;
+            expected[row][column] = desks[row].getType();
+            column++;
+            expected[row][column] = desks[row].getLegs();
+            column++;
+            expected[row][column] = desks[row].getTop();
+            column++;
+            expected[row][column] = desks[row].getDrawer();
+            column++;
+            expected[row][column] = String.valueOf(desks[row].getPrice());
+            column++;
+            expected[row][column] = desks[row].getManuId();
+            column = 0;
+            row++;
+        }
+        return expected;
+    }
+    /**
+     @return returns String array of the hardcoded representation of original Filing object data member values
+      * that corresponds to the original data in the Filing table in SQL
+     */
     public String[][] writeFiling()
     {
           String [][] filingData =
@@ -352,7 +460,45 @@ public class DataBaseTest
                  };
           return filingData;
     }
+     /** @return returns a String[][] array of the loaded data from Filing SQL table.
+        * This method initializes the Filing[] array in Database class that loads the data from SQL
+        * Then, converts the object array into a String[][] array for comparing with hardcoded data.
+       */
+   public String[][] filingsToStringArray()
+   {
+       String[][] actual = writeFiling();
+       int rows = actual.length;
+       int columns = actual[0].length;
+       String[][] expected = new String[rows][columns];
 
+       databaseTest.updateFilings();
+       Filing[] cabinets = databaseTest.getFilings();
+       int counter = 0;
+       int column = 0;
+       while(counter != cabinets.length)
+       {
+           expected[counter][column] = cabinets[counter].getId();
+           column++;
+           expected[counter][column] = cabinets[counter].getType();
+           column++;
+           expected[counter][column] = cabinets[counter].getRails();
+           column++;
+           expected[counter][column] = cabinets[counter].getDrawers();
+           column++;
+           expected[counter][column] = cabinets[counter].getCabinet();
+           column++;
+           expected[counter][column] = String.valueOf(cabinets[counter].getPrice());
+           column++;
+           expected[counter][column] = cabinets[counter].getManuId();
+           column = 0;
+           counter++;
+       }
+       return expected;
+   }
+    /**
+     @return returns String array of the hardcoded representation of original Lamp object data member values
+      * that corresponds to the original data in the Lamp table in SQL
+     */
    public String[][] writeLamp()
    {
        String[][] lampData =
@@ -375,6 +521,43 @@ public class DataBaseTest
                };
        return lampData;
    }
+    /** @return returns a String[][] array of the loaded data from Lamp SQL table.
+      * This method initializes the Lamp[] array in Database class that loads the data from SQL
+      * Then, converts the object array into a String[][] array for comparing with hardcoded data.
+      */
+   public String[][] lampsToStringArray()
+   {
+       String[][] actual = writeLamp();
+       int rows = actual.length;
+       int columns = actual[0].length;
+       String[][] expected = new String[rows][columns];
+
+       databaseTest.updateLamps();
+       Lamp[] theLamps = databaseTest.getLamps();
+       int row = 0;
+       int column = 0;
+       while(row != theLamps.length)
+       {
+           expected[row][column] = theLamps[row].getId();
+           column++;
+           expected[row][column] = theLamps[row].getType();
+           column++;
+           expected[row][column] = theLamps[row].getBase();
+           column++;
+           expected[row][column] = theLamps[row].getBulb();
+           column++;
+           expected[row][column] = String.valueOf(theLamps[row].getPrice());
+           column++;
+           expected[row][column] = theLamps[row].getManuId();
+           column = 0;
+           row++;
+       }
+       return expected;
+   }
+    /**
+     @return returns String array of the hardcoded representation of original Manufacturer object data member values
+      * that corresponds to the original data in the Manufacturer table in SQL
+     */
    public String[][] writeManufacturer()
    {
       String[][] manuData =
@@ -387,19 +570,30 @@ public class DataBaseTest
               };
       return manuData;
    }
+   public String[][] manusToStringArray()
+   {
+       String[][] actual = writeManufacturer();
+       int rows = actual.length;
+       int columns = actual[0].length;
+       String[][] expected = new String[rows][columns];
+
+       databaseTest.updateMans();
+       Manufacturer[] manufs = databaseTest.getManufacturers();
+       int row = 0;
+       int column = 0;
+       while(row != manufs.length)
+       {
+           expected[row][column] = manufs[row].getManuId();
+           column++;
+           expected[row][column] = manufs[row].getName();
+           column++;
+           expected[row][column] = manufs[row].getPhone();
+           column++;
+           expected[row][column] = manufs[row].getProvince();
+           column = 0;
+           row++;
+       }
+       return expected;
+   }
+
 }
-
-
-
-                  
-                          
-                          
-       
-       
-       
-       
-                          
-                          
-                         
-
-
