@@ -530,6 +530,6 @@ public class CreateOrder {
                 }
             }
         }
-        return lowest; // return updated lowest price
+        return lowest; // return updated lowest price.
     }
 }
