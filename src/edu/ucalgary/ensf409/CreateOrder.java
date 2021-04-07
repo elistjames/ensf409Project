@@ -319,7 +319,7 @@ public class CreateOrder {
      * @param seats // counts the number of seats found
      * @param cushions // counts the number of cushions found
      */
-    public int chairPrice(Chair table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int chairPrice(Chair[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                            int legs, int arms, int seats, int cushions) {
         int lowest = getLowestPrice();
         int totalPrice2 = priceTotal; // saves the price total for each recursion stage
@@ -380,7 +380,7 @@ public class CreateOrder {
      * @param tops // counts the number of tops found
      * @param drawers // counts the number of drawers found
      */
-    public int deskPrice(Desk table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int deskPrice(Desk[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int legs, int tops, int drawers) {
         int lowest = getLowestPrice();
         int totalPrice2 = priceTotal; // saves the price total for each recursion stage
@@ -417,7 +417,7 @@ public class CreateOrder {
                         lowest = getLowestPrice(); // Update lowest desk price
                         return lowest; // return updated lowest price
                     }
-                    deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount); // recursive call
+                    lowest = deskPrice(table, totalPrice2, alreadyHit2, type, number, lCount, tCount, dCount); // recursive call
                 }
             }
         }
@@ -438,7 +438,7 @@ public class CreateOrder {
      * @param drawers // counts the number of drawers found
      * @param cabinets // counts the number of cabinets found
      */
-    public int filingPrice(Filing table[], int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
+    public int filingPrice(Filing[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                             int rails, int drawers, int cabinets) {
         int lowest = getLowestPrice();
         int totalPrice2 = priceTotal; // saves the price total for each recursion stage
@@ -475,7 +475,7 @@ public class CreateOrder {
                         lowest = getLowestPrice(); // Update lowest filing price
                         return lowest; // return updated lowest price
                     }
-                    filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount); // recursive call
+                    lowest = filingPrice(table, totalPrice2, alreadyHit2, type, number, rCount, dCount, cCount); // recursive call
                 }
             }
         }
@@ -526,7 +526,7 @@ public class CreateOrder {
                         lowest = getLowestPrice(); // Update lowest lamp price
                         return lowest; // return updated lowest price
                     }
-                    lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount); // recursive call
+                    lowest = lampPrice(table, totalPrice2, alreadyHit2, type, number, bCount, lCount); // recursive call
                 }
             }
         }

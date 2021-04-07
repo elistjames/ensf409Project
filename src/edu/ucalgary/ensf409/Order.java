@@ -3,7 +3,6 @@ package edu.ucalgary.ensf409;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -35,7 +34,7 @@ public class Order
          * and the program ends.
          */
         while(true){
-
+            order.ldt = LocalDateTime.now();
             Scanner input1 = new Scanner(System.in);
             order.setFurnitureCategory(order.userCategory(input1));
 
@@ -359,7 +358,7 @@ public class Order
         }
         System.out.println("The file name is: "+order.getFurnitureType()+"_"+order.getFurnitureCategory()+
                 "_Order_["+ formatDateTime + "].txt");
-        db.pushLocal(); //update all tables in the database.
+        //db.pushLocal(); //update all tables in the database.
     }
 
     /**
