@@ -1,5 +1,7 @@
 package edu.ucalgary.ensf409;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -13,6 +15,7 @@ public class Order
     private String furnitureCategory; // store the furniture category
     private String furnitureType; //store the furniture type
     private int numberItems; // store the quantity of desired item
+    private LocalDateTime ldt;
 
     static boolean command = true; //indicates weather or not another order will be made
     /**
@@ -41,7 +44,7 @@ public class Order
             Scanner input3 = new Scanner(System.in);
             order.setNumberItems(order.userNumber(order, input3));
 
-            CreateOrder co = new CreateOrder(order, orderCounter, db); // creates new order for based from user's input
+            CreateOrder co = new CreateOrder(order, order.getLDT(), db); // creates new order for based from user's input
             db.initializeConnection(); // initialize the connection to the database
             db.updateLocal(); // update the Objects arrays
 
@@ -107,7 +110,7 @@ public class Order
         if(order.getFurnitureCategory().equals("filing")){
             type = "";
             boolean correctType;
-            do{
+            do {
                 correctType = false;
                 System.out.println();
                 System.out.println("Enter a number corresponding to the type of lamp you would like:");
@@ -139,7 +142,7 @@ public class Order
             do{
                 correctType = false;
                 System.out.println();
-                System.out.println("enter a number corresponding to the type of lamp you would like:");
+                System.out.println("Enter a number corresponding to the type of lamp you would like:");
                 System.out.println("(1) Desk");
                 System.out.println("(2) Swing Arm");
                 System.out.println("(3) Study");
@@ -168,7 +171,7 @@ public class Order
             do{
                 correctType = false;
                 System.out.println();
-                System.out.println("enter a number corresponding to the type of desk you would like:");
+                System.out.println("Enter a number corresponding to the type of desk you would like:");
                 System.out.println("(1) Traditional");
                 System.out.println("(2) Adjustable");
                 System.out.println("(3) Standing");
@@ -198,7 +201,7 @@ public class Order
             do{
                 correctType = false;
                 System.out.println();
-                System.out.println("enter a number corresponding to the type of chair you would like:");
+                System.out.println("Enter a number corresponding to the type of chair you would like:");
                 System.out.println("(1) Task");
                 System.out.println("(2) Mesh");
                 System.out.println("(3) Kneeling");
@@ -243,24 +246,29 @@ public class Order
      */
     public int userNumber(Order order, Scanner input){
         boolean correctAmount = true;
-        int number = 0;
+        String number = "";
         do{
+            correctAmount = true;
             System.out.println();
-            System.out.println("Please enter the amount: ");
-            try {
-                number = input.nextInt();
-            }
-            catch (InputMismatchException e){
-                System.out.println("Must be an integer");
+            System.out.println("Please enter your desired amount: ");
+            number = input.nextLine();
+            if(number.length() == 0){
                 correctAmount = false;
+                System.out.println("Input cannot be blank");
             }
-            if(!correctAmount){
-                System.out.println("Invalid entry: Must enter a valid amount");
+            else{
+                for(int i = 0; i < number.length(); i++){
+                    if(number.charAt(i) < 48 || number.charAt(i) > 57){
+                        correctAmount = false;
+                        System.out.println("Input must only contain integers");
+                        break;
+                    }
+                }
             }
         }
         while(!correctAmount);
 
-        return number;
+        return Integer.parseInt(number);
     }
 
     /**
@@ -270,86 +278,87 @@ public class Order
      * @param db DataBase object
      */
     public void operation(Order order, CreateOrder co, Database db){
-
         ArrayList<Integer> already = new ArrayList<Integer>(); // create null arraylist to pass into Price search algorithms.
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH~mm~ss");
+        String formatDateTime = ldt.format(format);
         switch(order.getFurnitureCategory()){
             case "desk": //If category is desk
-                co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(),
-                        0, 0, 0); // Find all combinations of desk order
-                int lowestDesk = co.getLowestPrice(); // get lowest price of all combinations
+                int lowestDesk = co.deskPrice(db.getDesk(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                        0, 0, 0); // get lowest price of all combinations
                 if(lowestDesk != 0){ // if a combination was found
                     co.setTotalPrice(lowestDesk); // set lowest price found to the member variable totalPrice in CreateOrder
-                    ArrayList<Integer> orderedItems = co.getLowestCombination(); // get the indexed of the combination to make the lowest price
+                    ArrayList<Integer> orderedItems = co.getLowestCombination(); // get the indexes of the combination to make the lowest price
                     String[] deskIds = co.makeIdArray(orderedItems, 0); // Get the Id's of the desks corresponding to the combined indexes
                     System.out.println("The price found to make this item is: $" + lowestDesk+".00");
+
                     db.updateTable(orderedItems, 0); // update the desk table
                     co.setItemsOrdered(deskIds);
-                    co.generateOrder(); //make the order output file
+                    co.generateOrder(); //Makes the output file containing the order form for the requested desk.
                     co.clearLists(); //clear the array lists storing the prices and combinations
                 }
                 else{
                     System.out.println("Impossible to make this order due to lack of inventory");
-                    co.generateRecommendation();
+                    co.generateRecommendation(); // makes a output file containing the recommended manufacturers to make desk.
                 }
                 break;
             case "chair": // if the category is chair
-                co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(),
-                        0, 0, 0, 0); // Find all combinations of chair order
-                int lowestChair = co.getLowestPrice();
-                if(lowestChair != 0){
-                    co.setTotalPrice(lowestChair);
-                    ArrayList<Integer> orderedItems = co.getLowestCombination();
-                    String[] chairIds = co.makeIdArray(orderedItems, 1);
+                int lowestChair = co.chairPrice(db.getChairs(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                        0, 0, 0, 0); // get lowest price of all combinations
+                if(lowestChair != 0){ // if a combination was found
+                    co.setTotalPrice(lowestChair); // set lowest price found to the member variable totalPrice in CreateOrder
+                    ArrayList<Integer> orderedItems = co.getLowestCombination(); // get the indexes of the combination to make the lowest price
+                    String[] chairIds = co.makeIdArray(orderedItems, 1); // Get the Id's of the chairs corresponding to the combined indexes
                     System.out.println("The price found to make this item is: $" + lowestChair+".00");
-                    db.updateTable(orderedItems, 1);
+                    db.updateTable(orderedItems, 1); // update the chair table
                     co.setItemsOrdered(chairIds);
-                    co.generateOrder();
-                    co.clearLists();
+                    co.generateOrder(); //Makes the output file containing the order form for the requested chair.
+                    co.clearLists(); //clear the array lists storing the prices and combinations
                 }
                 else{
                     System.out.println("Impossible to make this order due to lack of inventory");
-                    co.generateRecommendation();
+                    co.generateRecommendation(); // makes a output file containing the recommended manufacturers to make chair.
                 }
                 break;
             case "filing": // if category is filing
-                co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(),
-                        0, 0, 0); // find all combinations to make filing order
-                int lowestFiling = co.getLowestPrice();
-                if(lowestFiling != 0){
-                    co.setTotalPrice(lowestFiling);
-                    ArrayList<Integer> orderedItems = co.getLowestCombination();
-                    String[] filingIds = co.makeIdArray(orderedItems, 2);
+                int lowestFiling = co.filingPrice(db.getFilings(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                        0, 0, 0); // get lowest price of all combinations
+                if(lowestFiling != 0){ // if a combination was found
+                    co.setTotalPrice(lowestFiling); // set lowest price found to the member variable totalPrice in CreateOrder
+                    ArrayList<Integer> orderedItems = co.getLowestCombination(); // get the indexes of the combination to make the lowest price
+                    String[] filingIds = co.makeIdArray(orderedItems, 2); // Get the Id's of the filings corresponding to the combined indexes
                     System.out.println("The price found to make this item is: $" + lowestFiling+".00");
-                    db.updateTable(orderedItems, 2);
+                    db.updateTable(orderedItems, 2); // update the filing table
                     co.setItemsOrdered(filingIds);
-                    co.generateOrder();
-                    co.clearLists();
+                    co.generateOrder(); //Makes the output file containing the order form for the requested filing.
+                    co.clearLists(); //clear the array lists storing the prices and combinations
                 }
                 else{
                     System.out.println("Impossible to make this order due to lack of inventory");
-                    co.generateRecommendation();
+                    co.generateRecommendation(); // makes a output file containing the recommended manufacturers to make filing.
                 }
                 break;
             case "lamp": //if category is lamp
-                co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(),
-                        0, 0); // Find all combinations to make Lamp order
-                int lowestLamp = co.getLowestPrice();
-                if(lowestLamp != 0){
-                    co.setTotalPrice(lowestLamp);
-                    ArrayList<Integer> orderedItems = co.getLowestCombination();
-                    String[] lampIds = co.makeIdArray(orderedItems, 3);
+                int lowestLamp = co.lampPrice(db.getLamps(), 0, already, order.getFurnitureType(), order.getNumberItems(),
+                        0, 0); // get lowest price of all combinations
+                if(lowestLamp != 0){ // if a combination was found
+                    co.setTotalPrice(lowestLamp); // set lowest price found to the member variable totalPrice in CreateOrder
+                    ArrayList<Integer> orderedItems = co.getLowestCombination(); // get the indexes of the combination to make the lowest price
+                    String[] lampIds = co.makeIdArray(orderedItems, 3); // Get the Id's of the lamps corresponding to the combined indexes
                     System.out.println("The price found to make this item is: $" + lowestLamp+".00");
-                    db.updateTable(orderedItems, 3);
+                    db.updateTable(orderedItems, 3); // update the lamp table
                     co.setItemsOrdered(lampIds);
-                    co.generateOrder();
-                    co.clearLists();
+                    co.generateOrder(); //Makes the output file containing the order form for the requested lamp.
+                    co.clearLists(); //clear the array lists storing the prices and combinations
                 }
                 else{
                     System.out.println("Impossible to make this order due to lack of inventory");
-                    co.generateRecommendation();
+                    co.generateRecommendation(); // makes a output file containing the recommended manufacturers to make lamp.
                 }
                 break;
         }
+        System.out.println("The file name is: "+order.getFurnitureType()+"_"+order.getFurnitureCategory()+
+                "_Order_["+ formatDateTime + "].txt");
+        db.pushLocal(); //update all tables in the database.
     }
 
     /**
@@ -362,33 +371,35 @@ public class Order
      */
     public boolean makeAnotherOrder(Order order, Scanner input){
         boolean command = true;
-        StringBuilder yn = new StringBuilder();
-        while(true){
-            System.out.println();
+        boolean valid;
+        do{
+            valid = true;
             System.out.println("Would you like to make another order? (Y/N)");
-            yn.append(input.nextLine().trim());
-            if(yn.length() < 2){
-                if(yn.toString().equals("y") || yn.toString().equals("Y") || yn.toString().equals("n") || yn.toString().equals("N")){
-                    if(yn.toString().equals("n") || yn.toString().equals("N")){
-                        command = false;
-                    }
+            switch(input.nextLine().trim()){
+                case "Y":
+                case "y":
+                    command = true;
                     break;
-                }
-                else{
-                    System.out.println("You can only enter Y or N");
-                }
-            }
-            else{
-                System.out.println("You can only enter Y or N");
+                case "N":
+                case "n":
+                    command = false;
+                    break;
+                default:
+                    valid = false;
+                    System.out.println("Must select either Y or N");
+                    break;
             }
         }
+        while(!valid);
         return command;
     }
 
     /**
      * Default constructor for class Order
      */
-    public Order(){}
+    public Order(){
+        this.ldt = LocalDateTime.now();
+    }
 
     /**
      * Getter method for NumberItems
@@ -436,6 +447,14 @@ public class Order
      */
     public void setFurnitureType(String furnitureType) {
         this.furnitureType = furnitureType;
+    }
+
+    /**
+     * Getter method for LocalDateTime
+     * @return current time on the System
+     */
+    public LocalDateTime getLDT(){
+        return this.ldt;
     }
 
 }//End of Order documentation

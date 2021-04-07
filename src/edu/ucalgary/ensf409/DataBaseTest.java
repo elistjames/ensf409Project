@@ -117,8 +117,7 @@ public class DataBaseTest
         // run test
         databaseTest.updateFilings(); // load the data from SQL into the Filing array in Database class
         String[][] expected = filingsToStringArray(); // calls a helper method to load the data from the Filing[] array in Database class and convert it to String[][] array.
-
-
+      
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
 
@@ -223,6 +222,7 @@ public class DataBaseTest
         actual[0][6] = "002";
 
         // run test
+
         databaseTest.updateDesks(); // initializes Desk[] array with data that is in SQL
         Desk desk = new Desk("D0890", "Adjustable", "Y", "Y", "Y", 15, "002");
         databaseTest.setDeskRow(desk, 0); // changes a row with different values to ensure updated data from array is stored in SQL
@@ -597,18 +597,3 @@ public class DataBaseTest
    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
