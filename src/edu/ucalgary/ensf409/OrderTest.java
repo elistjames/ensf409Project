@@ -3,7 +3,6 @@ import org.junit.*;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import static org.junit.Assert.*;
-import java.util.Random;
 
 import java.util.*;
 
@@ -11,24 +10,11 @@ import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emp
 
 public class OrderTest
 {
+    /**
+     * class OrderTest will test the user inputs such that the integer value inputted corresponds to their respective data member,
+     * furnitureCategory and furnitureType. We simulate user input using the System Rules library.
+     */
 
-    /*
-    passedTest = false
-    capturedInput = testInputWithIncorrectData if (capturedInput == repeatOptions) {
-    revisedInput = testInputWithCorrectData
-    if (revisedInput == nextSetOfOptions) {
-        passedTest = true
-    }
-    // one loops, on that moves to next level
-}
-    */
-    //assertTrue("Message", passedTest)
-
-    @Before
-    public void setUp()
-    {
-
-    }
 
     /**
      * testUserCategory() will verify that if you select an incorrect input, then the method will reloop until a
@@ -79,6 +65,7 @@ public class OrderTest
      * respective furnitureCategory. We test the possible furnitureType data member branches that are set as each case in the switch in UserType()
      * corresponds to the data member, furnitureType. We generate random integer numbers 1-4 to first take a correct input for
      * furnitureCategory data member. Then, we generate random integers depending on how many possible furnitureType options for each branch option.
+     * When we take a subsequent branch, boolean passedTest is true. We assert that it is true which verifies it has taken a branch.
      */
     @Test
     public void testUserTypeLevelTwoInput()
