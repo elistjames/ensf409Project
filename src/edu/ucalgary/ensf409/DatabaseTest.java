@@ -14,7 +14,7 @@ import java.sql.*;
  * their respective furniture category which hold their categorical information based on the table columns
  * in SQL
  */
-public class DataBaseTest
+public class DatabaseTest
 {
 
     private Database databaseTest;
