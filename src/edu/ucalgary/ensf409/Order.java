@@ -69,7 +69,8 @@ public class Order
      * @param input User input reader
      * @return String of the category chosen by the user
      */
-    public String userCategory(Scanner input) {
+    public String userCategory(Scanner input)
+    {
         String category = "";
 
         loop:   while(true)
@@ -113,7 +114,8 @@ public class Order
     {
         String type = "";
 
-        if(order.getFurnitureCategory().equals("filing")){
+        if(order.getFurnitureCategory().equals("filing"))
+        {
             type = "";
             boolean correctType;
             do {
