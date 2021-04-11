@@ -4,7 +4,6 @@
  @version    1.9
  @since      1.0
  */
-
 package edu.ucalgary.ensf409;
 import org.junit.*;
 import java.sql.*;
@@ -14,7 +13,7 @@ import java.sql.*;
  * their respective furniture category which hold their categorical information based on the table columns
  * in SQL
  */
-public class DataBaseTest
+public class DatabaseTest
 {
 
     private Database databaseTest;
@@ -71,13 +70,19 @@ public class DataBaseTest
         // setup
         databaseTest.initializeConnection(); // connect to SQL server
         String[][] actual = writeChairs(); // calls a helper method to get hardcoded String[][] representation of Chair table in SQL
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateChairs(); // load the data from SQL into the Chair furniture category array in Database class
         String[][] expected = chairsToStringArray(); // calls a helper method to load the data from the Chair[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
 
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+        Assert.assertEquals("Row length are not the same for Chair local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Chair local and database", expectedColSize,actualColSize); // checks col size
     }
     /**
      * testUpdateDesks() will test populating a Desk array from the database and into the Database class Desk[] array, then
@@ -92,13 +97,19 @@ public class DataBaseTest
         // setup
         databaseTest.initializeConnection();
         String[][] actual = writeDesks(); // calls a helper method to get hardcoded String[][] representation of Desk table in SQL
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateDesks(); // load the data from SQL into the Desk furniture category array in Database class
         String[][] expected = desksToStringArray(); // calls a helper method to load the data from the Desk[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
 
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same.
+        Assert.assertEquals("Row length are not the same for Desk local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Desk local and database", expectedColSize,actualColSize); // checks col size
     }
     /**
      * testUpdateFilings() will test populating a Filing array from the database and into the Database class Filing[] array, then
@@ -113,13 +124,19 @@ public class DataBaseTest
         // setup
         databaseTest.initializeConnection();
         String[][] actual = writeFiling();// calls a helper method to get hardcoded String[][] representation of Filing table in SQL
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateFilings(); // load the data from SQL into the Filing array in Database class
         String[][] expected = filingsToStringArray(); // calls a helper method to load the data from the Filing[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
       
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+        Assert.assertEquals("Row length are not the same for Filing local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Filing local and database", expectedColSize,actualColSize); // checks col size
 
     }
     /**
@@ -135,13 +152,20 @@ public class DataBaseTest
         // setup
         databaseTest.initializeConnection();
         String[][] actual = writeLamp(); // calls a helper method to get hardcoded String[][] representation of Lamp table in SQL
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateLamps(); // load the data from SQL into the Lamp array in Database class
         String[][] expected = lampsToStringArray();  // calls a helper method to load the data from the Lamp[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
+
 
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+        Assert.assertEquals("Row length are not the same for Filing local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Filing local and database", expectedColSize,actualColSize); // checks col size
     }
     /**
      * testUpdateManufacturer() will test populating a Manufacturer array from the database and into the Database class Manufacturer[] array, then
@@ -156,13 +180,19 @@ public class DataBaseTest
         // setup
         databaseTest.initializeConnection();
         String[][] actual = writeManufacturer(); // calls a helper method to get hardcoded String[][] representation of Manufacturer table in SQL
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateMans(); // load the data from SQL into the Manufacturer array in Database class
         String[][] expected = manusToStringArray(); // calls a helper method to load the data from the Desk[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
 
         // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+        Assert.assertEquals("Row length are not the same for Manufacturer local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Manufacturer local and database", expectedColSize,actualColSize); // checks col size
     }
     /**
      * sendChairTest() will test storing data from the Chair[] array into the Chair table in SQL. This is done through
@@ -185,6 +215,8 @@ public class DataBaseTest
         actual[0][5] = "Y";
         actual[0][6] = "10";
         actual[0][7] = "001";
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateChairs(); // initializes Chair[] array with data that is in SQL
@@ -192,7 +224,13 @@ public class DataBaseTest
         databaseTest.setChairRow(chair, 0); // changes a row with different values to ensure updated data from array is stored in SQL
         databaseTest.sendChair(); // stores Chair[] array data into the Chair table in SQL
         String[][] expected = chairsToStringArray(); // calls a helper method to load the data from the Chair[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
+
+        // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+        Assert.assertEquals("Row length are not the same for Chair local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Chair local and database", expectedColSize,actualColSize); // checks col size
 
         // after test, put original data back in the Chair table in SQL
         Chair oldChair = new Chair("C0914", "Task", "N", "N", "Y", "Y", 50, "002");
@@ -220,15 +258,22 @@ public class DataBaseTest
         actual[0][4] = "Y";
         actual[0][5] = "15";
         actual[0][6] = "002";
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
-
         databaseTest.updateDesks(); // initializes Desk[] array with data that is in SQL
         Desk desk = new Desk("D0890", "Adjustable", "Y", "Y", "Y", 15, "002");
         databaseTest.setDeskRow(desk, 0); // changes a row with different values to ensure updated data from array is stored in SQL
         databaseTest.sendDesk(); // stores Desk[] array data into the Desk table in SQL
         String[][] expected = desksToStringArray(); // calls a helper method to load the data from the Desk[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
+
+        // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are exactly the same
+        Assert.assertEquals("Row length are not the same for Desk local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Desk local and database", expectedColSize,actualColSize); // checks col size
 
         // after test, store old data back into row
         Desk oldDesk = new Desk("D0890", "Traditional", "N", "N", "Y",25,"002");
@@ -255,6 +300,8 @@ public class DataBaseTest
         actual[0][4] = "Y";
         actual[0][5] = "110";
         actual[0][6] = "002";
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateFilings(); // initializes Filing[] array with data that is in SQL
@@ -262,7 +309,13 @@ public class DataBaseTest
         databaseTest.setFilingRow(filing, 0); // changes a row with different values to ensure updated data from array is stored in SQL
         databaseTest.sendFiling();  // stores Filing[] array data into the Filing table in SQL
         String[][] expected = filingsToStringArray(); // calls a helper method to load the data from the Filing[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
+
+        // verify
         Assert.assertArrayEquals(expected, actual); // checks if Arrays are the same
+        Assert.assertEquals("Row length are not the same for Filing local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Filing local and database", expectedColSize,actualColSize); // checks col size
 
         // after test, store data back into row
         Filing oldFiling = new Filing("F001", "Small", "Y", "Y", "N", 50, "005");
@@ -288,6 +341,8 @@ public class DataBaseTest
         actual[0][3] = "Y";
         actual[0][4] = "90";
         actual[0][5] = "001";
+        int actualRowSize = actual.length; // assign row length in hardcoded String[][]
+        int actualColSize = actual[0].length; // assign col length in hardcoded String[][]
 
         // run test
         databaseTest.updateLamps(); // initializes Filing[] array with data that is in SQL
@@ -295,7 +350,13 @@ public class DataBaseTest
         databaseTest.setLampRow(lamp, 0); // changes a row with different values to ensure updated data from array is stored in SQL
         databaseTest.sendLamp(); // stores Lamp[] array data into the Lamp table in SQL
         String[][] expected = lampsToStringArray(); // calls a helper method to load the data from the Lamp[] array in Database class and convert it to String[][] array.
+        int expectRowSize = expected.length; // assign row length retrieved Class[] array converted into String[][]
+        int expectedColSize = expected[0].length; // assign column length retrieved Class[] array converted into String[][]
+
+        // verify
         Assert.assertArrayEquals(expected, actual); // checks if arrays are the same
+        Assert.assertEquals("Row length are not the same for Filing local and database", expectRowSize, actualRowSize); // checks row size
+        Assert.assertEquals("Col length are not the same for Filing local and database", expectedColSize,actualColSize); // checks col size
 
         // after test, put old date back into row
         Lamp oldLamp = new Lamp("L013", "Desk", "Y", "N", 18, "004");
@@ -305,9 +366,8 @@ public class DataBaseTest
 
     /**
      *  This is where all of the helper methods for testing class Database will be placed for convenience
-     *  -------------------------------------------------------------------------------------------------
+     *  ---------------------------------------------------------------------------------------------------------------
      */
-
 
     /**
      @return returns String array of the hardcoded representation of original Chair object data member values

@@ -33,16 +33,20 @@ public class Order
          * loop, the program prompts the user to make a new order, if they choose to do so. If not, the while loop breaks
          * and the program ends.
          */
-        while(true){
+        while(true)
+        {
             order.ldt = LocalDateTime.now();
             Scanner input1 = new Scanner(System.in);
-            order.setFurnitureCategory(order.userCategory(input1));
+            String theCategory = order.userCategory(input1);
+            order.setFurnitureCategory(theCategory);
 
             Scanner input2 = new Scanner(System.in);
-            order.setFurnitureType(order.userType(order, input2));
+            String theType = order.userType(order, input2);
+            order.setFurnitureType(theType);
 
             Scanner input3 = new Scanner(System.in);
-            order.setNumberItems(order.userNumber(order, input3));
+            int theNumberItems = order.userNumber(order, input3);
+            order.setNumberItems(theNumberItems);
 
             CreateOrder co = new CreateOrder(order, order.getLDT(), db); // creates new order for based from user's input
             db.initializeConnection(); // initialize the connection to the database
@@ -65,10 +69,12 @@ public class Order
      * @param input User input reader
      * @return String of the category chosen by the user
      */
-    public String userCategory(Scanner input) {
+    public String userCategory(Scanner input)
+    {
         String category = "";
 
-        loop:   while(true){
+        loop:   while(true)
+        {
             System.out.println("Please enter a number corresponding to your desired furniture category:");
             System.out.println("(1) Desk");
             System.out.println("(2) Chair");
@@ -91,6 +97,7 @@ public class Order
                 default:
                     System.out.println("Invalid Entry"); // Error message if invalid selection
                     break;
+
             }
         }
         return category;
@@ -107,7 +114,8 @@ public class Order
     {
         String type = "";
 
-        if(order.getFurnitureCategory().equals("filing")){
+        if(order.getFurnitureCategory().equals("filing"))
+        {
             type = "";
             boolean correctType;
             do {
