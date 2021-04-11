@@ -23,10 +23,13 @@ public class Order
      * @param args
      */
     public static void main(String[] args){
+        String DBURL, USERNAME, PASSWORD;
+        DBURL = args[0]; // jdbc:mysql://localhost/inventory
+        USERNAME = args[1]; // scm
+        PASSWORD = args[2]; // ensf409
         Scanner input = new Scanner(System.in); //Reads the user input
-        int orderCounter = 1; // indicates the order number
         Order order = new Order(); // stores order information
-        Database db = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409"); //makes new database
+        Database db = new Database(DBURL, USERNAME, PASSWORD); //makes new database
 
         /**
          * This while loop is the beating heart of the program and will keep looping as long as the while argument is true.  Every
@@ -55,7 +58,6 @@ public class Order
             order.operation(order, co, db);
 
             if(order.makeAnotherOrder(order, input)){
-                orderCounter++;
             }else{
                 break;
             }
@@ -366,7 +368,7 @@ public class Order
         }
         System.out.println("The file name is: "+order.getFurnitureType()+"_"+order.getFurnitureCategory()+
                 "_Order_["+ formatDateTime + "].txt");
-        db.pushLocal(); //update all tables in the database.
+        //db.pushLocal(); //update all tables in the database.
     }
 
     /**
