@@ -268,9 +268,14 @@ public class Order
             }
             else{
                 for(int i = 0; i < number.length(); i++){
-                    if(number.charAt(i) < 48 || number.charAt(i) > 57){
+                    if(number.charAt(i) < 49 || number.charAt(i) > 57){
+                        if(number.charAt(i) == 48){
+                            System.out.println("Amount must be greater than zero");
+                        }
+                        else{
+                            System.out.println("Input must only contain integers");
+                        }
                         correctAmount = false;
-                        System.out.println("Input must only contain integers");
                         break;
                     }
                 }
