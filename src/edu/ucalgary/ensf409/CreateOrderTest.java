@@ -21,7 +21,7 @@ public class CreateOrderTest
         testOrder.setFurnitureCategory("desk");
         testOrder.setFurnitureType("Standing");
         testOrder.setNumberItems(0);
-        testCreateOrder = new CreateOrder(testOrder, LocalDateTime.of(2021, 4, 11, 0, 0, 0), new Database("jdbc:mysql://localhost/inventory", "chad", "@@Kawa1000"));
+        testCreateOrder = new CreateOrder(testOrder, LocalDateTime.of(2021, 4, 11, 0, 0, 0), new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409"));
     }
 
     /**

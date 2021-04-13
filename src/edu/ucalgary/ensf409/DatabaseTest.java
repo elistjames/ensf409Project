@@ -26,7 +26,7 @@ public class DatabaseTest
     @Before
     public void setUpTests()
     {
-        databaseTest = new Database("jdbc:mysql://localhost/inventory", "chad", "@@Kawa1000");
+        databaseTest = new Database("jdbc:mysql://localhost/inventory", "scm", "ensf409");
         // create Database object for testing before each test
     }
 

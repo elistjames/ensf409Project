@@ -2,9 +2,9 @@ package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.ArrayList;
 
-/*
-This class contains data for Database object. It stores the attributes used for accessing the SQL database, as well as local copies of the data in arrays.
-It contains methods which facilitate the accessing and updating of the database. It also includes the various getter methods for the private data members.
+/**
+ * This class contains data for Database object. It stores the attributes used for accessing the SQL database, as well as local copies of the data in arrays.
+ *  It contains methods which facilitate the accessing and updating of the database. It also includes the various getter methods for the private data members.
  */
 public class Database {
 

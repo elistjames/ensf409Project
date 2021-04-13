@@ -9,9 +9,7 @@ import java.util.Scanner;
  * The Order Class is the main class and that prompts the user to make an order on the console with a sequence of
  * questions asking for what furniture category, furniture type and the desired quantity of that item.
  */
-
-public class Order
-{
+public class Order {
     private String furnitureCategory; // store the furniture category
     private String furnitureType; //store the furniture type
     private int numberItems; // store the quantity of desired item

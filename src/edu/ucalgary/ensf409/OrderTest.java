@@ -13,6 +13,9 @@ import static org.junit.Assert.*;
 import java.util.*;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
+/**
+ * Tests various methods from the @Order class
+ */
 public class OrderTest
 {
     private Order testOrder;

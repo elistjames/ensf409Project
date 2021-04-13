@@ -5,6 +5,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+/**
+ * The CreateOrder class handles everything regarding data processing and then outputting that data. The class
+ * has several methods near the bottom that handle finding the lowest price using data passed in by the @Order class
+ * and the @Database class. Near the top are methods that create and populate the output file, either with a fulfilled
+ * order or a recommendation.
+ */
 public class CreateOrder {
     private Order originalRequest;
     private PrintWriter outStream;
@@ -318,6 +324,7 @@ public class CreateOrder {
      * @param arms // counts the number of arms found
      * @param seats // counts the number of seats found
      * @param cushions // counts the number of cushions found
+     * @return int
      */
     public int chairPrice(Chair[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                            int legs, int arms, int seats, int cushions) {
@@ -379,6 +386,7 @@ public class CreateOrder {
      * @param legs // counts the number of legs found
      * @param tops // counts the number of tops found
      * @param drawers // counts the number of drawers found
+     * @return int
      */
     public int deskPrice(Desk[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int legs, int tops, int drawers) {
@@ -437,6 +445,7 @@ public class CreateOrder {
      * @param rails //  counts the number of rails found
      * @param drawers // counts the number of drawers found
      * @param cabinets // counts the number of cabinets found
+     * @return int
      */
     public int filingPrice(Filing[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                             int rails, int drawers, int cabinets) {
@@ -494,6 +503,7 @@ public class CreateOrder {
      * @param number // number of desired furniture items
      * @param bases // counts the number of bases found
      * @param lightBulbs // counts the number of bulbs found
+     * @return int
      */
     public int lampPrice(Lamp[] table, int priceTotal, ArrayList<Integer>alreadyHit, String type, int number,
                           int bases, int lightBulbs) {
