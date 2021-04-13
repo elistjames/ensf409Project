@@ -25,7 +25,7 @@ public class CreateOrder {
     private File fileName;
     private String[] itemsOrdered;
     private int totalPrice;
-    Database db;
+    public Database db;
     private ArrayList<ArrayList<Integer>> combinations = new ArrayList<ArrayList<Integer>>();
     private ArrayList<Integer> prices = new ArrayList<Integer>();
 

@@ -37,62 +37,62 @@ public class Lamp {
     }
 
     /**
-     * @return - String data member from
+     * @return - String data member this.id
      */
     public String getId() { return this.id; }
 
     /**
-     * @return
+     * @return - String data member this.price
      */
     public String getType() { return this.type; }
 
     /**
-     * @return
+     * @return - String data member this.base
      */
     public String getBase() { return this.base; }
 
     /**
-     * @return
+     * @return - String data member this.bulb
      */
     public String getBulb() { return this.bulb; }
 
     /**
-     * @return
+     * @return - String data member this.price
      */
     public int getPrice() { return this.price; }
 
     /**
-     * @return
+     * @return - int data member this.manuId
      */
     public String getManuId() { return this.manuId; }
 
     /**
-     * @param id
+     * @param id - set data member this.id
      */
     public void setId(String id){this.id = id;}
 
     /**
-     * @param type
+     * @param type - set data member this.type
      */
     public void setType(String type){this.type = type;}
 
     /**
-     * @param base
+     * @param base - set data member this.base
      */
     public void setBase(String base){this.base = base;}
 
     /**
-     * @param bulb
+     * @param bulb - set data member this.base
      */
     public void setBulb(String bulb){this.bulb = bulb;}
 
     /**
-     * @param price
+     * @param price - set data member this.price
      */
     public void setPrice(int price){this.price = price;}
 
     /**
-     * @param manuId
+     * @param manuId set data member this.manuId
      */
     public void setManuId(String manuId){this.manuId = manuId;}
 
