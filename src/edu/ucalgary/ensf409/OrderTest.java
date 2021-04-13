@@ -21,17 +21,6 @@ public class OrderTest
      * furnitureCategory and furnitureType. We simulate user input using the System Rules library.
      */
 
-    /**
-     * testUserCategory() will verify that if you select an incorrect input, then the method will reloop until a
-     * valid input is made. For this test, we try inputting anything other than 1,2,3, or 4 into the input stream.
-     * After the incorrect input, we supply the correct input as "1"; "1" corresponds
-     * to setting the furnitureCategory data member in the Order class to "desk". This shows that any invalid input
-     * will be taken care of by the loop which minimizes any potential input errors. "2" corresponds to "chair", "3" corresponds to
-     * "filing" and "4" corresponds to "lamp". We test that the default branch is taken with SystemOutRule() which
-     * retrieves the error message "Invalid Input" and asserts that the branch was taken through assertEquals() which asserts the error matches.
-     * Then, we supply correct input of "1" and assertEquals() that "1" corresponds to setting "desk" in furnitureCategory
-     * data member.
-     */
     @Before
     public void setUp()
     {
@@ -40,6 +29,19 @@ public class OrderTest
     @Rule
     public final TextFromStandardInputStream systemInMock = emptyStandardInputStream(); // allows for access to an input stream where we place the input into provideLines() method
     public final SystemOutRule systemOutRule = new SystemOutRule().enableLog(); // allows for checking what gets printed to the terminal
+
+    /**
+     * testUserCategory() will demonstrate that if you select an incorrect input, then the method will loop again until a
+     * valid input is made. For this test, we try inputting anything other than 1,2,3, or 4 into the input stream.
+     * After the incorrect input, we supply the correct input as "1"; "1" corresponds
+     * to setting the furnitureCategory data member in the Order class to "desk". This shows that any invalid input
+     * will be taken care of by the loop which minimizes any potential input errors. "2" corresponds to "chair", "3" corresponds to
+     * "filing" and "4" corresponds to "lamp". We test that the default branch is taken with SystemOutRule() which
+     * retrieves the error message "Invalid Input" and asserts that the branch was taken through assertEquals() which asserts the error message matches.
+     * Then, we supply correct input of "1" and assertEquals() that "1" corresponds to setting "desk" in furnitureCategory
+     * data member. Unfortunately, the test only demonstrates the loop instead of actually implementing it
+     * because we had a Scanner: line not found error everytime we tried to loop with the test class.
+     */
     @Test
     public void testUserCategoryFirstLevel()
     {
