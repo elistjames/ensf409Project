@@ -1,3 +1,11 @@
+/**
+ * Active Team Members:
+ * @Author Callum Matheson <a href="mailto:callum.matheson1@ucalgary.ca">callum.matheson1@ucalgary.ca</a>
+ * @Author Eli St.James <a href="mailto:eli.stjames@ucalgary.ca">eli.stjames@ucalgary.ca</a>
+ * @Version 2.4
+ * @Since 1.0
+ */
+
 package edu.ucalgary.ensf409;
 
 import java.io.*;
@@ -14,6 +22,7 @@ import java.time.LocalDateTime;
 public class CreateOrder {
     private Order originalRequest;
     private PrintWriter outStream;
+    private File fileName;
     private String[] itemsOrdered;
     private int totalPrice;
     Database db;
@@ -41,7 +50,8 @@ public class CreateOrder {
         //Create output Filepath
         try
         {
-            this.outStream = new PrintWriter(new File(request.getFurnitureType()+"_"+request.getFurnitureCategory()+"_Order_["+ formatDateTime + "].txt"));
+            this.fileName = new File(request.getFurnitureType()+"_"+request.getFurnitureCategory()+"_Order_["+ formatDateTime + "].txt");
+            this.outStream = new PrintWriter(fileName);
         }
         catch (IOException e)
         {
@@ -51,6 +61,18 @@ public class CreateOrder {
         this.db = db;
     }
 
+    /**
+     * setter method for fileName
+     * @param fileName File object to set
+     */
+    public void setFileName(File fileName){this.fileName = fileName;}
+    /**
+     * getter Method for the fileName of the output file
+     * @return a File object
+     */
+    public File getFileName() {
+        return this.fileName;
+    }
     /**
      * Setter method for the private Order Object
      * @param request Order object to set
@@ -104,7 +126,7 @@ public class CreateOrder {
     }
 
     /**
-     * Creates an outputfile with all the relevant data
+     * Creates an output file with all the relevant data
      * including price, and items ordered referenced by
      * Item ID passed in via private data methods
      */
@@ -132,7 +154,7 @@ public class CreateOrder {
     }
     /**
      * Called from main in the case that an order cannot be created using the current inventory
-     * uses privately held data members to use the Method: suppliersOf to find which manufacuturers can produce
+     * uses privately held data members to use the Method: suppliersOf to find which manufacturers can produce
      * the specified order, this data is then used to generate an alternative output file.
      */
     public void generateRecommendation() {
