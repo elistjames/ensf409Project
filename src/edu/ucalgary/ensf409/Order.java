@@ -1,3 +1,10 @@
+/**
+ * Active Team Member:
+ @author     Eli St.James <a href="mailto:eli.stjames@ucalgary.ca">eli.stjames@ucalgary.ca</a>
+ @version    2.4
+ @since      1.0
+ */
+
 package edu.ucalgary.ensf409;
 
 import java.time.LocalDateTime;

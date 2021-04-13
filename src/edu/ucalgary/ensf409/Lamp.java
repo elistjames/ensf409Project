@@ -4,12 +4,13 @@
  @version    1.9
  @since      1.0
  */
+
 package edu.ucalgary.ensf409;
+
 /**
  * This class contains data for the furniture category, Lamp.
  * It stores the values for each column used in the Lamp table in SQL as data members.
  */
-
 public class Lamp {
     private String id;
     private String type;

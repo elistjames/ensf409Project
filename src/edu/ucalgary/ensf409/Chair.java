@@ -4,7 +4,9 @@
  @version    1.9
  @since      1.0
  */
+
 package edu.ucalgary.ensf409;
+
 /**
  * This class contains data for the furniture category, Chair.
  * It stores the values for each column used in the Chair table in SQL as data members.

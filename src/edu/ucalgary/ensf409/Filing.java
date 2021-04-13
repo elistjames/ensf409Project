@@ -4,12 +4,13 @@
  @version    1.9
  @since      1.0
  */
+
 package edu.ucalgary.ensf409;
+
 /**
  *  This class contains data for the furniture category, Filing.
  *  It stores the values for each column used in the Filing table in SQL as data members.
  */
-
 public class Filing {
     private String id;
     private String type;
